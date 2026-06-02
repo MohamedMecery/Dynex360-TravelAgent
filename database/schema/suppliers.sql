@@ -1,0 +1,3 @@
+-- suppliers schema
+-- POST-MVP: Supplier management deferred to Growth phase
+-- See docs/01-Product/Roadmap.md

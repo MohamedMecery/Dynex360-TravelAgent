@@ -537,7 +537,7 @@
     "statusUpdateSuccess": "Booking status updated.",
     "statusConfirmedSuccess": "Booking confirmed.",
     "statusCompletedSuccess": "Booking marked as completed.",
-    "statusCancelledSuccess": "Booking cancelled.",
+    "statusCancelledSuccess": "Booking cancelled."
   },
   "invoices": {
     "title": "Invoices",

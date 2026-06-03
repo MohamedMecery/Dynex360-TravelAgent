@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
 import { Traveler } from "@/types";
@@ -14,7 +16,12 @@ export default function TravelerShowPage() {
   const { formatDate } = useFormat();
   const { queryResult } = useShow<Traveler>({
     resource: "travelers",
-    meta: { select: "*, customers(first_name, last_name, email), countries(name)" },
+    meta: {
+      select: withAuditUserSelect(
+        "travelers",
+        "*, customers(first_name, last_name, email), countries(name)"
+      ),
+    },
   });
   const traveler = queryResult?.data?.data;
   if (!traveler) return <p>{t("common.loading")}</p>;
@@ -39,6 +46,7 @@ export default function TravelerShowPage() {
           <div className="flex gap-2"><dt className="font-medium w-32">{t("fields.email")}:</dt><dd>{traveler.email ?? "—"}</dd></div>
           <div className="flex gap-2"><dt className="font-medium w-32">{t("fields.phone")}:</dt><dd>{traveler.phone ?? "—"}</dd></div>
         </dl>
+        <RecordMetadata {...traveler} className="mt-4" />
       </Card>
     </div>
   );

@@ -29,6 +29,22 @@ export default function SettingsPage() {
             </CardHeader>
           </Card>
         </Link>
+        <Link href="/ai/history" className="block">
+          <Card className="h-full transition-colors hover:bg-muted/40">
+            <CardHeader>
+              <CardTitle>{t("settings.aiHistoryCard")}</CardTitle>
+              <p className="text-sm text-muted-foreground">{t("settings.aiHistoryDescription")}</p>
+            </CardHeader>
+          </Card>
+        </Link>
+        <Link href="/audit-logs" className="block">
+          <Card className="h-full transition-colors hover:bg-muted/40">
+            <CardHeader>
+              <CardTitle>{t("settings.auditLogsCard")}</CardTitle>
+              <p className="text-sm text-muted-foreground">{t("settings.auditLogsDescription")}</p>
+            </CardHeader>
+          </Card>
+        </Link>
       </div>
     </div>
   );

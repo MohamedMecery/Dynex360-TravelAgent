@@ -82,6 +82,34 @@ export default function KnowledgeSettingsPage() {
     }
   };
 
+  const handleReindex = async (id: string) => {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/knowledge/documents/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const payload = (await response.json()) as {
+        data?: { chunk_count?: number };
+        error?: { message?: string };
+      };
+      if (!response.ok) {
+        throw new Error(payload.error?.message ?? t("knowledgeSettings.reindexError"));
+      }
+      const count = String(payload.data?.chunk_count ?? 0);
+      const msg = t("knowledgeSettings.reindexSuccess").replace("{count}", count);
+      setError(null);
+      alert(msg);
+      await loadDocuments();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t("knowledgeSettings.reindexError"));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm(t("knowledgeSettings.confirmDelete"))) return;
     const response = await fetch(`/api/knowledge/documents/${id}`, { method: "DELETE" });
@@ -194,7 +222,15 @@ export default function KnowledgeSettingsPage() {
                   <td className="py-2 pr-4">
                     <Badge>{doc.status}</Badge>
                   </td>
-                  <td className="py-2">
+                  <td className="py-2 flex gap-3">
+                    <button
+                      type="button"
+                      disabled={submitting || doc.status === "processing"}
+                      onClick={() => void handleReindex(doc.id)}
+                      className="text-xs text-primary hover:underline disabled:opacity-50"
+                    >
+                      {submitting ? t("knowledgeSettings.reindexing") : t("knowledgeSettings.reindex")}
+                    </button>
                     <button
                       type="button"
                       onClick={() => void handleDelete(doc.id)}

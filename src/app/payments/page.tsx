@@ -1,17 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useList } from "@refinedev/core";
+import { useCan, useGetIdentity, useList } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
-import { Payment } from "@/types";
+import { Payment, UserRole } from "@/types";
 
 export default function PaymentListPage() {
   const { t } = useTranslation();
   const { formatCurrency, formatDate } = useFormat();
+  const { data: identity } = useGetIdentity<{ role?: UserRole }>();
+  const { data: canCreate } = useCan({
+    resource: "payments",
+    action: "create",
+    params: { role: identity?.role },
+  });
   const { data, isLoading } = useList<Payment>({
     resource: "payments",
     sorters: [{ field: "payment_date", order: "desc" }],
@@ -23,7 +30,9 @@ export default function PaymentListPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">{t("payments.title")}</h2>
-        <Link href="/payments/create"><Button>{t("payments.record")}</Button></Link>
+        {canCreate?.can !== false && (
+          <Link href="/payments/create"><Button>{t("payments.record")}</Button></Link>
+        )}
       </div>
       <Card>
         {isLoading ? <p>{t("common.loading")}</p> : (
@@ -47,7 +56,9 @@ export default function PaymentListPage() {
                   <td className="py-2 pr-4">{p.reference_number ?? "—"}</td>
                   <td className="py-2 pr-4">{formatDate(p.payment_date)}</td>
                   <td className="py-2">
-                    <Link href={`/payments/show/${p.id}`}><Button variant="outline" size="sm">{t("common.view")}</Button></Link>
+                    <GridActionButton href={`/payments/show/${p.id}`} variant="outline" size="sm">
+                      {t("common.view")}
+                    </GridActionButton>
                   </td>
                 </tr>
               ))}

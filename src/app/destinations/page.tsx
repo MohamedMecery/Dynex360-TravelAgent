@@ -1,22 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { useList, useDelete } from "@refinedev/core";
+import { useCan, useGetIdentity, useList, useUpdate } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { useTranslation } from "@/i18n/locale-provider";
-import { Destination } from "@/types";
+import { Destination, UserRole } from "@/types";
 
 export default function DestinationListPage() {
   const { t } = useTranslation();
+  const { data: identity } = useGetIdentity<{ role?: UserRole }>();
+  const { data: canDelete } = useCan({
+    resource: "destinations",
+    action: "delete",
+    params: { role: identity?.role },
+  });
   const { data, isLoading } = useList<Destination>({
     resource: "destinations",
     sorters: [{ field: "name", order: "asc" }],
     meta: { select: "*, countries(name), cities(name)" },
   });
-  const { mutate: deleteOne } = useDelete();
+  const { mutate: softDelete } = useUpdate();
   const destinations = data?.data ?? [];
+
+  const handleSoftDelete = (id: string) => {
+    if (!confirm(t("destinations.confirmDelete"))) return;
+    softDelete({
+      resource: "destinations",
+      id,
+      values: { deleted_at: new Date().toISOString() },
+    });
+  };
 
   return (
     <div>
@@ -45,10 +61,23 @@ export default function DestinationListPage() {
                   <td className="py-2 pr-4">{d.countries?.name ?? "—"}</td>
                   <td className="py-2 pr-4">{d.cities?.name ?? "—"}</td>
                   <td className="py-2 pr-4"><StatusBadge namespace="destinationStatus" value={d.status} /></td>
-                  <td className="py-2 flex gap-2">
-                    <Link href={`/destinations/show/${d.id}`}><Button variant="outline" size="sm">{t("common.view")}</Button></Link>
-                    <Link href={`/destinations/edit/${d.id}`}><Button variant="outline" size="sm">{t("common.edit")}</Button></Link>
-                    <Button variant="destructive" size="sm" onClick={() => deleteOne({ resource: "destinations", id: d.id })}>{t("common.delete")}</Button>
+                  <td className="py-2">
+                    <div className="flex flex-wrap gap-2">
+                      <GridActionButton href={`/destinations/show/${d.id}`} variant="outline" size="sm">
+                        {t("common.view")}
+                      </GridActionButton>
+                      <GridActionButton href={`/destinations/edit/${d.id}`} variant="outline" size="sm">
+                        {t("common.edit")}
+                      </GridActionButton>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        disabled={!canDelete?.can}
+                        onClick={() => canDelete?.can && handleSoftDelete(d.id)}
+                      >
+                        {t("common.delete")}
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

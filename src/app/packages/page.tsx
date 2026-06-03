@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { PackageStatusActions } from "@/components/packages/package-status-actions";
 import { useTranslation } from "@/i18n/locale-provider";
 import { Destination, Package, PackageStatus, UserRole } from "@/types";
@@ -134,30 +135,31 @@ export default function PackageListPage() {
                     <td className="py-2 pr-4">
                       <StatusBadge namespace="packageStatus" value={p.status} />
                     </td>
-                    <td className="px-4 py-2">
-                      <div className="flex flex-wrap gap-2">
-                        <Link href={`/packages/show/${p.id}`}>
-                          <Button variant="outline" size="sm">
-                            {t("common.view")}
-                          </Button>
-                        </Link>
-                        {p.status !== "archived" && (
-                          <Link href={`/packages/edit/${p.id}`}>
-                            <Button variant="outline" size="sm">
-                              {t("common.edit")}
-                            </Button>
-                          </Link>
-                        )}
-                        {(p.status === "draft" || p.status === "published") && (
-                          <PackageStatusActions
-                            packageId={p.id}
-                            status={p.status}
-                            size="sm"
-                            onStatusChange={() => void refetch()}
-                          />
-                        )}
-                        {canDelete?.can && (
+                    <td className="px-4 py-2 align-top">
+                      <div className="flex min-w-[20rem] flex-wrap gap-2">
+                        <GridActionButton href={`/packages/show/${p.id}`} variant="outline" size="sm">
+                          {t("common.view")}
+                        </GridActionButton>
+                        <GridActionButton
+                          href={`/packages/edit/${p.id}`}
+                          variant="outline"
+                          size="sm"
+                          disabled={p.status === "archived"}
+                        >
+                          {t("common.edit")}
+                        </GridActionButton>
+                        <PackageStatusActions
+                          packageId={p.id}
+                          status={p.status}
+                          size="sm"
+                          onStatusChange={() => void refetch()}
+                        />
+                        {canDelete?.can ? (
                           <Button variant="destructive" size="sm" onClick={() => handleSoftDelete(p.id)}>
+                            {t("common.delete")}
+                          </Button>
+                        ) : (
+                          <Button variant="destructive" size="sm" disabled>
                             {t("common.delete")}
                           </Button>
                         )}

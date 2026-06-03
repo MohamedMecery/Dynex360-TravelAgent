@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { SupportTicketActions } from "@/components/support/support-ticket-actions";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
 import { SupportTicket, SupportTicketMessage } from "@/types";
@@ -20,6 +22,7 @@ export default function SupportTicketShowPage() {
   const { data: ticketData, isLoading, refetch } = useOne<SupportTicket>({
     resource: "support_tickets",
     id,
+    meta: { select: withAuditUserSelect("support_tickets", "*") },
   });
 
   const { data: messagesData, refetch: refetchMessages } = useList<SupportTicketMessage>({
@@ -52,6 +55,7 @@ export default function SupportTicketShowPage() {
           <StatusBadge namespace="supportTicketStatus" value={ticket.status} />
           <StatusBadge namespace="supportTicketPriority" value={ticket.priority} />
         </div>
+        <RecordMetadata {...ticket} className="mt-3 border-t-0 pt-0" />
       </div>
 
       <SupportTicketActions

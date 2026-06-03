@@ -17,7 +17,9 @@
     "settings": "Settings",
     "knowledgeAgent": "Knowledge Agent",
     "supportAgent": "Support Agent",
-    "bookingAgent": "Booking Agent"
+    "bookingAgent": "Booking Agent",
+    "aiHistory": "AI History",
+    "auditLogs": "Audit Log"
   },
   "common": {
     "loading": "Loading...",
@@ -363,6 +365,12 @@
     "selectDestination": "— Select destination —",
     "selectBooking": "Select booking..."
   },
+  "audit": {
+    "createdBy": "Created by {user} on {date}",
+    "createdOn": "Created on {date}",
+    "updatedBy": "Last modified by {user} on {date}",
+    "updatedOn": "Last modified on {date}"
+  },
   "customers": {
     "title": "Customers",
     "create": "Create Customer",
@@ -419,7 +427,8 @@
     "details": "Traveler Details",
     "standaloneTraveler": "Standalone traveler",
     "passport": "Passport",
-    "noTravelers": "No travelers yet"
+    "noTravelers": "No travelers yet",
+    "confirmDelete": "Remove this traveler from active lists?"
   },
   "destinations": {
     "title": "Destinations",
@@ -427,7 +436,8 @@
     "createTitle": "Add Destination",
     "editTitle": "Edit Destination",
     "details": "Destination Details",
-    "noDestinations": "No destinations yet"
+    "noDestinations": "No destinations yet",
+    "confirmDelete": "Remove this destination from active lists?"
   },
   "packages": {
     "title": "Packages",
@@ -546,6 +556,7 @@
     "editTitle": "Edit Invoice",
     "details": "Invoice Details",
     "noInvoices": "No invoices yet",
+    "confirmDelete": "Remove this invoice from active lists?",
     "issue": "Issue Invoice",
     "recordPayment": "Record Payment"
   },
@@ -618,7 +629,11 @@
     "title": "Settings",
     "comingSoon": "Agency settings — coming soon",
     "tenantSettings": "Tenant Settings",
-    "description": "Branding, locale, and agency preferences will be configurable here in a future release."
+    "description": "Branding, locale, and agency preferences will be configurable here in a future release.",
+    "auditLogsCard": "Audit Log",
+    "auditLogsDescription": "Review who changed bookings, customers, and other records.",
+    "aiHistoryCard": "AI History",
+    "aiHistoryDescription": "Browse and resume Knowledge, Booking, and Support agent chats."
   },
   "knowledgeSettings": {
     "title": "Knowledge Base",
@@ -638,6 +653,10 @@
     "status": "Status",
     "noDocuments": "No documents indexed yet.",
     "confirmDelete": "Archive this document?",
+    "reindex": "Reindex",
+    "reindexing": "Reindexing…",
+    "reindexSuccess": "Document reindexed ({count} chunks).",
+    "reindexError": "Reindex failed.",
     "errorLoad": "Failed to load documents.",
     "errorUpload": "Upload or indexing failed.",
     "types": {
@@ -695,6 +714,41 @@
     "high": "High",
     "urgent": "Urgent"
   },
+  "auditLogs": {
+    "title": "Audit Log",
+    "subtitle": "Append-only trail of data changes in your agency (tenant-scoped).",
+    "when": "When",
+    "who": "User",
+    "action": "Action",
+    "entity": "Table",
+    "recordId": "Record ID",
+    "filterTable": "Table name",
+    "tablePlaceholder": "e.g. bookings",
+    "filterAction": "Action",
+    "allActions": "All actions",
+    "empty": "No audit entries match your filters.",
+    "actions": {
+      "insert": "Insert",
+      "update": "Update",
+      "delete": "Delete"
+    }
+  },
+  "aiHistory": {
+    "title": "AI Conversation History",
+    "subtitle": "Resume prior agent sessions. Booking drafts still require confirmation in Bookings.",
+    "agent": "Agent",
+    "topic": "Topic",
+    "user": "User",
+    "updated": "Last activity",
+    "open": "Open",
+    "untitled": "Untitled conversation",
+    "empty": "No conversations yet — start a chat from an AI agent.",
+    "agents": {
+      "knowledge": "Knowledge",
+      "booking": "Booking",
+      "support": "Support"
+    }
+  },
   "bookingAgent": {
     "title": "Booking Agent",
     "subtitle": "Search packages, look up bookings, and prepare drafts — you confirm before any change is saved.",
@@ -713,6 +767,14 @@
     "travelerLast": "Traveler last name",
     "tier": "Pricing tier",
     "hitlNote": "Drafts stay in draft status until you confirm in Bookings. The agent never auto-confirms.",
+    "activeDraft": "Active draft: {ref} — open in Bookings to confirm.",
+    "updateDraftHint": "Update a draft via chat: include the reference (e.g. DEMO-BK-001) and what to change (date, package, travelers).",
+    "promptUpdateDraft": "Update draft DEMO-BK-001 travel date to next month",
+    "promptPackageSearch": "Show Dubai packages under $1500",
+    "promptStatus": "Status of DEMO-BK-005",
+    "pendingCreateDraft": "Review new draft",
+    "pendingUpdateDraft": "Review draft update",
+    "pendingCancellation": "Review cancellation request",
     "tiers": {
       "adult": "Adult",
       "child": "Child",

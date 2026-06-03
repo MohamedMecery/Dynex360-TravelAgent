@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
+import { useAiConversationResume } from "@/hooks/use-ai-conversation-resume";
 import { useGetIdentity } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/input";
@@ -19,7 +20,7 @@ interface ChatMessage {
   confidence?: "low" | "medium" | "high";
 }
 
-export default function KnowledgeAgentPage() {
+function KnowledgeAgentContent() {
   const { t, locale } = useTranslation();
   const { data: identity } = useGetIdentity<{ role?: UserRole }>();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -29,6 +30,8 @@ export default function KnowledgeAgentPage() {
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [sessionId, setSessionId] = useState<string | undefined>();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useAiConversationResume({ setConversationId, setMessages });
 
   const scrollToBottom = useCallback(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -182,5 +185,15 @@ export default function KnowledgeAgentPage() {
         </p>
       )}
     </div>
+  );
+}
+
+export default function KnowledgeAgentPage() {
+  const { t } = useTranslation();
+
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">{t("common.loading")}</p>}>
+      <KnowledgeAgentContent />
+    </Suspense>
   );
 }

@@ -105,45 +105,46 @@ export function BookingStatusActions({
   const showComplete = Boolean(canComplete?.can) && canCompleteBooking(status);
   const showCancel = Boolean(canCancel?.can) && canCancelBooking(status);
 
-  if (!showConfirm && !showComplete && !showCancel) {
+  const buttonSize = size === "sm" ? "sm" : undefined;
+  const alwaysShow = variant === "inline";
+
+  if (!alwaysShow && !showConfirm && !showComplete && !showCancel) {
     return null;
   }
 
-  const buttonSize = size === "sm" ? "sm" : undefined;
-
   return (
-    <div className={variant === "inline" ? "space-y-2" : undefined}>
-      <div className="flex flex-wrap gap-2">
-        {showConfirm && (
+    <div className={variant === "inline" ? "contents" : undefined}>
+      <div className={variant === "inline" ? "contents" : "flex flex-wrap gap-2"}>
+        {(alwaysShow || showConfirm) && (
           <Button
             size={buttonSize}
             onClick={() => confirmWithDialog("bookings.confirmBookingMessage", "confirmed")}
-            disabled={isLoading}
+            disabled={isLoading || !showConfirm}
           >
             {t("bookings.confirm")}
           </Button>
         )}
-        {showComplete && (
+        {(alwaysShow || showComplete) && (
           <Button
             size={buttonSize}
             onClick={() => confirmWithDialog("bookings.completeBookingMessage", "completed")}
-            disabled={isLoading}
+            disabled={isLoading || !showComplete}
           >
             {t("bookings.complete")}
           </Button>
         )}
-        {showCancel && (
+        {(alwaysShow || showCancel) && (
           <Button
             size={buttonSize}
             variant="destructive"
             onClick={() => confirmWithDialog("bookings.cancelConfirmMessage", "cancelled")}
-            disabled={isLoading}
+            disabled={isLoading || !showCancel}
           >
             {t("bookings.cancelBooking")}
           </Button>
         )}
       </div>
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error && variant !== "inline" && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }

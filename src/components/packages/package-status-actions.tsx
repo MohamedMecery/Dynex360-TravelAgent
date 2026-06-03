@@ -68,20 +68,23 @@ export function PackageStatusActions({
   };
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-wrap gap-2">
-        {status === "draft" && (
-          <Button size={size} onClick={() => void handlePublish()} disabled={isLoading || checking}>
-            {checking || isLoading ? t("common.loading") : t("packages.publish")}
-          </Button>
-        )}
-        {status === "published" && (
-          <Button size={size} variant="outline" onClick={handleArchive} disabled={isLoading}>
-            {t("packages.archive")}
-          </Button>
-        )}
-      </div>
-      {error && <p className="text-sm text-destructive">{error}</p>}
-    </div>
+    <>
+      <Button
+        size={size}
+        onClick={() => void handlePublish()}
+        disabled={isLoading || checking || status !== "draft"}
+      >
+        {checking || isLoading ? t("common.loading") : t("packages.publish")}
+      </Button>
+      <Button
+        size={size}
+        variant="outline"
+        onClick={handleArchive}
+        disabled={isLoading || status !== "published"}
+      >
+        {t("packages.archive")}
+      </Button>
+      {error && <p className="w-full basis-full text-sm text-destructive">{error}</p>}
+    </>
   );
 }

@@ -1,24 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useList, useDelete } from "@refinedev/core";
+import { useCan, useGetIdentity, useList, useUpdate } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
-import { Invoice } from "@/types";
+import { Invoice, UserRole } from "@/types";
 
 export default function InvoiceListPage() {
   const { t } = useTranslation();
   const { formatCurrency, formatDate } = useFormat();
+  const { data: identity } = useGetIdentity<{ role?: UserRole }>();
+  const { data: canUpdate } = useCan({
+    resource: "invoices",
+    action: "update",
+    params: { role: identity?.role },
+  });
+  const { data: canDelete } = useCan({
+    resource: "invoices",
+    action: "delete",
+    params: { role: identity?.role },
+  });
   const { data, isLoading } = useList<Invoice>({
     resource: "invoices",
     sorters: [{ field: "created_at", order: "desc" }],
     meta: { select: "*, bookings(reference_number)" },
   });
-  const { mutate: deleteOne } = useDelete();
+  const { mutate: softDelete } = useUpdate();
   const invoices = data?.data ?? [];
+
+  const handleSoftDelete = (id: string) => {
+    if (!confirm(t("invoices.confirmDelete"))) return;
+    softDelete({
+      resource: "invoices",
+      id,
+      values: { deleted_at: new Date().toISOString() },
+    });
+  };
 
   return (
     <div>
@@ -49,10 +70,28 @@ export default function InvoiceListPage() {
                   <td className="py-2 pr-4 font-medium">{formatCurrency(Number(inv.total_amount), inv.currency)}</td>
                   <td className="py-2 pr-4"><StatusBadge namespace="invoiceStatus" value={inv.status} /></td>
                   <td className="py-2 pr-4">{inv.due_date ? formatDate(inv.due_date) : "—"}</td>
-                  <td className="py-2 flex gap-2">
-                    <Link href={`/invoices/show/${inv.id}`}><Button variant="outline" size="sm">{t("common.view")}</Button></Link>
-                    <Link href={`/invoices/edit/${inv.id}`}><Button variant="outline" size="sm">{t("common.edit")}</Button></Link>
-                    <Button variant="destructive" size="sm" onClick={() => deleteOne({ resource: "invoices", id: inv.id })}>{t("common.delete")}</Button>
+                  <td className="py-2">
+                    <div className="flex flex-wrap gap-2">
+                      <GridActionButton href={`/invoices/show/${inv.id}`} variant="outline" size="sm">
+                        {t("common.view")}
+                      </GridActionButton>
+                      <GridActionButton
+                        href={`/invoices/edit/${inv.id}`}
+                        variant="outline"
+                        size="sm"
+                        disabled={!canUpdate?.can}
+                      >
+                        {t("common.edit")}
+                      </GridActionButton>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        disabled={!canDelete?.can}
+                        onClick={() => canDelete?.can && handleSoftDelete(inv.id)}
+                      >
+                        {t("common.delete")}
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

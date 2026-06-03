@@ -21,7 +21,8 @@ Deliver the **TravelOS AI Platform**: three approved agents (Knowledge, Booking,
 | Booking Agent | Sales Agent, Admin | [Bookings](./Bookings.md), Customers, Packages |
 | Support Agent | Support staff, Sales | [Customers](./Customers.md), Bookings (read) |
 
-Architecture detail: [AIArchitecture.md](../../ai/AIArchitecture.md).
+Architecture detail: [AIArchitecture.md](../../ai/AIArchitecture.md).  
+**How-to & testing:** [AI-Agents-Guide.md](../05-Development/AI-Agents-Guide.md).
 
 ---
 

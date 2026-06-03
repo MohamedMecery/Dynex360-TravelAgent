@@ -86,7 +86,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
             const isActive = pathname === href || pathname.startsWith(href + "/");
             const labelKey = resource.meta?.labelKey as string | undefined;
             const label = labelKey ? t(labelKey) : (resource.meta?.label as string);
-            if (resource.name === "users" || resource.name === "settings") {
+            if (
+              resource.name === "users" ||
+              resource.name === "settings" ||
+              resource.name === "audit_logs" ||
+              resource.name === "ai-conversations"
+            ) {
               return (
                 <NavResourceLink
                   key={resource.name}

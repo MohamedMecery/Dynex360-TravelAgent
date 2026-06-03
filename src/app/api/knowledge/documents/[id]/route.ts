@@ -2,7 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { hasAiPermission } from "@/lib/auth/rbac";
 import { requireActiveApiAccess } from "@/lib/auth/require-active-api-access";
 import { reingestKnowledgeDocument } from "@/lib/ai/ingest-document";
-import { knowledgeDocumentCreateSchema } from "@/lib/validation/knowledge-document";
+import { loadKnowledgeDocumentContent } from "@/lib/knowledge/load-document-content";
+import { z } from "zod";
+
+const knowledgeReindexSchema = z.object({
+  content: z.string().trim().min(1).max(200_000).optional(),
+});
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -65,20 +70,34 @@ export async function POST(request: NextRequest, { params }: RouteParams): Promi
       );
     }
 
-    const parsed = knowledgeDocumentCreateSchema.safeParse(await request.json());
+    const body =
+      request.headers.get("content-length") === "0"
+        ? {}
+        : ((await request.json().catch(() => ({}))) as Record<string, unknown>);
+    const parsed = knowledgeReindexSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
-        { error: { code: "VALIDATION_ERROR", message: "Content required for reindex" } },
+        {
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "Invalid reindex body",
+            details: parsed.error.flatten(),
+          },
+        },
         { status: 400 }
       );
     }
+
+    const content =
+      parsed.data.content?.trim() ||
+      (await loadKnowledgeDocumentContent(supabase, id, tenantId));
 
     const chunkCount = await reingestKnowledgeDocument(
       supabase,
       id,
       tenantId,
       user.id,
-      parsed.data.content
+      content
     );
 
     return NextResponse.json({ data: { id, chunk_count: chunkCount } });

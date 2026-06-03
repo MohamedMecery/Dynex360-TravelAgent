@@ -1,6 +1,6 @@
 # TravelOS Product Roadmap
 
-**Last Updated:** 2026-06-02
+**Last Updated:** 2026-06-03
 
 ## Release Strategy Overview
 
@@ -11,10 +11,12 @@ TravelOS follows a phased release model: **MVP (Phases 1–4) → AI Foundation 
 | Track | Status |
 |-------|--------|
 | PRD, Requirements, User Stories, Domain Model, ERD, Database Design | Complete |
-| Supabase migrations | In progress (001–011) |
-| Admin UI (Refine) + core modules | In progress |
-| Marketing landing page | Implemented (`/`, `/home`) — Trust & Scale Metrics band pending (D-009) |
-| AI agents (Knowledge, Booking, Support) | In progress — DB 012–017, APIs + chat UI; Phase 5 exit criteria pending |
+| Supabase migrations | **001–021** applied in repo (latest: audit user triggers) |
+| Admin UI (Refine) + core modules | **Implemented** (MVP modules + RecordMetadata on Show pages) |
+| Marketing landing page | **Implemented** (`/`, `/home`) — Trust & Scale Metrics (D-009) |
+| AI agents (Knowledge, Booking, Support) | **Implemented** — DB 012–017, chat UI, knowledge admin, feedback; Phase 5 manual sign-off pending |
+| Audit logs UI | **Implemented** (`/audit-logs`, `tenant_admin`) |
+| AI conversation history | **Implemented** (`/ai/history`, `ai.read`) |
 
 ```mermaid
 gantt

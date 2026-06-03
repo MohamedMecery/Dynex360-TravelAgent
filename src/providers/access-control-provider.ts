@@ -55,6 +55,14 @@ export const accessControlProvider: AccessControlProvider = {
       return { can: hasAiPermission(role, "knowledge.manage") };
     }
 
+    if (resource === "ai-conversations") {
+      return { can: hasAiPermission(role, "ai.read") };
+    }
+
+    if (resource === "audit_logs") {
+      return { can: hasPermission(role, "audit_logs", "read") };
+    }
+
     return { can: hasPermission(role, resource ?? "", action ?? "") };
   },
 };

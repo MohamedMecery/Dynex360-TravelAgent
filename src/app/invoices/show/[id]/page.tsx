@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
 import { Invoice } from "@/types";
@@ -14,7 +16,9 @@ export default function InvoiceShowPage() {
   const { formatCurrency, formatDate } = useFormat();
   const { queryResult } = useShow<Invoice>({
     resource: "invoices",
-    meta: { select: "*, bookings(reference_number, customer_id, total_amount)" },
+    meta: {
+      select: withAuditUserSelect("invoices", "*, bookings(reference_number, customer_id, total_amount)"),
+    },
   });
   const { mutate: updateOne } = useUpdate();
   const invoice = queryResult?.data?.data;
@@ -52,6 +56,7 @@ export default function InvoiceShowPage() {
           <div className="flex gap-2"><dt className="font-medium w-28">{t("bookings.total")}:</dt><dd className="font-bold">{formatCurrency(Number(invoice.total_amount), invoice.currency)}</dd></div>
           {invoice.notes && <div><dt className="font-medium mb-1">{t("common.notes")}:</dt><dd className="text-muted-foreground">{invoice.notes}</dd></div>}
         </dl>
+        <RecordMetadata {...invoice} className="mt-4" />
       </Card>
     </div>
   );

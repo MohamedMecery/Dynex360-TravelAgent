@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useList } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/i18n/locale-provider";
 import { AiMessageFeedback } from "@/components/ai/ai-message-feedback";
+import { useAiConversationResume } from "@/hooks/use-ai-conversation-resume";
 import {
   BookingAgentPendingAction,
   BookingAgentResponse,
@@ -28,7 +29,30 @@ interface ChatMessage {
   draftRef?: string;
 }
 
-export default function BookingAgentPage() {
+function interpolate(template: string, values: Record<string, string>): string {
+  return Object.entries(values).reduce(
+    (text, [key, value]) => text.replaceAll(`{${key}}`, value),
+    template
+  );
+}
+
+function pendingActionLabel(
+  action: BookingAgentPendingAction,
+  t: (key: string) => string
+): string {
+  switch (action.type) {
+    case "create_draft":
+      return t("bookingAgent.pendingCreateDraft");
+    case "update_draft":
+      return t("bookingAgent.pendingUpdateDraft");
+    case "propose_cancellation":
+      return t("bookingAgent.pendingCancellation");
+    default:
+      return t("bookingAgent.confirmAction");
+  }
+}
+
+function BookingAgentContent() {
   const { t, locale } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -37,7 +61,12 @@ export default function BookingAgentPage() {
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [sessionId, setSessionId] = useState<string | undefined>();
   const [showDraftForm, setShowDraftForm] = useState(false);
+  const [activeDraft, setActiveDraft] = useState<{ ref: string; bookingId?: string } | null>(
+    null
+  );
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useAiConversationResume({ setConversationId, setMessages });
 
   const { data: customersData } = useList<Customer>({
     resource: "customers",
@@ -57,6 +86,15 @@ export default function BookingAgentPage() {
     traveler_last: "",
     tier: "adult" as PricingTier,
   });
+
+  const quickPrompts = useMemo(
+    () => [
+      t("bookingAgent.promptPackageSearch"),
+      t("bookingAgent.promptStatus"),
+      t("bookingAgent.promptUpdateDraft"),
+    ],
+    [t]
+  );
 
   const scrollToBottom = useCallback(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -93,6 +131,13 @@ export default function BookingAgentPage() {
   };
 
   const appendAssistant = (data: BookingAgentResponse) => {
+    if (data.draft?.reference_number) {
+      setActiveDraft({
+        ref: data.draft.reference_number,
+        bookingId: data.draft.booking_id,
+      });
+    }
+
     setMessages((prev) => [
       ...prev,
       {
@@ -107,13 +152,13 @@ export default function BookingAgentPage() {
     setTimeout(scrollToBottom, 50);
   };
 
-  const sendMessage = async () => {
-    const text = input.trim();
+  const sendMessage = async (textOverride?: string) => {
+    const text = (textOverride ?? input).trim();
     if (!text || loading) return;
 
     setError(null);
     setLoading(true);
-    setInput("");
+    if (!textOverride) setInput("");
     setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: text }]);
 
     try {
@@ -171,6 +216,10 @@ export default function BookingAgentPage() {
     }
   };
 
+  const activeDraftHref = activeDraft?.bookingId
+    ? `/bookings/show/${activeDraft.bookingId}`
+    : "/bookings";
+
   return (
     <div className="flex h-[calc(100vh-3rem)] flex-col gap-4 lg:flex-row">
       <div className="flex flex-1 flex-col min-h-0">
@@ -179,13 +228,27 @@ export default function BookingAgentPage() {
             <h2 className="text-2xl font-bold">{t("bookingAgent.title")}</h2>
             <p className="text-sm text-muted-foreground">{t("bookingAgent.subtitle")}</p>
           </div>
-          <Link href="/bookings" className="text-sm text-primary hover:underline">
-            {t("bookingAgent.openBookings")}
-          </Link>
+          <div className="flex flex-col items-end gap-1 text-sm">
+            <Link href="/bookings" className="text-primary hover:underline">
+              {t("bookingAgent.openBookings")}
+            </Link>
+            <Link href="/ai/history" className="text-muted-foreground hover:underline">
+              {t("aiHistory.title")}
+            </Link>
+          </div>
         </div>
 
+        {activeDraft && (
+          <div className="mb-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100">
+            {interpolate(t("bookingAgent.activeDraft"), { ref: activeDraft.ref })}{" "}
+            <Link href={activeDraftHref} className="font-medium underline">
+              {t("common.view")}
+            </Link>
+          </div>
+        )}
+
         <Card className="flex flex-1 flex-col overflow-hidden">
-          <CardHeader className="border-b py-3 flex-row items-center justify-between">
+          <CardHeader className="border-b py-3 flex-row items-center justify-between gap-2">
             <CardTitle className="text-base">{t("bookingAgent.chatTitle")}</CardTitle>
             <Button size="sm" variant="outline" onClick={() => setShowDraftForm((v) => !v)}>
               {t("bookingAgent.draftBuilder")}
@@ -194,7 +257,24 @@ export default function BookingAgentPage() {
 
           <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto p-4">
             {messages.length === 0 && (
-              <p className="text-sm text-muted-foreground">{t("bookingAgent.emptyState")}</p>
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">{t("bookingAgent.emptyState")}</p>
+                <p className="text-xs text-muted-foreground">{t("bookingAgent.updateDraftHint")}</p>
+                <div className="flex flex-wrap gap-2">
+                  {quickPrompts.map((prompt) => (
+                    <Button
+                      key={prompt}
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      disabled={loading}
+                      onClick={() => void sendMessage(prompt)}
+                    >
+                      {prompt}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             )}
             {messages.map((message) => (
               <div key={message.id}>
@@ -229,7 +309,10 @@ export default function BookingAgentPage() {
                   </Badge>
                 )}
                 {message.pendingAction && (
-                  <div className="mt-2 flex gap-2">
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <span className="text-xs text-muted-foreground">
+                      {pendingActionLabel(message.pendingAction, t)}
+                    </span>
                     <Button
                       size="sm"
                       disabled={loading}
@@ -350,5 +433,15 @@ export default function BookingAgentPage() {
         </Card>
       )}
     </div>
+  );
+}
+
+export default function BookingAgentPage() {
+  const { t } = useTranslation();
+
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">{t("common.loading")}</p>}>
+      <BookingAgentContent />
+    </Suspense>
   );
 }

@@ -2,7 +2,8 @@
 
 **Version:** `travelos-demo-seed-v1`  
 **Prerequisites:** `npm run admin:create` → `npm run db:push` → `npm run db:seed`  
-**Login:** Tenant admin from `admin:create` (default slug `dynex360-travel`)
+**Login:** Tenant admin from `admin:create` (default slug `dynex360-travel`)  
+**Full guide:** [AI-Agents-Guide.md](./AI-Agents-Guide.md) — detailed use & test steps for all three agents
 
 ---
 

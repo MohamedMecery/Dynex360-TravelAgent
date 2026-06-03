@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { Destination } from "@/types";
 
@@ -12,7 +14,7 @@ export default function DestinationShowPage() {
   const { t } = useTranslation();
   const { queryResult } = useShow<Destination>({
     resource: "destinations",
-    meta: { select: "*, countries(name), cities(name)" },
+    meta: { select: withAuditUserSelect("destinations", "*, countries(name), cities(name)") },
   });
   const destination = queryResult?.data?.data;
   if (!destination) return <p>{t("common.loading")}</p>;
@@ -32,6 +34,7 @@ export default function DestinationShowPage() {
           <div className="flex gap-2"><dt className="font-medium w-24">{t("fields.city")}:</dt><dd>{destination.cities?.name ?? "—"}</dd></div>
           <div><dt className="font-medium mb-1">{t("fields.description")}:</dt><dd className="text-muted-foreground">{destination.description ?? "—"}</dd></div>
         </dl>
+        <RecordMetadata {...destination} className="mt-4" />
       </Card>
     </div>
   );

@@ -3,6 +3,8 @@
 import { useShow } from "@refinedev/core";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
 import { Payment } from "@/types";
@@ -12,7 +14,7 @@ export default function PaymentShowPage() {
   const { formatCurrency, formatDate } = useFormat();
   const { queryResult } = useShow<Payment>({
     resource: "payments",
-    meta: { select: "*, bookings(reference_number, total_amount)" },
+    meta: { select: withAuditUserSelect("payments", "*, bookings(reference_number, total_amount)") },
   });
   const payment = queryResult?.data?.data;
   if (!payment) return <p>{t("common.loading")}</p>;
@@ -28,6 +30,7 @@ export default function PaymentShowPage() {
           <div className="flex gap-2"><dt className="font-medium w-32">{t("fields.referenceNumber")}:</dt><dd>{payment.reference_number ?? "—"}</dd></div>
           <div className="flex gap-2"><dt className="font-medium w-32">{t("dashboard.date")}:</dt><dd>{formatDate(payment.payment_date)}</dd></div>
         </dl>
+        <RecordMetadata {...payment} className="mt-4" />
       </Card>
     </div>
   );

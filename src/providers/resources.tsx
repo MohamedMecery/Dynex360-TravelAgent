@@ -1,7 +1,7 @@
 import { ResourceProps } from "@refinedev/core";
 import {
   Users, Package, CalendarCheck, CreditCard, LayoutDashboard, Settings,
-  MapPin, UserCircle, FileText, BookOpen, Headphones,
+  MapPin, UserCircle, FileText, BookOpen, Headphones, History, ScrollText,
 } from "lucide-react";
 
 export const resources: ResourceProps[] = [
@@ -97,6 +97,24 @@ export const resources: ResourceProps[] = [
       label: "Booking Agent",
       labelKey: "nav.bookingAgent",
       icon: <CalendarCheck className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "ai-conversations",
+    list: "/ai/history",
+    meta: {
+      label: "AI History",
+      labelKey: "nav.aiHistory",
+      icon: <History className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "audit_logs",
+    list: "/audit-logs",
+    meta: {
+      label: "Audit Log",
+      labelKey: "nav.auditLogs",
+      icon: <ScrollText className="h-4 w-4" />,
     },
   },
   {

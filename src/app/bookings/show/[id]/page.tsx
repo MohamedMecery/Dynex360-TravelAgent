@@ -10,7 +10,9 @@ import { BookingTravelersSection } from "@/components/bookings/booking-travelers
 import { BookingStatusHistorySection } from "@/components/bookings/booking-status-history-section";
 import { BookingStatusActions } from "@/components/bookings/booking-status-actions";
 import { PageBreadcrumbs } from "@/components/layout/page-breadcrumbs";
+import { RecordMetadata } from "@/components/shared/record-metadata";
 import { canRecordPaymentForBookingStatus } from "@/lib/bookings/payment-eligibility";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
 import { Booking } from "@/types";
@@ -20,7 +22,12 @@ export default function BookingShowPage() {
   const { formatCurrency, formatDate } = useFormat();
   const { queryResult } = useShow<Booking>({
     resource: "bookings",
-    meta: { select: "*, customers(first_name, last_name, email), packages(title, destinations(name))" },
+    meta: {
+      select: withAuditUserSelect(
+        "bookings",
+        "*, customers(first_name, last_name, email), packages(title, destinations(name))"
+      ),
+    },
   });
   const booking = queryResult?.data?.data;
   if (!booking) return <p>{t("common.loading")}</p>;
@@ -109,6 +116,9 @@ export default function BookingShowPage() {
             </div>
           )}
         </dl>
+        <div className="px-6 pb-6">
+          <RecordMetadata {...booking} />
+        </div>
       </Card>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">

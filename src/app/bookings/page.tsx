@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { BookingStatusActions } from "@/components/bookings/booking-status-actions";
 import { formatCustomerDisplayName } from "@/lib/customers/format-customer-name";
 import {
@@ -200,6 +201,9 @@ function BookingListContent() {
                 {bookings.map((b) => {
                   const terminal = isTerminalBookingStatus(b.status);
                   const customerName = formatCustomerDisplayName(b.customers);
+                  const canEdit = b.status === "draft";
+                  const canRecordPayment =
+                    b.status === "confirmed" && b.payment_status !== "paid" && !terminal;
 
                   return (
                     <tr key={b.id} className="border-b">
@@ -225,34 +229,33 @@ function BookingListContent() {
                       <td className="px-4 py-2">
                         {b.travel_date ? formatDate(b.travel_date) : "—"}
                       </td>
-                      <td className="px-4 py-2">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <Link href={`/bookings/show/${b.id}`}>
-                            <Button variant="outline" size="sm">
-                              {t("common.view")}
-                            </Button>
-                          </Link>
-                          {!terminal && b.status === "draft" && (
-                            <Link href={`/bookings/edit/${b.id}`}>
-                              <Button variant="outline" size="sm">
-                                {t("common.edit")}
-                              </Button>
-                            </Link>
-                          )}
-                          {!terminal && b.status === "confirmed" && b.payment_status !== "paid" && (
-                            <Link href={`/payments/create?booking_id=${b.id}`}>
-                              <Button size="sm">{t("bookings.recordPayment")}</Button>
-                            </Link>
-                          )}
-                          {!terminal && (
-                            <BookingStatusActions
-                              bookingId={b.id}
-                              status={b.status}
-                              size="sm"
-                              variant="inline"
-                              onStatusChange={() => void refetch()}
-                            />
-                          )}
+                      <td className="px-4 py-2 align-top">
+                        <div className="flex min-w-[32rem] flex-wrap items-center gap-2">
+                          <GridActionButton href={`/bookings/show/${b.id}`} variant="outline" size="sm">
+                            {t("common.view")}
+                          </GridActionButton>
+                          <GridActionButton
+                            href={`/bookings/edit/${b.id}`}
+                            variant="outline"
+                            size="sm"
+                            disabled={!canEdit}
+                          >
+                            {t("common.edit")}
+                          </GridActionButton>
+                          <GridActionButton
+                            href={`/payments/create?booking_id=${b.id}`}
+                            size="sm"
+                            disabled={!canRecordPayment}
+                          >
+                            {t("bookings.recordPayment")}
+                          </GridActionButton>
+                          <BookingStatusActions
+                            bookingId={b.id}
+                            status={b.status}
+                            size="sm"
+                            variant="inline"
+                            onStatusChange={() => void refetch()}
+                          />
                         </div>
                       </td>
                     </tr>

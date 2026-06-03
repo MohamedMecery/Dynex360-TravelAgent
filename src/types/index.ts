@@ -1,3 +1,7 @@
+import type { AuditUserRef } from "@/lib/audit/record-metadata";
+
+export type { AuditUserRef, RecordAuditFields } from "@/lib/audit/record-metadata";
+
 export type TenantStatus = "active" | "suspended" | "inactive";
 export type UserStatus = "active" | "inactive" | "pending";
 export type CustomerType = "individual" | "corporate";
@@ -168,6 +172,7 @@ export interface AiConversation {
   title?: string;
   created_at: string;
   updated_at: string;
+  users?: { email?: string; first_name?: string; last_name?: string } | null;
 }
 
 export interface AiMessage {
@@ -216,6 +221,10 @@ export interface SupportTicket {
   subject: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
 }
 
 export interface SupportTicketMessage {
@@ -259,6 +268,10 @@ export interface Destination {
   status: DestinationStatus;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   countries?: Country;
   cities?: City;
 }
@@ -275,6 +288,10 @@ export interface Customer {
   notes?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
 }
 
 export interface CustomerContact {
@@ -319,6 +336,10 @@ export interface Traveler {
   phone?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   customers?: Customer;
   countries?: Country;
 }
@@ -334,6 +355,10 @@ export interface Package {
   cover_image_url?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   destinations?: Destination;
 }
 
@@ -383,6 +408,10 @@ export interface Booking {
   notes?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   customers?: Customer;
   packages?: Package;
 }
@@ -435,6 +464,10 @@ export interface Invoice {
   notes?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   bookings?: Booking;
 }
 
@@ -450,6 +483,10 @@ export interface Payment {
   notes?: string;
   created_at: string;
   updated_at: string;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_by_user?: AuditUserRef | null;
+  updated_by_user?: AuditUserRef | null;
   bookings?: Booking;
   invoices?: Invoice;
 }

@@ -17,7 +17,9 @@
     "settings": "الإعدادات",
     "knowledgeAgent": "وكيل المعرفة",
     "supportAgent": "وكيل الدعم",
-    "bookingAgent": "وكيل الحجز"
+    "bookingAgent": "وكيل الحجز",
+    "aiHistory": "سجل المحادثات",
+    "auditLogs": "سجل التدقيق"
   },
   "common": {
     "loading": "جاري التحميل...",
@@ -363,6 +365,12 @@
     "selectDestination": "— اختر الوجهة —",
     "selectBooking": "اختر الحجز..."
   },
+  "audit": {
+    "createdBy": "أُنشئ بواسطة {user} في {date}",
+    "createdOn": "تاريخ الإنشاء: {date}",
+    "updatedBy": "آخر تعديل بواسطة {user} في {date}",
+    "updatedOn": "آخر تعديل: {date}"
+  },
   "customers": {
     "title": "العملاء",
     "create": "إضافة عميل",
@@ -419,7 +427,8 @@
     "details": "بيانات المسافر",
     "standaloneTraveler": "مسافر مستقل",
     "passport": "جواز السفر",
-    "noTravelers": "لا يوجد مسافرون بعد"
+    "noTravelers": "لا يوجد مسافرون بعد",
+    "confirmDelete": "إزالة هذا المسافر من القوائم النشطة؟"
   },
   "destinations": {
     "title": "الوجهات",
@@ -427,7 +436,8 @@
     "createTitle": "إضافة وجهة",
     "editTitle": "تعديل الوجهة",
     "details": "بيانات الوجهة",
-    "noDestinations": "لا توجد وجهات بعد"
+    "noDestinations": "لا توجد وجهات بعد",
+    "confirmDelete": "إزالة هذه الوجهة من القوائم النشطة؟"
   },
   "packages": {
     "title": "الباقات",
@@ -546,6 +556,7 @@
     "editTitle": "تعديل الفاتورة",
     "details": "بيانات الفاتورة",
     "noInvoices": "لا توجد فواتير بعد",
+    "confirmDelete": "إزالة هذه الفاتورة من القوائم النشطة؟",
     "issue": "إصدار الفاتورة",
     "recordPayment": "تسجيل دفعة"
   },
@@ -618,7 +629,11 @@
     "title": "الإعدادات",
     "comingSoon": "إعدادات الوكالة — قريباً",
     "tenantSettings": "إعدادات المستأجر",
-    "description": "ستتوفر إعدادات الهوية واللغة وتفضيلات الوكالة هنا في إصدار لاحق."
+    "description": "ستتوفر إعدادات الهوية واللغة وتفضيلات الوكالة هنا في إصدار لاحق.",
+    "auditLogsCard": "سجل التدقيق",
+    "auditLogsDescription": "مراجعة من غيّر الحجوزات والعملاء وسجلات أخرى.",
+    "aiHistoryCard": "سجل المحادثات",
+    "aiHistoryDescription": "تصفح واستأنف محادثات وكلاء المعرفة والحجز والدعم."
   },
   "knowledgeSettings": {
     "title": "قاعدة المعرفة",
@@ -638,6 +653,10 @@
     "status": "الحالة",
     "noDocuments": "لا توجد مستندات مفهرسة بعد.",
     "confirmDelete": "أرشفة هذا المستند؟",
+    "reindex": "إعادة الفهرسة",
+    "reindexing": "جاري إعادة الفهرسة…",
+    "reindexSuccess": "تمت إعادة فهرسة المستند ({count} مقطع).",
+    "reindexError": "فشلت إعادة الفهرسة.",
     "errorLoad": "تعذّر تحميل المستندات.",
     "errorUpload": "فشل الرفع أو الفهرسة.",
     "types": {
@@ -695,6 +714,41 @@
     "high": "عالية",
     "urgent": "عاجلة"
   },
+  "auditLogs": {
+    "title": "سجل التدقيق",
+    "subtitle": "سجل تغييرات البيانات في وكالتك (معزول حسب المستأجر).",
+    "when": "الوقت",
+    "who": "المستخدم",
+    "action": "الإجراء",
+    "entity": "الجدول",
+    "recordId": "معرّف السجل",
+    "filterTable": "اسم الجدول",
+    "tablePlaceholder": "مثال: bookings",
+    "filterAction": "الإجراء",
+    "allActions": "كل الإجراءات",
+    "empty": "لا توجد إدخالات تطابق الفلاتر.",
+    "actions": {
+      "insert": "إدراج",
+      "update": "تحديث",
+      "delete": "حذف"
+    }
+  },
+  "aiHistory": {
+    "title": "سجل محادثات الذكاء الاصطناعي",
+    "subtitle": "استأنف جلسات الوكلاء السابقة. تأكيد مسودات الحجز يبقى في شاشة الحجوزات.",
+    "agent": "الوكيل",
+    "topic": "الموضوع",
+    "user": "المستخدم",
+    "updated": "آخر نشاط",
+    "open": "فتح",
+    "untitled": "محادثة بدون عنوان",
+    "empty": "لا محادثات بعد — ابدأ من أحد وكلاء الذكاء الاصطناعي.",
+    "agents": {
+      "knowledge": "المعرفة",
+      "booking": "الحجز",
+      "support": "الدعم"
+    }
+  },
   "bookingAgent": {
     "title": "وكيل الحجز",
     "subtitle": "ابحث عن الباقات، واستعلم عن الحجوزات، وأعد المسودات — أنت تؤكد قبل حفظ أي تغيير.",
@@ -713,6 +767,14 @@
     "travelerLast": "اسم العائلة",
     "tier": "فئة السعر",
     "hitlNote": "تبقى المسودات بحالة draft حتى تؤكدها في الحجوزات. الوكيل لا يؤكد تلقائياً.",
+    "activeDraft": "مسودة نشطة: {ref} — افتحها في الحجوزات للتأكيد.",
+    "updateDraftHint": "لتحديث مسودة عبر المحادثة: اذكر المرجع (مثل DEMO-BK-001) وما تريد تغييره (التاريخ، الباقة، المسافرين).",
+    "promptUpdateDraft": "Update draft DEMO-BK-001 travel date to next month",
+    "promptPackageSearch": "Show Dubai packages under $1500",
+    "promptStatus": "Status of DEMO-BK-005",
+    "pendingCreateDraft": "مراجعة مسودة جديدة",
+    "pendingUpdateDraft": "مراجعة تحديث المسودة",
+    "pendingCancellation": "مراجعة طلب الإلغاء",
     "tiers": {
       "adult": "بالغ",
       "child": "طفل",

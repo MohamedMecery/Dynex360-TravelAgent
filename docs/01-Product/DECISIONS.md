@@ -1,7 +1,7 @@
 # TravelOS Architecture & Product Decision Log
 
 **Status:** Approved decisions (documentation baseline)  
-**Last Updated:** 2026-06-02  
+**Last Updated:** 2026-06-03  
 **Implementation:** Decisions 1–5 reflected in migrations 001–010 (in progress). Decisions 6–9 approved for Phase 5+ / marketing. D-010 documents phased i18n. AI agents (D-006–D-008) have partial implementation — see Roadmap Phase 5 completion checklist.
 
 ---
@@ -20,6 +20,7 @@
 | D-008 | Support Agent approved for product scope | Approved | 2026-06-02 |
 | D-009 | Landing page Trust & Scale Metrics section approved | Approved | 2026-06-02 |
 | D-010 | Phased i18n — customer/AI first; staff UI EN+AR for MVP | Approved | 2026-06-02 |
+| D-011 | Product glossary: Package vs booking_items vs Invoice | Approved | 2026-06-03 |
 
 ---
 
@@ -143,6 +144,18 @@
 **Technical:** `FUTURE_LOCALES` in `src/i18n/config.ts`; add to `LOCALES` + `messages/es.json` when each surface is approved.
 
 **References:** [Roadmap.md](./Roadmap.md) § Internationalization — Future Work.
+
+---
+
+## D-011 — Product glossary (Package vs line items vs Invoice)
+
+**Decision:** Publish a single glossary defining **Package**, **booking_items**, **Invoice (MVP header only)**, and **Payment** relationships.
+
+**Rationale:** Sales and finance teams confuse “package price” with invoice lines; engineering must not add `invoice_items` in MVP without an explicit product decision.
+
+**Impact:** Documentation only for MVP schema; invoice UI may show booking line snapshot as a Should enhancement.
+
+**Reference:** [Glossary.md](./Glossary.md).
 
 ---
 

@@ -8,6 +8,8 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { PackageItineraryEditor } from "@/components/packages/package-itinerary-editor";
 import { PackagePricingEditor } from "@/components/packages/package-pricing-editor";
 import { PackageStatusActions } from "@/components/packages/package-status-actions";
+import { RecordMetadata } from "@/components/shared/record-metadata";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { Package } from "@/types";
 
@@ -15,7 +17,7 @@ export default function PackageShowPage() {
   const { t } = useTranslation();
   const { queryResult } = useShow<Package>({
     resource: "packages",
-    meta: { select: "*, destinations(name)" },
+    meta: { select: withAuditUserSelect("packages", "*, destinations(name)") },
   });
   const pkg = queryResult?.data?.data;
 
@@ -67,6 +69,9 @@ export default function PackageShowPage() {
             <dd className="text-muted-foreground">{pkg.description ?? "—"}</dd>
           </div>
         </dl>
+        <div className="px-6 pb-6">
+          <RecordMetadata {...pkg} />
+        </div>
       </Card>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">

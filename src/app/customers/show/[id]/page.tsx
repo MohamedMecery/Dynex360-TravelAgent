@@ -9,12 +9,17 @@ import { CustomerAddressesEditor } from "@/components/customers/customer-address
 import { CustomerBookingsSection } from "@/components/customers/customer-bookings-section";
 import { CustomerContactsEditor } from "@/components/customers/customer-contacts-editor";
 import { getCustomerDisplayName } from "@/lib/customers/display-name";
+import { withAuditUserSelect } from "@/lib/audit/record-metadata";
+import { RecordMetadata } from "@/components/shared/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { Customer } from "@/types";
 
 export default function CustomerShowPage() {
   const { t } = useTranslation();
-  const { queryResult } = useShow<Customer>({ resource: "customers" });
+  const { queryResult } = useShow<Customer>({
+    resource: "customers",
+    meta: { select: withAuditUserSelect("customers", "*") },
+  });
   const customer = queryResult?.data?.data;
 
   if (!customer) return <p>{t("common.loading")}</p>;
@@ -70,6 +75,9 @@ export default function CustomerShowPage() {
             </div>
           )}
         </dl>
+        <div className="px-6 pb-6">
+          <RecordMetadata {...customer} />
+        </div>
       </Card>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">

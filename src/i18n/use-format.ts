@@ -2,7 +2,11 @@
 
 import { useCallback } from "react";
 import { useTranslation } from "@/i18n/locale-provider";
-import { formatCurrency as fmtCurrency, formatDate as fmtDate } from "@/lib/utils";
+import {
+  formatCurrency as fmtCurrency,
+  formatDate as fmtDate,
+  formatDateTime as fmtDateTime,
+} from "@/lib/utils";
 
 export function useFormat() {
   const { locale } = useTranslation();
@@ -17,5 +21,10 @@ export function useFormat() {
     [locale]
   );
 
-  return { formatCurrency, formatDate, locale };
+  const formatDateTime = useCallback(
+    (date: string) => fmtDateTime(date, locale),
+    [locale]
+  );
+
+  return { formatCurrency, formatDate, formatDateTime, locale };
 }

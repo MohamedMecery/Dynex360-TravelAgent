@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
+import { useAiConversationResume } from "@/hooks/use-ai-conversation-resume";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/input";
@@ -20,7 +21,7 @@ interface ChatMessage {
   bookingSummary?: string;
 }
 
-export default function SupportAgentPage() {
+function SupportAgentContent() {
   const { t, locale } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -30,6 +31,8 @@ export default function SupportAgentPage() {
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [sessionId, setSessionId] = useState<string | undefined>();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useAiConversationResume({ setConversationId, setMessages });
 
   const scrollToBottom = useCallback(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -182,5 +185,15 @@ export default function SupportAgentPage() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function SupportAgentPage() {
+  const { t } = useTranslation();
+
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">{t("common.loading")}</p>}>
+      <SupportAgentContent />
+    </Suspense>
   );
 }

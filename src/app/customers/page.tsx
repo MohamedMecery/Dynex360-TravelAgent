@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { getCustomerDisplayName } from "@/lib/customers/display-name";
 import { useTranslation } from "@/i18n/locale-provider";
 import { Customer, CustomerType, UserRole } from "@/types";
@@ -126,21 +127,20 @@ export default function CustomerListPage() {
                     </td>
                     <td className="px-4 py-2">
                       <div className="flex flex-wrap gap-2">
-                        <Link href={`/customers/show/${c.id}`}>
-                          <Button variant="outline" size="sm">
-                            {t("common.view")}
-                          </Button>
-                        </Link>
-                        <Link href={`/customers/edit/${c.id}`}>
-                          <Button variant="outline" size="sm">
-                            {t("common.edit")}
-                          </Button>
-                        </Link>
-                        {canDelete?.can && (
-                          <Button variant="destructive" size="sm" onClick={() => handleSoftDelete(c.id)}>
-                            {t("common.delete")}
-                          </Button>
-                        )}
+                        <GridActionButton href={`/customers/show/${c.id}`} variant="outline" size="sm">
+                          {t("common.view")}
+                        </GridActionButton>
+                        <GridActionButton href={`/customers/edit/${c.id}`} variant="outline" size="sm">
+                          {t("common.edit")}
+                        </GridActionButton>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          disabled={!canDelete?.can}
+                          onClick={() => canDelete?.can && handleSoftDelete(c.id)}
+                        >
+                          {t("common.delete")}
+                        </Button>
                       </div>
                     </td>
                   </tr>

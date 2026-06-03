@@ -1,7 +1,7 @@
 # TravelOS RBAC Security Model
 
 **Version:** 1.0 — MVP  
-**Last Updated:** 2026-06-01
+**Last Updated:** 2026-06-03
 
 ---
 
@@ -102,6 +102,23 @@ TravelOS implements Role-Based Access Control (RBAC) at three layers:
 | settings.read | ✓ | ✓ | — | — |
 | settings.update | ✓ | ✓ | — | — |
 | settings.manage | ✓ | ✓ | — | — |
+
+### AI agents (Phase 5)
+
+| Permission | super_admin | tenant_admin | sales_agent | finance_officer |
+|------------|:-----------:|:------------:|:-----------:|:---------------:|
+| ai.knowledge.use | ✓ | ✓ | ✓ | ✓ |
+| ai.booking.use | ✓ | ✓ | ✓ | — |
+| ai.support.use | ✓ | ✓ | ✓ | ✓ |
+| ai.read | ✓ | ✓ | ✓ | ✓ |
+| ai.logs.read | ✓ | ✓ | — | — |
+| knowledge.manage | ✓ | ✓ | — | — |
+
+**Notes:**
+
+- Booking Agent is **not** granted to `finance_officer` (see `src/lib/auth/rbac.ts`, migration `015_rls_ai.sql`).
+- `ai.read` allows the conversation history UI (`/ai/history`). Tenant admins see all tenant threads; other roles see only their own conversations (UI filter).
+- Agents never receive `bookings.confirm`, `payments.create`, or autonomous confirmation permissions.
 
 ---
 

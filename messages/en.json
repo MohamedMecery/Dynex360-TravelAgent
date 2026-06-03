@@ -557,6 +557,13 @@
     "details": "Invoice Details",
     "noInvoices": "No invoices yet",
     "confirmDelete": "Remove this invoice from active lists?",
+    "lineItemsPreview": "Booking line items",
+    "subtotalFromLineItems": "Subtotal prefilled from sum of booking line items.",
+    "subtotalFromBookingTotal": "No line items on booking — subtotal uses booking total.",
+    "bookingLinesSnapshot": "Booking line items (snapshot)",
+    "bookingLinesSnapshotHint": "Read-only view of the booking’s commercial lines. Amounts are not stored on the invoice in MVP.",
+    "noBookingLines": "This booking has no line items to display.",
+    "linesSubtotal": "Lines subtotal",
     "issue": "Issue Invoice",
     "recordPayment": "Record Payment"
   },

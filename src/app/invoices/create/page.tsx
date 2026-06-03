@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { useList, useNavigation } from "@refinedev/core";
 import { useSearchParams } from "next/navigation";
@@ -8,11 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Select, Textarea } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTenantId } from "@/lib/auth/use-tenant-id";
+import {
+  resolveInvoiceSubtotalFromBooking,
+  type InvoiceSubtotalSource,
+} from "@/lib/invoices/booking-subtotal";
 import { useTranslation } from "@/i18n/locale-provider";
-import { Booking } from "@/types";
+import { useFormat } from "@/i18n/use-format";
+import { Booking, BookingItem } from "@/types";
 
-export default function InvoiceCreatePage() {
+function InvoiceCreateContent() {
   const { t } = useTranslation();
+  const { formatCurrency } = useFormat();
   const { list } = useNavigation();
   const tenantId = useTenantId();
   const searchParams = useSearchParams();
@@ -25,7 +31,13 @@ export default function InvoiceCreatePage() {
     meta: { select: "id, reference_number, total_amount, currency" },
   });
 
-  const { refineCore: { onFinish, formLoading }, register, handleSubmit, watch, setValue } = useForm({
+  const {
+    refineCore: { onFinish, formLoading },
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+  } = useForm({
     refineCoreProps: { resource: "invoices", action: "create", redirect: "list" },
     defaultValues: {
       booking_id: preselectedBooking,
@@ -44,22 +56,46 @@ export default function InvoiceCreatePage() {
   const subtotal = Number(watch("subtotal")) || 0;
   const taxAmount = Number(watch("tax_amount")) || 0;
   const bookingId = watch("booking_id");
+  const currency = watch("currency") || "USD";
+
+  const { data: lineItemsData, isLoading: lineItemsLoading } = useList<BookingItem>({
+    resource: "booking_items",
+    filters: bookingId
+      ? [{ field: "booking_id", operator: "eq", value: bookingId }]
+      : [],
+    pagination: { pageSize: 50 },
+    queryOptions: { enabled: !!bookingId },
+  });
+
+  const lineItems = lineItemsData?.data ?? [];
+
+  const applyBookingAmounts = (id: string) => {
+    const booking = (bookingsData?.data ?? []).find((b) => b.id === id);
+    if (!booking) return;
+
+    const { subtotal: nextSubtotal } = resolveInvoiceSubtotalFromBooking(
+      lineItems,
+      Number(booking.total_amount)
+    );
+
+    setValue("subtotal", nextSubtotal);
+    setValue("currency", booking.currency);
+  };
 
   useEffect(() => {
     if (!bookingId || !bookingsData?.data) return;
-    const booking = bookingsData.data.find((b) => b.id === bookingId);
-    if (booking) {
-      setValue("subtotal", Number(booking.total_amount));
-      setValue("currency", booking.currency);
-    }
-  }, [bookingId, bookingsData?.data, setValue]);
+    applyBookingAmounts(bookingId);
+  }, [bookingId, bookingsData?.data, lineItems, setValue]);
+
+  const subtotalSource: InvoiceSubtotalSource | null = useMemo(() => {
+    if (!bookingId) return null;
+    const booking = (bookingsData?.data ?? []).find((b) => b.id === bookingId);
+    if (!booking) return null;
+    return resolveInvoiceSubtotalFromBooking(lineItems, Number(booking.total_amount)).source;
+  }, [bookingId, bookingsData?.data, lineItems]);
 
   const onBookingChange = (id: string) => {
-    const booking = (bookingsData?.data ?? []).find((b) => b.id === id);
-    if (booking) {
-      setValue("subtotal", Number(booking.total_amount));
-      setValue("currency", booking.currency);
-    }
+    applyBookingAmounts(id);
   };
 
   const onSubmit = handleSubmit((values) => {
@@ -80,9 +116,11 @@ export default function InvoiceCreatePage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">{t("invoices.createTitle")}</h2>
+      <h2 className="mb-6 text-2xl font-bold">{t("invoices.createTitle")}</h2>
       <Card className="max-w-lg p-6">
-        <CardHeader className="px-0 pt-0"><CardTitle>{t("invoices.details")}</CardTitle></CardHeader>
+        <CardHeader className="px-0 pt-0">
+          <CardTitle>{t("invoices.details")}</CardTitle>
+        </CardHeader>
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
             <Label>{t("fields.booking")}</Label>
@@ -95,20 +133,64 @@ export default function InvoiceCreatePage() {
             >
               <option value="">{t("fields.selectBooking")}</option>
               {(bookingsData?.data ?? []).map((b) => (
-                <option key={b.id} value={b.id}>{b.reference_number} — {b.currency} {b.total_amount}</option>
+                <option key={b.id} value={b.id}>
+                  {b.reference_number} — {b.currency} {b.total_amount}
+                </option>
               ))}
             </Select>
           </div>
+
+          {bookingId && (
+            <div className="rounded-md border bg-muted/30 p-3 text-sm">
+              <p className="mb-2 font-medium">{t("invoices.lineItemsPreview")}</p>
+              {lineItemsLoading ? (
+                <p className="text-muted-foreground">{t("common.loading")}</p>
+              ) : lineItems.length === 0 ? (
+                <p className="text-muted-foreground">{t("bookings.noLineItems")}</p>
+              ) : (
+                <ul className="space-y-1 text-xs">
+                  {lineItems.map((item) => (
+                    <li key={item.id} className="flex justify-between gap-2">
+                      <span className="truncate">{item.description}</span>
+                      <span className="shrink-0 font-medium">
+                        {formatCurrency(Number(item.total_price), currency)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {subtotalSource && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {subtotalSource === "line_items"
+                    ? t("invoices.subtotalFromLineItems")
+                    : t("invoices.subtotalFromBookingTotal")}
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="grid grid-cols-2 gap-4">
-            <div><Label>{t("fields.issueDate")}</Label><Input type="date" {...register("issue_date")} /></div>
-            <div><Label>{t("fields.dueDate")}</Label><Input type="date" {...register("due_date")} /></div>
+            <div>
+              <Label>{t("fields.issueDate")}</Label>
+              <Input type="date" {...register("issue_date")} />
+            </div>
+            <div>
+              <Label>{t("fields.dueDate")}</Label>
+              <Input type="date" {...register("due_date")} />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div><Label>{t("fields.subtotal")}</Label><Input type="number" step="0.01" {...register("subtotal", { valueAsNumber: true })} /></div>
-            <div><Label>{t("fields.tax")}</Label><Input type="number" step="0.01" {...register("tax_amount", { valueAsNumber: true })} /></div>
+            <div>
+              <Label>{t("fields.subtotal")}</Label>
+              <Input type="number" step="0.01" {...register("subtotal", { valueAsNumber: true })} />
+            </div>
+            <div>
+              <Label>{t("fields.tax")}</Label>
+              <Input type="number" step="0.01" {...register("tax_amount", { valueAsNumber: true })} />
+            </div>
           </div>
           <div className="text-sm text-muted-foreground">
-            {t("bookings.total")}: {(subtotal + taxAmount).toFixed(2)} {watch("currency")}
+            {t("bookings.total")}: {(subtotal + taxAmount).toFixed(2)} {currency}
           </div>
           <div>
             <Label>{t("fields.status")}</Label>
@@ -117,13 +199,30 @@ export default function InvoiceCreatePage() {
               <option value="issued">{t("invoiceStatus.issued")}</option>
             </Select>
           </div>
-          <div><Label>{t("common.notes")}</Label><Textarea {...register("notes")} /></div>
+          <div>
+            <Label>{t("common.notes")}</Label>
+            <Textarea {...register("notes")} />
+          </div>
           <div className="flex gap-2">
-            <Button type="submit" disabled={formLoading || !tenantId}>{formLoading ? t("common.creating") : t("invoices.create")}</Button>
-            <Button type="button" variant="outline" onClick={() => list("invoices")}>{t("common.cancel")}</Button>
+            <Button type="submit" disabled={formLoading || !tenantId}>
+              {formLoading ? t("common.creating") : t("invoices.create")}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => list("invoices")}>
+              {t("common.cancel")}
+            </Button>
           </div>
         </form>
       </Card>
     </div>
+  );
+}
+
+export default function InvoiceCreatePage() {
+  const { t } = useTranslation();
+
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">{t("common.loading")}</p>}>
+      <InvoiceCreateContent />
+    </Suspense>
   );
 }

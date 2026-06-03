@@ -557,6 +557,13 @@
     "details": "بيانات الفاتورة",
     "noInvoices": "لا توجد فواتير بعد",
     "confirmDelete": "إزالة هذه الفاتورة من القوائم النشطة؟",
+    "lineItemsPreview": "بنود الحجز",
+    "subtotalFromLineItems": "المجموع الفرعي من مجموع بنود الحجز.",
+    "subtotalFromBookingTotal": "لا توجد بنود — يُستخدم إجمالي الحجز.",
+    "bookingLinesSnapshot": "بنود الحجز (لقطة)",
+    "bookingLinesSnapshotHint": "عرض للقراءة فقط لبنود الحجز التجارية. المبالغ غير مخزنة على الفاتورة في MVP.",
+    "noBookingLines": "لا توجد بنود على هذا الحجز.",
+    "linesSubtotal": "مجموع البنود",
     "issue": "إصدار الفاتورة",
     "recordPayment": "تسجيل دفعة"
   },

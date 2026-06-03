@@ -25,6 +25,41 @@ test.describe("AI agents (smoke)", () => {
     ).toBeVisible();
   });
 
+  test("Booking Agent opens draft builder form", async ({ page }) => {
+    await page.goto("/ai/booking");
+    await page.getByRole("button", { name: /Draft builder|منشئ المسودة/i }).click();
+    await expect(page.getByText(/Customer|العميل/i).first()).toBeVisible();
+    await expect(page.locator("select").first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /Preview draft|معاينة المسودة/i })).toBeVisible();
+  });
+
+  test("Booking Agent package search prompt returns assistant reply", async ({ page }) => {
+    await page.goto("/ai/booking");
+    await page
+      .getByRole("button", { name: /Show Dubai packages under \$1500/i })
+      .click();
+
+    await expect(page.locator(".bg-muted").first()).toBeVisible({ timeout: 60_000 });
+  });
+
+  test("Support Agent tickets list loads", async ({ page }) => {
+    await page.goto("/ai/support/tickets");
+    await expect(
+      page.getByRole("heading", { name: /Support Tickets|تذاكر الدعم/i })
+    ).toBeVisible();
+  });
+
+  test("Support Agent answers booking status lookup", async ({ page }) => {
+    await page.goto("/ai/support");
+    const input = page.getByPlaceholder(/issue|مشكلة|FAQ/i);
+    await input.fill("What is the status of booking DEMO-BK-005?");
+    await page.getByRole("button", { name: /Send|إرسال/i }).click();
+
+    await expect(
+      page.getByText(/DEMO-BK-005|confirmed|مؤكد|status/i).first()
+    ).toBeVisible({ timeout: 60_000 });
+  });
+
   test("Knowledge Agent accepts a question (API)", async ({ page }) => {
     await page.goto("/ai/knowledge");
     const input = page.getByPlaceholder(/policy|سياسة|packages/i);

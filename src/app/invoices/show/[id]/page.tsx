@@ -9,6 +9,7 @@ import { RecordMetadata } from "@/components/shared/record-metadata";
 import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
+import { InvoiceBookingLineItems } from "@/components/invoices/invoice-booking-line-items";
 import { Invoice } from "@/types";
 
 export default function InvoiceShowPage() {
@@ -45,10 +46,19 @@ export default function InvoiceShowPage() {
           <Link href={`/invoices/edit/${invoice.id}`}><Button>{t("common.edit")}</Button></Link>
         </div>
       </div>
-      <Card className="max-w-lg p-6">
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+      <Card className="p-6">
         <CardHeader className="px-0 pt-0"><CardTitle>{t("common.details")}</CardTitle></CardHeader>
         <dl className="space-y-2 text-sm">
-          <div className="flex gap-2"><dt className="font-medium w-28">{t("fields.booking")}:</dt><dd>{invoice.bookings?.reference_number ?? "—"}</dd></div>
+          <div className="flex gap-2"><dt className="font-medium w-28">{t("fields.booking")}:</dt><dd>
+            {invoice.bookings?.reference_number ? (
+              <Link href={`/bookings/show/${invoice.booking_id}`} className="text-primary hover:underline">
+                {invoice.bookings.reference_number}
+              </Link>
+            ) : (
+              "—"
+            )}
+          </dd></div>
           <div className="flex gap-2"><dt className="font-medium w-28">{t("fields.issueDate")}:</dt><dd>{invoice.issue_date ? formatDate(invoice.issue_date) : "—"}</dd></div>
           <div className="flex gap-2"><dt className="font-medium w-28">{t("fields.dueDate")}:</dt><dd>{invoice.due_date ? formatDate(invoice.due_date) : "—"}</dd></div>
           <div className="flex gap-2"><dt className="font-medium w-28">{t("fields.subtotal")}:</dt><dd>{formatCurrency(Number(invoice.subtotal), invoice.currency)}</dd></div>
@@ -58,6 +68,13 @@ export default function InvoiceShowPage() {
         </dl>
         <RecordMetadata {...invoice} className="mt-4" />
       </Card>
+
+      <InvoiceBookingLineItems
+        bookingId={invoice.booking_id}
+        bookingReference={invoice.bookings?.reference_number}
+        currency={invoice.currency}
+      />
+      </div>
     </div>
   );
 }

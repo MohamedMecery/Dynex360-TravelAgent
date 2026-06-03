@@ -25,6 +25,8 @@ Automated critical flows in `e2e/`:
 | `dashboard.spec.ts` | Dashboard KPIs + stats API |
 | `customers.spec.ts` | Create customer → list search |
 | `booking-flow.spec.ts` | Customer → package publish → booking → confirm → payment |
+| `ai-agents.spec.ts` | AI pages, draft builder, support/knowledge API smoke |
+| `invoice-snapshot.spec.ts` | Invoice create from `DEMO-BK-005` → show booking line snapshot |
 
 ### Prerequisites
 

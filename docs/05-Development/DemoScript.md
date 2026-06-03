@@ -3,7 +3,8 @@
 **Version:** `travelos-demo-seed-v1`  
 **Prerequisites:** `npm run admin:create` → `npm run db:push` → `npm run db:seed`  
 **Login:** Tenant admin from `admin:create` (default slug `dynex360-travel`)  
-**Full guide:** [AI-Agents-Guide.md](./AI-Agents-Guide.md) — detailed use & test steps for all three agents
+**Full guide:** [AI-Agents-Guide.md](./AI-Agents-Guide.md) — detailed use & test steps for all three agents  
+**Production pilot:** [Production-Deploy-Checklist.md](./Production-Deploy-Checklist.md) — Vercel, Supabase Auth, SMTP
 
 ---
 
@@ -56,59 +57,69 @@ Sign in at `/login`. Confirm `/dashboard` shows non-zero booking status cards an
 
 ---
 
-## 4. Payments (2 min)
+## 4. Invoices (1 min)
 
 | Step | Action | Talking point |
 |------|--------|---------------|
-| 4.1 | Go to **Payments** | Ten demo payments linked to bookings |
-| 4.2 | Open a booking with **Partial** payment status | Deposit + balance pattern |
-| 4.3 | Open a **Paid** completed booking | Full settlement |
-| 4.4 | Try **Record Payment** on cancelled booking | Blocked in UI and database (BR-009) |
+| 4.1 | Go to **Invoices → Create** | Billing header per booking (D-005: multiple invoices allowed) |
+| 4.2 | Select a confirmed booking (e.g. `DEMO-BK-005`) | Subtotal prefilled from **booking line items** |
+| 4.3 | Add tax if needed; save as **draft** or **issued** | No `invoice_items` in MVP — lines stay on the booking |
 
 ---
 
-## 5. Dashboard (2 min)
+## 5. Payments (2 min)
 
 | Step | Action | Talking point |
 |------|--------|---------------|
-| 5.1 | Go to **Dashboard** | Operations command center |
-| 5.2 | Point to status cards | Draft / confirmed / completed / cancelled counts |
-| 5.3 | Show **Total revenue** & **Outstanding** | Finance visibility (admin / finance role) |
-| 5.4 | Scroll **Recent bookings** | Live pipeline view |
+| 5.1 | Go to **Payments** | Ten demo payments linked to bookings |
+| 5.2 | Open a booking with **Partial** payment status | Deposit + balance pattern |
+| 5.3 | Open a **Paid** completed booking | Full settlement |
+| 5.4 | Try **Record Payment** on cancelled booking | Blocked in UI and database (BR-009) |
 
 ---
 
-## 6. Knowledge Agent (2 min)
+## 6. Dashboard (2 min)
 
 | Step | Action | Talking point |
 |------|--------|---------------|
-| 6.1 | Open **Knowledge Agent** | Internal Q&A over tenant documents |
-| 6.2 | Ask: *What is the cancellation policy for confirmed bookings?* | Citations from seeded policy doc |
-| 6.3 | Ask: *Tell me about Dubai packages* | FAQ / package knowledge |
-| 6.4 | Click 👍 on the answer | Feedback recorded (`ai_feedback`) |
-| 6.5 | Optional: **Settings → Knowledge Base** | Four demo documents indexed for FTS |
+| 6.1 | Go to **Dashboard** | Operations command center |
+| 6.2 | Point to status cards | Draft / confirmed / completed / cancelled counts |
+| 6.3 | Show **Total revenue** & **Outstanding** | Finance visibility (admin / finance role) |
+| 6.4 | Scroll **Recent bookings** | Live pipeline view |
 
 ---
 
-## 7. Support Agent (1 min)
+## 7. Knowledge Agent (2 min)
 
 | Step | Action | Talking point |
 |------|--------|---------------|
-| 7.1 | Open **Support Agent** | FAQ + booking context |
-| 7.2 | Ask: *What is booking DEMO-BK-005 status?* | Lookup by reference |
-| 7.3 | Enable **Create ticket** if unresolved | Ticket routed to `/ai/support/tickets` |
-| 7.4 | Open ticket → assign or escalate | Status + assignee updated in UI |
+| 7.1 | Open **Knowledge Agent** | Internal Q&A over tenant documents |
+| 7.2 | Ask: *What is the cancellation policy for confirmed bookings?* | Citations from seeded policy doc |
+| 7.3 | Ask: *Tell me about Dubai packages* | FAQ / package knowledge |
+| 7.4 | Click 👍 on the answer | Feedback recorded (`ai_feedback`) |
+| 7.5 | Optional: **Settings → Knowledge Base** | Four demo documents indexed for FTS |
 
 ---
 
-## 8. Booking Agent (1 min)
+## 8. Support Agent (1 min)
 
 | Step | Action | Talking point |
 |------|--------|---------------|
-| 8.1 | Open **Booking Agent** | AI-assisted sales, human confirms |
-| 8.2 | Ask: *Show Dubai packages under $1500* | Published package recommendations |
-| 8.3 | Describe a family trip → **draft booking** | Draft only — staff confirms in Bookings UI |
-| 8.4 | Emphasize | Agent never auto-confirms |
+| 8.1 | Open **Support Agent** | FAQ + booking context |
+| 8.2 | Ask: *What is booking DEMO-BK-005 status?* | Lookup by reference |
+| 8.3 | Enable **Create ticket** if unresolved | Ticket routed to `/ai/support/tickets` |
+| 8.4 | Open ticket → assign or escalate | Status + assignee updated in UI |
+
+---
+
+## 9. Booking Agent (1 min)
+
+| Step | Action | Talking point |
+|------|--------|---------------|
+| 9.1 | Open **Booking Agent** | AI-assisted sales, human confirms |
+| 9.2 | Ask: *Show Dubai packages under $1500* | Published package recommendations |
+| 9.3 | Describe a family trip → **draft booking** | Draft only — staff confirms in Bookings UI |
+| 9.4 | Emphasize | Agent never auto-confirms |
 
 ---
 

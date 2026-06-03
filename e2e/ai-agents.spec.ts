@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { runAiApiTests } from "./helpers/ci";
 
 test.describe("AI agents (smoke)", () => {
   test("Knowledge Agent page loads", async ({ page }) => {
@@ -34,12 +35,16 @@ test.describe("AI agents (smoke)", () => {
   });
 
   test("Booking Agent package search prompt returns assistant reply", async ({ page }) => {
+    test.skip(!runAiApiTests, "Set E2E_RUN_AI_API=1 in CI to run live agent API tests");
+
     await page.goto("/ai/booking");
     await page
       .getByRole("button", { name: /Show Dubai packages under \$1500/i })
       .click();
 
-    await expect(page.locator(".bg-muted").first()).toBeVisible({ timeout: 60_000 });
+    await expect(
+      page.locator(".bg-muted").filter({ hasText: /package|باقة|Dubai|دبي/i }).first()
+    ).toBeVisible({ timeout: 60_000 });
   });
 
   test("Support Agent tickets list loads", async ({ page }) => {
@@ -50,24 +55,28 @@ test.describe("AI agents (smoke)", () => {
   });
 
   test("Support Agent answers booking status lookup", async ({ page }) => {
+    test.skip(!runAiApiTests, "Set E2E_RUN_AI_API=1 in CI to run live agent API tests");
+
     await page.goto("/ai/support");
     const input = page.getByPlaceholder(/issue|مشكلة|FAQ/i);
     await input.fill("What is the status of booking DEMO-BK-005?");
     await page.getByRole("button", { name: /Send|إرسال/i }).click();
 
     await expect(
-      page.getByText(/DEMO-BK-005|confirmed|مؤكد|status/i).first()
+      page.locator(".bg-muted").filter({ hasText: /DEMO-BK-005|confirmed|مؤكد/i }).first()
     ).toBeVisible({ timeout: 60_000 });
   });
 
   test("Knowledge Agent accepts a question (API)", async ({ page }) => {
+    test.skip(!runAiApiTests, "Set E2E_RUN_AI_API=1 in CI to run live agent API tests");
+
     await page.goto("/ai/knowledge");
     const input = page.getByPlaceholder(/policy|سياسة|packages/i);
     await input.fill("What is the cancellation policy?");
     await page.getByRole("button", { name: /Send|إرسال/i }).click();
 
     await expect(
-      page.getByText(/cancellation|إلغاء|policy|سياسة/i).first()
+      page.locator(".bg-muted").filter({ hasText: /cancellation|إلغاء|policy|سياسة/i }).first()
     ).toBeVisible({ timeout: 60_000 });
   });
 });

@@ -16,6 +16,7 @@
     "admin:create": "node scripts/create-admin-user.mjs",
     "db:seed": "node scripts/seed-demo-data.mjs",
     "db:seed:validate": "node scripts/seed-demo-data.mjs --validate-only",
+    "e2e:ci-prep": "node scripts/e2e-ci-prep.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",

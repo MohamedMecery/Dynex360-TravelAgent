@@ -8,7 +8,16 @@ test.describe("Invoice booking line snapshot", () => {
     await expect(page.getByRole("heading", { name: /Create Invoice|إنشاء فاتورة/i })).toBeVisible();
 
     const bookingSelect = page.locator("select").first();
-    await bookingSelect.selectOption({ label: DEMO_BOOKING_REF });
+    const bookingValue = await bookingSelect
+      .locator("option", { hasText: DEMO_BOOKING_REF })
+      .first()
+      .getAttribute("value");
+    if (!bookingValue) {
+      throw new Error(
+        `${DEMO_BOOKING_REF} not found — run npm run db:seed (or e2e:ci-prep in CI).`
+      );
+    }
+    await bookingSelect.selectOption(bookingValue);
 
     await expect(page.getByText(DEMO_BOOKING_REF)).toBeVisible();
 
@@ -19,7 +28,12 @@ test.describe("Invoice booking line snapshot", () => {
     await page.waitForURL("**/invoices", { timeout: 30_000 });
 
     await page.goto("/invoices");
-    await page.getByRole("row").filter({ hasText: DEMO_BOOKING_REF }).getByRole("link", { name: /View|عرض/i }).click();
+    await page
+      .getByRole("row")
+      .filter({ hasText: DEMO_BOOKING_REF })
+      .getByRole("link", { name: /View|عرض/i })
+      .first()
+      .click();
     await page.waitForURL("**/invoices/show/**");
 
     const snapshot = page.getByTestId("invoice-booking-line-items");

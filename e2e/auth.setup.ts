@@ -8,6 +8,12 @@ setup("authenticate as tenant admin", async ({ page }) => {
   const email = process.env.E2E_ADMIN_EMAIL ?? "eng.m.mecery@gmail.com";
   const password = process.env.E2E_ADMIN_PASSWORD ?? "TravelOS@2026";
 
+  if (process.env.CI && (!process.env.E2E_ADMIN_EMAIL || !process.env.E2E_ADMIN_PASSWORD)) {
+    throw new Error(
+      "E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD GitHub secrets are required for CI auth setup."
+    );
+  }
+
   mkdirSync(dirname(authFile), { recursive: true });
 
   await page.goto("/login", { waitUntil: "domcontentloaded" });

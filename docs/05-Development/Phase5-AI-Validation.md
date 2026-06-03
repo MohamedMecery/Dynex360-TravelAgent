@@ -3,7 +3,8 @@
 **Last updated:** 2026-06-02  
 **Prerequisites:** `npm run db:push` · `npm run db:seed` · `.env.local` with Supabase keys  
 **User guide:** [AI-Agents-Guide.md](./AI-Agents-Guide.md) — step-by-step usage and test scenarios  
-**Production deploy:** [Production-Deploy-Checklist.md](./Production-Deploy-Checklist.md) — Vercel env, Auth URLs, SMTP (run before pilot)
+**Production deploy:** [Production-Deploy-Checklist.md](./Production-Deploy-Checklist.md) — Vercel env, Auth URLs, SMTP (run before pilot)  
+**E2E CI (separate Supabase):** [E2E-CI-Setup.md](./E2E-CI-Setup.md) — GitHub secrets; run before or in parallel with pilot prep
 
 ---
 

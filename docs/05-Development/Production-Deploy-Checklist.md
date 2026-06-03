@@ -2,7 +2,23 @@
 
 **Last updated:** 2026-06-03  
 **Use when:** First deploy or promoting `main` to a live agency pilot.  
-**Related:** [Phase5-AI-Validation.md](./Phase5-AI-Validation.md) · [DemoScript.md](./DemoScript.md) · [Glossary.md](../01-Product/Glossary.md)
+**Related:** [Phase5-AI-Validation.md](./Phase5-AI-Validation.md) · [DemoScript.md](./DemoScript.md) · [E2E-CI-Setup.md](./E2E-CI-Setup.md) · [Glossary.md](../01-Product/Glossary.md)
+
+---
+
+## 0. Recommended order (Pilot vs CI)
+
+Complete in this order for a safe first pilot:
+
+| Order | Track | Document / action |
+|:-----:|-------|-------------------|
+| 1 | **CI (optional but recommended)** | [E2E-CI-Setup.md](./E2E-CI-Setup.md) — separate Supabase + GitHub secrets → green E2E on `main` |
+| 2 | **Pilot DB** | §1 below — **production/pilot** Supabase (not the E2E project) |
+| 3 | **Vercel** | §2 + §5 — env vars + deploy |
+| 4 | **Auth + SMTP** | §3 + §4 |
+| 5 | **Smoke + AI sign-off** | §6 + [Phase5-AI-Validation.md](./Phase5-AI-Validation.md) |
+
+> Do not point GitHub E2E secrets at the pilot database. CI runs seed/admin sync on every E2E run.
 
 ---
 
@@ -11,7 +27,7 @@
 | Step | Action | Done |
 |------|--------|:----:|
 | S1 | Create or select cloud project; note **Project URL** and **API keys** | ☐ |
-| S2 | Apply migrations: `npm run db:push` (or run `database/migrations/001`–`021` in order) | ☐ |
+| S2 | Apply migrations: `npm run db:push` (migrations **001–022**; latest: invoice line snapshot `022`) | ☐ |
 | S3 | Run seed once if demo needed: `npm run db:seed` (uses service role locally only) | ☐ |
 | S4 | **Authentication → Hooks:** enable **Custom Access Token** hook (`009_auth_hook.sql` function) | ☐ |
 | S5 | **Authentication → URL configuration** — set **Site URL** to production app origin (see §3) | ☐ |
@@ -119,7 +135,7 @@ Without SMTP, create users manually in Supabase Auth + `users` table (dev only).
 |---|-------|:----:|
 | P1 | Login / logout | ☐ |
 | P2 | Create or view customer, package, booking | ☐ |
-| P3 | Create invoice from booking — subtotal matches booking line items | ☐ |
+| P3 | Create invoice from booking — subtotal matches booking line items; **Issue** → frozen line snapshot (D-012) | ☐ |
 | P4 | `/ai/knowledge` — question returns answer | ☐ |
 | P5 | `/settings/knowledge` — documents listed | ☐ |
 | P6 | `/audit-logs` — rows visible for `tenant_admin` | ☐ |

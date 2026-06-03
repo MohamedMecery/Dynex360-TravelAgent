@@ -26,7 +26,7 @@ Automated critical flows in `e2e/`:
 | `customers.spec.ts` | Create customer → list search |
 | `booking-flow.spec.ts` | Customer → package publish → booking → confirm → payment |
 | `ai-agents.spec.ts` | AI pages + draft builder (UI); live chat API tests when `E2E_RUN_AI_API=1` |
-| `invoice-snapshot.spec.ts` | Invoice create from `DEMO-BK-005` → show booking line snapshot |
+| `invoice-snapshot.spec.ts` | Invoice from `DEMO-BK-005` → draft lines → Issue → frozen snapshot badge |
 
 ### Prerequisites
 
@@ -77,21 +77,13 @@ E2E tests use **unique timestamps** in data (emails, package titles) so re-runs 
 
 Workflow: `.github/workflows/e2e.yml` (runs on push to `main` and manual dispatch).
 
+**Setup guide (step-by-step secrets + dedicated Supabase):** [E2E-CI-Setup.md](./E2E-CI-Setup.md)
+
 Before tests, Playwright `globalSetup` runs `npm run e2e:ci-prep` (admin sync + `db:seed` for `DEMO-BK-005` and knowledge docs).
 
-Required GitHub secrets:
+Required GitHub secrets: see [E2E-CI-Setup.md §2](./E2E-CI-Setup.md#2-github-repository-secrets).
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` (or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`)
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `E2E_ADMIN_EMAIL` — must match a tenant admin on the E2E Supabase project
-- `E2E_ADMIN_PASSWORD`
-
-Optional:
-
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` — if set, used instead of anon key for the app build
-- `ANTHROPIC_API_KEY` — richer agent replies when `E2E_RUN_AI_API=1`
-- `E2E_RUN_AI_API` — set to `1` to run live Knowledge/Booking/Support chat tests in CI (skipped by default for stability)
+Optional: `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `ANTHROPIC_API_KEY`, `E2E_RUN_AI_API=1` for live agent chat tests.
 
 ---
 

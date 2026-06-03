@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCan, useGetIdentity } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { Input, Select } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTranslation } from "@/i18n/locale-provider";
@@ -150,9 +151,11 @@ export default function UsersListPage() {
                     <StatusBadge namespace="userStatus" value={user.status} />
                   </td>
                   <td className="p-3">
-                    <Link href={`/users/show/${user.id}`} className="text-primary hover:underline">
-                      {t("common.view")}
-                    </Link>
+                    <div className="flex flex-wrap gap-2">
+                      <GridActionButton href={`/users/show/${user.id}`} variant="outline" size="sm">
+                        {t("common.view")}
+                      </GridActionButton>
+                    </div>
                   </td>
                 </tr>
               ))

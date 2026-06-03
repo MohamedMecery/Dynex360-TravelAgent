@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useList } from "@refinedev/core";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { GridActionButton } from "@/components/ui/grid-action-button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
@@ -49,28 +50,21 @@ export default function SupportTicketsPage() {
             <tbody>
               {isLoading && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-4 text-muted-foreground">
+                  <td colSpan={6} className="px-4 py-4 text-muted-foreground">
                     {t("common.loading")}
                   </td>
                 </tr>
               )}
               {!isLoading && tickets.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-4 text-muted-foreground">
+                  <td colSpan={6} className="px-4 py-4 text-muted-foreground">
                     {t("supportTickets.noTickets")}
                   </td>
                 </tr>
               )}
               {tickets.map((ticket) => (
                 <tr key={ticket.id} className="border-b hover:bg-muted/40">
-                  <td className="px-4 py-2">
-                    <Link
-                      href={`/ai/support/tickets/show/${ticket.id}`}
-                      className="font-mono text-xs text-primary hover:underline"
-                    >
-                      {ticket.ticket_number}
-                    </Link>
-                  </td>
+                  <td className="px-4 py-2 font-mono text-xs">{ticket.ticket_number}</td>
                   <td className="px-4 py-2 max-w-xs truncate">{ticket.subject}</td>
                   <td className="px-4 py-2">
                     <StatusBadge namespace="supportTicketStatus" value={ticket.status} />
@@ -79,6 +73,17 @@ export default function SupportTicketsPage() {
                     <StatusBadge namespace="supportTicketPriority" value={ticket.priority} />
                   </td>
                   <td className="px-4 py-2">{formatDate(ticket.created_at)}</td>
+                  <td className="px-4 py-2">
+                    <div className="flex flex-wrap gap-2">
+                      <GridActionButton
+                        href={`/ai/support/tickets/show/${ticket.id}`}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {t("common.view")}
+                      </GridActionButton>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -11,8 +11,9 @@ TravelOS follows a phased release model: **MVP (Phases 1–4) → AI Foundation 
 | Track | Status |
 |-------|--------|
 | PRD, Requirements, User Stories, Domain Model, ERD, Database Design | Complete |
-| Supabase migrations | **001–021** applied in repo (latest: audit user triggers) |
-| Admin UI (Refine) + core modules | **Implemented** (MVP modules + RecordMetadata on Show pages) |
+| Supabase migrations | **001–022** in repo (latest: invoice line snapshot at issue) |
+| Admin UI (Refine) + core modules | **Implemented** (MVP modules + RecordMetadata on Show pages; `GridActionButton` on list grids) |
+| Invoices (header + booking line snapshot) | **Implemented** — live lines on draft, frozen JSONB at `issued` (D-012, migration 022) |
 | Marketing landing page | **Implemented** (`/`, `/home`) — Trust & Scale Metrics (D-009) |
 | AI agents (Knowledge, Booking, Support) | **Implemented** — DB 012–017, chat UI, knowledge admin, feedback; Phase 5 manual sign-off pending |
 | Audit logs UI | **Implemented** (`/audit-logs`, `tenant_admin`) |
@@ -221,7 +222,7 @@ gantt
 ### In Scope
 
 - Authentication, User Management
-- Customers, Packages, Bookings, Payments
+- Customers, Packages, Bookings, Payments, Invoices (header + line snapshot)
 - Multi-tenancy, RBAC, Audit
 
 ### Deferred (POST-MVP)
@@ -232,7 +233,7 @@ gantt
 | Destinations, Countries, Cities | Growth |
 | Hotels, Flights, Transfers, Excursions | Growth |
 | Guides, Suppliers (full) | Growth |
-| Invoices, Refunds | Growth |
+| Refunds, Invoice PDF | Growth |
 | CRM, Marketing | Enterprise |
 | Notifications (full) | Growth |
 | Documents (full) | Growth |
@@ -292,7 +293,7 @@ The three agents are **started in code** (routes, lib, UI, migrations). To decla
 | API route + RBAC | Done | Done | Done |
 | Chat UI | Done | Done | Done |
 | RAG / tools | FTS + optional vectors | Tools + draft HITL | RAG + tickets |
-| Admin (KB upload) | `/settings/knowledge` | — | Ticket list UI |
+| Admin (KB upload) | `/settings/knowledge` | — | Ticket list UI (`/ai/support/tickets`) |
 | **Env:** `ANTHROPIC_API_KEY` | Recommended | Recommended | Recommended |
 | **Env:** `OPENAI_API_KEY` (embeddings) | Optional (FTS fallback) | — | Optional |
 | Acceptance scenarios (AcceptanceCriteria §AI) | Validate manually | Validate manually | Validate manually |

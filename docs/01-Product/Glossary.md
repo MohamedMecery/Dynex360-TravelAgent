@@ -45,7 +45,7 @@ A **financial header document** linked to a booking:
 - **No `invoice_items` table in MVP** — line detail lives on `booking_items`
 - **1 booking → N invoices** (D-005): deposits, partial bills, add-on charges
 
-When creating an invoice in the UI, subtotal may be prefilled from `booking.total_amount`. A read-only snapshot of `booking_items` on the invoice show page is a **Should** enhancement; PDF export is POST-MVP.
+When creating an invoice in the UI, subtotal may be prefilled from `booking.total_amount`. On the invoice show page, **draft** invoices show live `booking_items`; when status becomes **`issued`**, commercial lines are copied once into `invoices.line_items_snapshot` (JSONB, D-012). PDF export is POST-MVP.
 
 ---
 

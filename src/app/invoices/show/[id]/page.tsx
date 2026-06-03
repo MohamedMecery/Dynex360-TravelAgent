@@ -73,6 +73,7 @@ export default function InvoiceShowPage() {
         bookingId={invoice.booking_id}
         bookingReference={invoice.bookings?.reference_number}
         currency={invoice.currency}
+        lineItemsSnapshot={invoice.line_items_snapshot}
       />
       </div>
     </div>

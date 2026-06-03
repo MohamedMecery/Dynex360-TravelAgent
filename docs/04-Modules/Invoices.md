@@ -45,9 +45,16 @@ See [BusinessFlows.md](../02-Business/BusinessFlows.md) — finance / invoicing 
 | BR-INV-005 | Multiple invoices allowed per booking (deposits, partial bills) |
 | BR-INV-006 | No autonomous invoice creation by AI agents in MVP |
 
-**MVP snapshot:** Show page loads live `booking_items` for the linked booking (`InvoiceBookingLineItems`) — informational only, not copied to the invoice row.
+**Line snapshot (D-012):**
 
-**POST-MVP:** `invoice_items` or frozen snapshot table at issue time; PDF export; auto-issue on booking confirm.
+| Invoice status | UI behavior |
+|----------------|-------------|
+| `draft` | Show page loads **live** `booking_items` for the linked booking |
+| `issued` and later | `line_items_snapshot` JSONB frozen at first transition to `issued` (DB trigger); UI shows frozen lines only |
+
+No `invoice_items` table. Snapshot is immutable once set.
+
+**POST-MVP:** Dedicated `invoice_items` table (if multi-version PDF needed); PDF export; auto-issue on booking confirm.
 
 ---
 
@@ -55,7 +62,7 @@ See [BusinessFlows.md](../02-Business/BusinessFlows.md) — finance / invoicing 
 
 | Table | Description |
 |-------|-------------|
-| `invoices` | Header: subtotal, tax, total, status, dates, `booking_id` |
+| `invoices` | Header: subtotal, tax, total, status, dates, `booking_id`, `line_items_snapshot` (JSONB, set at issue) |
 | `bookings` | Parent operational record |
 | `booking_items` | Source of truth for commercial lines (not copied to invoice in MVP) |
 | `payments` | Optional `invoice_id` |
@@ -114,6 +121,7 @@ Admin UI uses **Supabase client + RLS** via Refine (no dedicated REST module yet
 
 - Subtotal helper: `src/lib/invoices/booking-subtotal.ts`
 - Invoice create UI: `src/app/invoices/create/page.tsx`
+- Line snapshot: migration `022_invoice_line_snapshot.sql`; parser `src/lib/invoices/line-items-snapshot.ts`
 - Invoice line snapshot UI: `src/components/invoices/invoice-booking-line-items.tsx`
 - Product glossary: [Glossary.md](../01-Product/Glossary.md)
 

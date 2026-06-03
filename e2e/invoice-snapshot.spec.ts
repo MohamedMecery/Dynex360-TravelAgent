@@ -40,5 +40,12 @@ test.describe("Invoice booking line snapshot", () => {
     await expect(snapshot).toBeVisible();
     await expect(snapshot.getByRole("columnheader", { name: /Description|الوصف/i })).toBeVisible();
     await expect(snapshot.getByText(/Lines subtotal|مجموع البنود/i)).toBeVisible();
+    await expect(page.getByTestId("invoice-booking-line-items-frozen")).toHaveCount(0);
+
+    await page.getByRole("button", { name: /Issue Invoice|إصدار الفاتورة/i }).click();
+    await expect(page.getByTestId("invoice-booking-line-items-frozen")).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(snapshot.getByRole("columnheader", { name: /Description|الوصف/i })).toBeVisible();
   });
 });

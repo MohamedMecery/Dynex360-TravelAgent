@@ -428,6 +428,15 @@ export interface BookingItem {
   updated_at?: string;
 }
 
+/** Frozen booking line copied to `invoices.line_items_snapshot` at issue (D-012). */
+export interface InvoiceLineItemSnapshot {
+  id: string;
+  description: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+}
+
 export interface BookingTravelerRow {
   id: string;
   booking_id: string;
@@ -462,6 +471,7 @@ export interface Invoice {
   total_amount: number;
   currency: string;
   notes?: string;
+  line_items_snapshot?: InvoiceLineItemSnapshot[] | null;
   created_at: string;
   updated_at: string;
   created_by?: string | null;

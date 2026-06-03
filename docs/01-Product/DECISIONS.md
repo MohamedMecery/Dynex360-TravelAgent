@@ -21,6 +21,7 @@
 | D-009 | Landing page Trust & Scale Metrics section approved | Approved | 2026-06-02 |
 | D-010 | Phased i18n — customer/AI first; staff UI EN+AR for MVP | Approved | 2026-06-02 |
 | D-011 | Product glossary: Package vs booking_items vs Invoice | Approved | 2026-06-03 |
+| D-012 | Invoice line snapshot: JSONB on `invoices` at `issued` | Approved | 2026-06-03 |
 
 ---
 
@@ -153,9 +154,25 @@
 
 **Rationale:** Sales and finance teams confuse “package price” with invoice lines; engineering must not add `invoice_items` in MVP without an explicit product decision.
 
-**Impact:** Documentation only for MVP schema; invoice UI may show booking line snapshot as a Should enhancement.
+**Impact:** MVP schema and UI; frozen snapshot at issue documented in D-012.
 
 **Reference:** [Glossary.md](./Glossary.md).
+
+---
+
+## D-012 — Invoice line snapshot at issue
+
+**Decision:** When an invoice transitions to `issued`, copy the booking’s `booking_items` into `invoices.line_items_snapshot` (JSONB array). Do **not** add an `invoice_items` table for this phase.
+
+**Rationale:** Finance needs a stable commercial breakdown on issued invoices even if the booking is edited later; JSONB keeps MVP schema small and matches the existing header-only invoice model (D-011).
+
+**Rules:**
+
+- Snapshot is written **once** (trigger on first `issued`; never overwritten).
+- Draft invoices continue to show **live** booking lines in the UI.
+- Backfill: migration `022` populates snapshot for invoices already `issued`.
+
+**Impact:** Migration `022_invoice_line_snapshot.sql`; UI `InvoiceBookingLineItems`; module spec [Invoices.md](../04-Modules/Invoices.md).
 
 ---
 

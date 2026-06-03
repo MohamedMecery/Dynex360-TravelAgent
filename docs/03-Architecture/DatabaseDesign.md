@@ -583,11 +583,13 @@ Legend: **PK** = primary key, **FK** = foreign key, **UK** = unique, **NN** = no
 | total_amount | DECIMAL(12,2) | NN, default 0, CHECK >= 0 |
 | currency | CHAR(3) | NN, default 'USD' |
 | notes | TEXT | |
+| line_items_snapshot | JSONB | Frozen `booking_items` at first `issued` (D-012, migration 022) |
 | deleted_at | TIMESTAMPTZ | |
 | created_by / updated_by | UUID | FK → users(id) ON DELETE SET NULL |
 | created_at / updated_at | TIMESTAMPTZ | NN, default now() |
 
 **Constraints:** UNIQUE(tenant_id, invoice_number); CHECK (total_amount = subtotal + tax_amount); CHECK (due_date IS NULL OR due_date >= issue_date).
+**Triggers:** `trg_invoices_freeze_line_snapshot` copies booking lines into `line_items_snapshot` when status becomes `issued`.
 **Indexes:** PK(id); idx(tenant_id); idx(booking_id); idx(tenant_id, status); idx(tenant_id, due_date).
 
 ---

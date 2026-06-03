@@ -17,6 +17,7 @@ CREATE TABLE invoices (
     total_amount DECIMAL(12,2) NOT NULL DEFAULT 0 CHECK (total_amount >= 0),
     currency CHAR(3) NOT NULL DEFAULT 'USD',
     notes TEXT,
+    line_items_snapshot JSONB,
     deleted_at TIMESTAMPTZ,
     created_by UUID REFERENCES users(id) ON DELETE SET NULL,
     updated_by UUID REFERENCES users(id) ON DELETE SET NULL,

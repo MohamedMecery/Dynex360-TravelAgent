@@ -57,3 +57,14 @@ Project_Execution_Strategy_extracted.txt
 Travel-Users.txt
 Travel-Users.*
 dev-output.log
+
+# scratch / tooling output (never commit)
+.tmp-*
+_commit_out.txt
+_push_out.txt
+_do_commit.bat
+.git-commit-msg.txt
+.closure-migrations-combined.sql
+
+# supabase CLI local state
+supabase/.temp/

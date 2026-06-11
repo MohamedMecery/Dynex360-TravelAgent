@@ -75,6 +75,7 @@ export const ar: TranslationKeys = {
     kpiOpenOpps: "فرص مفتوحة",
     kpiDueToday: "مستحقة اليوم",
     kpiOverdue: "متأخرة",
+    kpiRecommendations: "توصيات مفتوحة",
     kpiForecast: "التوقعات",
     kpiClosedRev: "إيرادات مغلقة",
     staleLeads: "عملاء راكدون",
@@ -83,6 +84,13 @@ export const ar: TranslationKeys = {
     noOverdueActivities: "لا توجد أنشطة متأخرة",
     daysSinceContact: "منذ %{days} يومًا",
     dueOn: "مستحق %{date}",
+  },
+  mobile: {
+    ops: {
+      health: "الصحة",
+      readiness: "الجاهزية",
+      openRecommendations: "إجراءات التشغيل",
+    },
   },
   leads: {
     title: "العملاء المحتملون",

@@ -22,7 +22,207 @@ export type InvoiceStatus =
 export type PaymentMethod = "cash" | "bank_transfer" | "card" | "other";
 export type UserRole = "super_admin" | "tenant_admin" | "sales_agent" | "finance_officer";
 
-export type AiAgentKey = "knowledge" | "booking" | "support";
+export type LeadStatus =
+  | "new"
+  | "contacted"
+  | "qualified"
+  | "proposal_sent"
+  | "negotiation"
+  | "won"
+  | "lost";
+
+export type LeadSource =
+  | "whatsapp"
+  | "website"
+  | "facebook"
+  | "instagram"
+  | "tiktok"
+  | "referral"
+  | "walk_in"
+  | "phone_call"
+  | "other";
+
+export type PreferredContactChannel = "whatsapp" | "phone" | "email" | "in_person";
+
+export type OpportunityStage =
+  | "discovery"
+  | "proposal"
+  | "negotiation"
+  | "verbal_approval"
+  | "closed_won"
+  | "closed_lost";
+
+export type ActivityType = "call" | "whatsapp" | "email" | "meeting" | "task";
+
+export type ActivityDirection = "incoming" | "outgoing";
+
+export type ActivityStatus = "open" | "in_progress" | "completed" | "cancelled";
+
+export type QuotationStatus =
+  | "draft"
+  | "pending_approval"
+  | "approved"
+  | "sent"
+  | "viewed"
+  | "accepted"
+  | "rejected"
+  | "expired"
+  | "converted_to_booking";
+
+export type QuotationItemType =
+  | "package"
+  | "hotel"
+  | "flight"
+  | "visa"
+  | "transport"
+  | "insurance"
+  | "other";
+
+export type QuotationApprovalMode = "simple" | "standard";
+
+export interface CrmActivity {
+  id: string;
+  tenant_id: string;
+  activity_type: ActivityType;
+  direction?: ActivityDirection | null;
+  subject: string;
+  description?: string | null;
+  due_date?: string | null;
+  assigned_to: string;
+  related_lead_id?: string | null;
+  related_opportunity_id?: string | null;
+  related_customer_id?: string | null;
+  status: ActivityStatus;
+  completed_at?: string | null;
+  channel_meta?: Record<string, unknown>;
+  deleted_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OpportunityStageHistoryEntry {
+  id: string;
+  tenant_id: string;
+  opportunity_id: string;
+  from_stage: OpportunityStage | null;
+  to_stage: OpportunityStage;
+  changed_by?: string | null;
+  changed_at: string;
+}
+
+export interface Lead {
+  id: string;
+  tenant_id: string;
+  lead_number: string;
+  full_name: string;
+  mobile?: string | null;
+  whatsapp?: string | null;
+  email?: string | null;
+  preferred_contact_channel: PreferredContactChannel;
+  source: LeadSource;
+  destination_id?: string | null;
+  destination_text?: string | null;
+  expected_budget?: number | null;
+  currency: string;
+  travel_date?: string | null;
+  pax_count: number;
+  notes?: string | null;
+  owner_id: string;
+  status: LeadStatus;
+  customer_id?: string | null;
+  last_contacted_at?: string | null;
+  last_whatsapp_at?: string | null;
+  activity_count?: number;
+  last_activity_at?: string | null;
+  lost_reason?: string | null;
+  deleted_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Opportunity {
+  id: string;
+  tenant_id: string;
+  opportunity_number: string;
+  lead_id?: string | null;
+  customer_id?: string | null;
+  destination_id?: string | null;
+  destination_text?: string | null;
+  expected_budget?: number | null;
+  estimated_revenue?: number | null;
+  currency: string;
+  expected_travel_date?: string | null;
+  pax_count: number;
+  probability?: number | null;
+  expected_close_date?: string | null;
+  stage: OpportunityStage;
+  owner_id: string;
+  notes?: string | null;
+  lead_source?: LeadSource | null;
+  preferred_contact_channel?: PreferredContactChannel | null;
+  whatsapp?: string | null;
+  activity_count?: number;
+  last_activity_at?: string | null;
+  deleted_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface QuotationItem {
+  id: string;
+  tenant_id: string;
+  quotation_id: string;
+  sort_order: number;
+  item_type: QuotationItemType;
+  description: string;
+  package_id?: string | null;
+  quantity: number;
+  unit_price: number;
+  line_total: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Quotation {
+  id: string;
+  tenant_id: string;
+  quotation_number: string;
+  opportunity_id: string;
+  customer_id?: string | null;
+  status: QuotationStatus;
+  valid_until?: string | null;
+  currency: string;
+  subtotal: number;
+  discount_amount: number;
+  tax_amount: number;
+  total_amount: number;
+  notes?: string | null;
+  terms_and_conditions?: string | null;
+  owner_id: string;
+  sent_at?: string | null;
+  viewed_at?: string | null;
+  accepted_at?: string | null;
+  rejected_at?: string | null;
+  rejection_reason?: string | null;
+  approved_by?: string | null;
+  approved_at?: string | null;
+  booking_id?: string | null;
+  source_quotation_id?: string | null;
+  deleted_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+  created_at: string;
+  updated_at: string;
+  items?: QuotationItem[];
+}
+
+export type AiAgentKey = "knowledge" | "booking" | "support" | "sales" | "operations";
 export type AiMessageRole = "user" | "assistant" | "system" | "tool";
 export type KnowledgeDocumentType = "policy" | "faq" | "contract" | "package" | "sop";
 export type KnowledgeDocumentStatus = "processing" | "published" | "archived";
@@ -286,6 +486,8 @@ export interface Customer {
   phone?: string;
   company_name?: string;
   notes?: string;
+  activity_count?: number;
+  last_activity_at?: string | null;
   created_at: string;
   updated_at: string;
   created_by?: string | null;
@@ -400,6 +602,7 @@ export interface Booking {
   reference_number: string;
   customer_id: string;
   package_id: string;
+  quotation_id?: string | null;
   status: BookingStatus;
   payment_status: PaymentStatus;
   total_amount: number;

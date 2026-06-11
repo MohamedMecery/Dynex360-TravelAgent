@@ -11,7 +11,11 @@ import {
 import { getAuthCallbackUrl } from "@/lib/auth/site-url";
 import { revokeUserSessions } from "@/lib/users/session-revoke";
 import type { InviteUserInput, UpdateUserInput } from "@/lib/validation/user-management";
-import type { InviteUserResult, TenantUserListItem } from "@/lib/users/types";
+import type {
+  AssigneeListItem,
+  InviteUserResult,
+  TenantUserListItem,
+} from "@/lib/users/types";
 import { UserRole, UserStatus } from "@/types";
 
 type UserRoleJoinRow = {
@@ -76,6 +80,49 @@ export async function listTenantUsers(
 
   if (filters.role) {
     items = items.filter((u) => u.role === filters.role);
+  }
+
+  return items;
+}
+
+export async function listAssignableUsers(
+  supabase: SupabaseClient,
+  tenantId: string,
+  search?: string
+): Promise<AssigneeListItem[]> {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, email, full_name, status, user_roles(roles(name))")
+    .eq("tenant_id", tenantId)
+    .eq("status", "active")
+    .order("full_name", { ascending: true });
+
+  if (error) {
+    throw new UserManagementError(error.message, "LIST_FAILED");
+  }
+
+  let items: AssigneeListItem[] = [];
+  for (const row of data ?? []) {
+    const joins = row.user_roles as UserRoleJoinRow[] | undefined;
+    const role = roleFromJoin(joins?.[0]);
+    if (!role || !isAssignableTenantRole(role)) {
+      continue;
+    }
+    items.push({
+      id: row.id as string,
+      email: row.email as string,
+      full_name: (row.full_name as string | null) ?? null,
+      role,
+    });
+  }
+
+  if (search?.trim()) {
+    const term = search.trim().toLowerCase();
+    items = items.filter(
+      (u) =>
+        u.email.toLowerCase().includes(term) ||
+        (u.full_name?.toLowerCase().includes(term) ?? false)
+    );
   }
 
   return items;

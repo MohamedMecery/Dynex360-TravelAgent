@@ -1,0 +1,48 @@
+«C-snapshot» &
+ «E-e2e+
+
+أعرض بنود الحجز على صفحة الفاتورة
+
+
+هدفك الآن	الأفضل
+Pilot على Vercel خلال ساعة
+نافذة جديدة + الـ PROMPT أعلاه + مسار Pilot
+«أصلح E2E في CI»
+هنا أو نافذة جديدة — فرق بسيط
+«أضف PDF للفواتير»
+نافذة جديدة — مهمة كبيرة
+
+////////////////////
+سيُشغَّل workflow E2E Tests تلقائياً على هذا الـ push. راقب النتيجة في:
+https://github.com/MohamedMecery/Dynex360-TravelAgent/actions
+///////////////
+
+A-docs — Production deploy checklist
+ملف جديد: docs/05-Development/Production-Deploy-Checklist.md
+
+يشمل:
+
+Supabase (migrations 001–021، Auth hook، Storage)
+متغيرات Vercel (قالب .env للنسخ)
+Redirect URLs جاهزة للصق
+SMTP للدعوات
+Smoke post-deploy + sign-off
+روابط من DemoScript.md و Phase5-AI-Validation.md
+C-finance — Invoices
+كود
+src/lib/invoices/booking-subtotal.ts — مجموع booking_items مع fallback إلى bookings.total_amount
+src/app/invoices/create/page.tsx:
+عند اختيار حجز: subtotal من بنود الحجز
+معاينة البنود في البطاقة
+تلميح: من البنود أم من إجمالي الحجز
+دعم ?booking_id=
+وثائق
+docs/04-Modules/Invoices.md — مواصفة الوحدة (D-005، D-011، RBAC، شاشات)
+قسم Invoices في DemoScript.md (مع إعادة ترقيم الأقسام 5–9)
+i18n
+invoices.lineItemsPreview, subtotalFromLineItems, subtotalFromBookingTotal (EN + AR)
+ما تحتاجه أنت (من الـ checklist)
+نسخ env إلى Vercel
+Supabase → Site URL + Redirect URLs
+SMTP → اختبار دعوة
+هل تريد commit + push لهذا الـ diff؟

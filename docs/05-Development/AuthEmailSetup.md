@@ -1,6 +1,9 @@
 # Supabase Auth Email Configuration (WP-4B)
 
-TravelOS uses **Supabase Auth** for password recovery and invite onboarding. No custom mail service is required.
+TravelOS uses a **dual-channel** email architecture:
+
+- **Supabase Auth** — user invite and password reset (this document).
+- **TravelOS EmailService** — welcome, booking confirmation, support notifications. See [EmailSetup.md](./EmailSetup.md).
 
 ## Redirect URLs
 

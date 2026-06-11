@@ -86,7 +86,7 @@ Full definitions: [UserStories.md](../02-Business/UserStories.md).
 | FR-AI-006 | Agent conversations and tool calls logged | Must (Ph5) |
 | FR-AI-007 | Knowledge document upload and chunk indexing (admin) | Should (Ph5) |
 | FR-AI-008 | Multi-agent orchestration router | POST-MVP (Ph6) |
-| FR-AI-009 | Agent analytics dashboard | POST-MVP (Ph6) |
+| FR-AI-009 | Agent analytics dashboard (`/ai/analytics`) | Implemented (V1 KPIs) |
 
 See [Requirements.md](../02-Business/Requirements.md) §1.8.
 

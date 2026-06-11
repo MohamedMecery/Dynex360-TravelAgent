@@ -1,0 +1,7 @@
+appId: ${MAESTRO_APP_ID}
+---
+- runFlow: 01-login.yaml
+- tapOn:
+    text: "Leads|العملاء"
+- assertVisible:
+    text: "Search|بحث"

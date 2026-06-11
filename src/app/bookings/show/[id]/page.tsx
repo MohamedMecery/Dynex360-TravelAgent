@@ -9,6 +9,8 @@ import { BookingItemsSection } from "@/components/bookings/booking-items-section
 import { BookingTravelersSection } from "@/components/bookings/booking-travelers-section";
 import { BookingStatusHistorySection } from "@/components/bookings/booking-status-history-section";
 import { BookingStatusActions } from "@/components/bookings/booking-status-actions";
+import { GatewayPaymentsPanel } from "@/components/payments/gateway-payments-panel";
+import { OperationsAssistantPanel } from "@/components/operations-ai/OperationsAssistantPanel";
 import { PageBreadcrumbs } from "@/components/layout/page-breadcrumbs";
 import { RecordMetadata } from "@/components/shared/record-metadata";
 import { canRecordPaymentForBookingStatus } from "@/lib/bookings/payment-eligibility";
@@ -127,6 +129,12 @@ export default function BookingShowPage() {
       </div>
 
       <BookingStatusHistorySection bookingId={booking.id} />
+
+      {booking.status !== "cancelled" && booking.status !== "completed" && (
+        <OperationsAssistantPanel bookingId={booking.id} />
+      )}
+
+      <GatewayPaymentsPanel fetchUrl={`/api/bookings/${booking.id}/gateway-payments`} />
     </div>
   );
 }

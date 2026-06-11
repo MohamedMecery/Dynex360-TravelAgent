@@ -46,7 +46,7 @@ export default function PaymentCreatePage() {
   });
 
   const selectedBookingId = watch("booking_id");
-  const activeBookings = bookingsData?.data ?? [];
+  const activeBookings = useMemo(() => bookingsData?.data ?? [], [bookingsData?.data]);
 
   const { data: preselectedBookingData } = useOne<Booking>({
     resource: "bookings",

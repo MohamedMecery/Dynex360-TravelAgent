@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-06-03T20:18:58.960Z",
+  "samples": [
+    {
+      "path": "/api/auth/me?include_permissions=true",
+      "avgMs": 393,
+      "status": 200
+    },
+    {
+      "path": "/api/crm/dashboard?period=month",
+      "avgMs": 683,
+      "status": 200
+    },
+    {
+      "path": "/api/leads?limit=20&page=1",
+      "avgMs": 1064,
+      "status": 200
+    },
+    {
+      "path": "/api/opportunities?limit=20&page=1",
+      "avgMs": 597,
+      "status": 200
+    },
+    {
+      "path": "/api/quotations?limit=20&page=1",
+      "avgMs": 553,
+      "status": 200
+    },
+    {
+      "path": "/api/quotations?search=QT&limit=20",
+      "avgMs": 525,
+      "status": 200
+    },
+    {
+      "path": "/api/bookings?limit=20&page=1",
+      "avgMs": 559,
+      "status": 200
+    }
+  ]
+}

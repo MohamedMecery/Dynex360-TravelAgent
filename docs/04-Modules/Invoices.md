@@ -54,7 +54,7 @@ See [BusinessFlows.md](../02-Business/BusinessFlows.md) — finance / invoicing 
 
 No `invoice_items` table. Snapshot is immutable once set.
 
-**POST-MVP:** Dedicated `invoice_items` table (if multi-version PDF needed); PDF export; auto-issue on booking confirm.
+**POST-MVP:** Dedicated `invoice_items` table (if multi-version PDF needed); auto-issue on booking confirm.
 
 ---
 
@@ -73,11 +73,12 @@ Migration: `database/migrations/004_bookings_finance.sql`.
 
 ## API / data access (MVP)
 
-Admin UI uses **Supabase client + RLS** via Refine (no dedicated REST module yet).
+Admin UI uses **Supabase client + RLS** via Refine for CRUD. PDF export uses a dedicated API route.
 
 | Resource | Operations | RBAC |
 |----------|------------|------|
 | `invoices` | list, create, read, update, soft delete | `invoices.*` — finance_officer, tenant_admin; sales read-only |
+| `GET /api/invoices/:id/pdf` | On-demand PDF (draft + issued) | `invoices.read` |
 
 ---
 
@@ -99,7 +100,7 @@ Admin UI uses **Supabase client + RLS** via Refine (no dedicated REST module yet
 | Invoice list | `/invoices` | All tenant invoices with booking ref |
 | Create invoice | `/invoices/create` | Select booking; subtotal from line items; tax + status |
 | Create (from booking) | `/invoices/create?booking_id={uuid}` | Preselects booking |
-| Invoice detail | `/invoices/show/:id` | Amounts, status, booking link, **read-only `booking_items` snapshot**, audit metadata |
+| Invoice detail | `/invoices/show/:id` | Amounts, status, booking link, **read-only `booking_items` snapshot**, **Download PDF**, audit metadata |
 | Edit invoice | `/invoices/edit/:id` | Dates, tax, status, notes |
 
 ---
@@ -123,7 +124,15 @@ Admin UI uses **Supabase client + RLS** via Refine (no dedicated REST module yet
 - Invoice create UI: `src/app/invoices/create/page.tsx`
 - Line snapshot: migration `022_invoice_line_snapshot.sql`; parser `src/lib/invoices/line-items-snapshot.ts`
 - Invoice line snapshot UI: `src/components/invoices/invoice-booking-line-items.tsx`
+- PDF: `GET /api/invoices/[id]/pdf` — Node runtime, 30s max duration; max **100** line items (422 if exceeded, no truncation); draft uses live `booking_items` + **DRAFT** watermark; issued+ uses `line_items_snapshot` only
+- PDF libs: `src/lib/invoices/invoice-pdf-data.ts`, `src/lib/invoices/pdf/invoice-pdf-document.tsx`
+- Branding: `tenants.name` + optional `tenant_settings.settings` keys (`company_name`, `company_logo`, …) via `resolveInvoicePdfBranding`
+- E2E: `e2e/invoice-pdf.spec.ts`
 - Product glossary: [Glossary.md](../01-Product/Glossary.md)
+
+### PDF unit tests (recommended later)
+
+The repo uses **Playwright** for E2E only. Mapper/line-resolution unit tests are recommended with **Vitest** once a unit-test runner is adopted project-wide; not added in the PDF MVP to avoid introducing a second test framework.
 
 ---
 

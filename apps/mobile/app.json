@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "TravelOS",
+    "slug": "travelos-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "travelos",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dynex360.travelos"
+    },
+    "android": {
+      "package": "com.dynex360.travelos"
+    },
+    "plugins": ["expo-secure-store"]
+  }
+}

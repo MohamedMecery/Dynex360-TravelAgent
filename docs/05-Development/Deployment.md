@@ -1,143 +1,135 @@
 # TravelOS Deployment Guide
 
-**Version:** 1.0 — MVP
+**Version:** 2.0 — Pilot (Sprint 9E)  
+**Last updated:** 2026-06-04
 
 ---
 
 ## Prerequisites
 
 - Node.js 20+
-- Supabase account (free tier sufficient for MVP)
+- Supabase cloud project (pilot-dedicated; not CI/E2E project)
 - Vercel account
-- GitHub repository
+- Resend (transactional email), Anthropic (AI), Paymob + Meta WhatsApp (live pilot)
 
 ---
 
-## Environment Setup
-
-### 1. Supabase Project
-
-1. Create project at [supabase.com](https://supabase.com)
-2. Link and apply migrations:
-   ```bash
-   npx supabase link --project-ref YOUR_PROJECT_REF
-   npm run db:push
-   ```
-   Or apply manually in SQL Editor (in order):
-   - `database/migrations/001_core.sql` through `010_seed_geography.sql`
-
-3. Enable the **Custom Access Token** hook:
-   - Dashboard → Authentication → Hooks → Custom Access Token
-   - Postgres function: `public.custom_access_token_hook`
-
-4. Bootstrap your first tenant:
-   - Run `npm run admin:create` (creates auth user + tenant), **or**
-   - Create an auth user in Dashboard → Authentication → Users and run `database/scripts/provision_tenant.sql`
-
-5. (Optional) Load demo business data for KPI and workflow testing:
-   ```bash
-   npm run db:seed
-   ```
-   See [SeedData.md](./SeedData.md).
-
-6. Copy project URL and anon key
-
-### 2. Environment Variables
-
-Create `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-```
-
-### 3. Local Development
+## Quick start (local)
 
 ```bash
 npm install
+cp .env.example .env.local
+# Fill Supabase URL, keys, optional mocks for payments/WhatsApp
+npm run db:push
+npm run admin:create
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Health: `npm run doctor`
 
 ---
 
-## Vercel Deployment
+## Environment setup
 
-### Initial Setup
+Full variable list, categories, and production validation:
 
-1. Push repository to GitHub
-2. Import project in Vercel dashboard
-3. Set environment variables (same as `.env.local`)
-4. Deploy
-
-### Automatic Deployments
-
-- **Production:** merge to `main` branch
-- **Preview:** every pull request
-
-GitHub Actions CI must pass before merge (see `.github/workflows/ci.yml`).
-
----
-
-## Branch Strategy
-
-| Branch | Purpose | Deploys To |
-|--------|---------|-----------|
-| main | Production-ready code | Production |
-| develop | Integration branch | Staging |
-| feature/* | Feature development | Preview |
-| fix/* | Bug fixes | Preview |
-
----
-
-## Database Migrations
-
-Always apply migrations to staging before production:
+**[Production-Environment-Catalog.md](./Production-Environment-Catalog.md)**
 
 ```bash
-# Staging
-npx supabase link --project-ref STAGING_REF
-npx supabase db push
-
-# Production (after verification)
-npx supabase link --project-ref PRODUCTION_REF
-npx supabase db push
+npm run validate:production-env
+PRODUCTION_CHECK=1 npm run validate:production-env
 ```
 
 ---
 
-## Monitoring (MVP)
+## Database migrations
 
-| Service | Purpose |
+Apply **001–064** in order via CLI:
+
+```bash
+npx supabase login
+npx supabase link --project-ref YOUR_PROJECT_REF
+npm run db:push
+```
+
+| Range | Domain |
+|-------|--------|
+| 001–024 | Core MVP, AI, email logs |
+| 025–038 | CRM, quotations, dashboard RPC |
+| 039–042 | Customer portal |
+| 041, 045 | Domain events, dispatch jobs |
+| 047–050 | Payments (Paymob) |
+| 051–055 | WhatsApp |
+| 056–064 | AI Sales + AI Operations |
+
+Enable **Custom Access Token** hook: `public.custom_access_token_hook`
+
+Optional demo data: `npm run db:seed` (not for production pilot with real PII)
+
+---
+
+## Vercel deployment
+
+1. Import GitHub repo → Next.js preset
+2. Set Production env vars (catalog)
+3. Configure **Cron** for worker (see [Production-Worker-Runbook.md](./Production-Worker-Runbook.md))
+4. Deploy `main`
+
+Redirects: Supabase Auth **Site URL** = `NEXT_PUBLIC_SITE_URL`
+
+---
+
+## Post-deploy verification
+
+```bash
+GATE_BASE_URL=https://your-app.vercel.app npm run gate:production-matrix
+```
+
+See [Production-Deploy-Checklist.md](./Production-Deploy-Checklist.md) and [TravelOS-Pilot-Launch-Readiness-Report.md](../03-Architecture/TravelOS-Pilot-Launch-Readiness-Report.md).
+
+---
+
+## Branch strategy
+
+| Branch | Deploys to |
+|--------|------------|
+| `main` | Production |
+| PRs | Vercel Preview |
+
+---
+
+## Monitoring
+
+| Surface | Purpose |
 |---------|---------|
-| Vercel Analytics | Page views, Web Vitals |
-| Supabase Dashboard | Database metrics, auth logs |
-| GitHub Actions | CI/CD status |
+| `/crm/operations` | Queue, email, WhatsApp, events |
+| Vercel Analytics | Web vitals |
+| Supabase Dashboard | DB, auth |
+| `npm run verify:worker-health` | Automated queue check |
 
-POST-MVP: Sentry for error tracking, Datadog for APM.
-
----
-
-## Backup Strategy
-
-- Supabase automated daily backups (included in all plans)
-- Point-in-time recovery available on Pro plan
-- Export schema via `pg_dump` for offline backup
+Procedures: [Operations-Monitoring-Runbook.md](./Operations-Monitoring-Runbook.md)
 
 ---
 
-## Rollback Procedure
+## Rollback
 
-1. Revert commit on `main`
-2. Vercel auto-deploys previous version
-3. If migration issue: restore Supabase backup via dashboard
+1. Vercel → redeploy previous deployment
+2. Database: forward-only migrations — restore Supabase backup if needed
 
 ---
 
-## Health Checks
+## Health checks
 
-- Frontend: Vercel deployment status
-- Database: Supabase project health dashboard
-- API: `GET /api/auth/me` returns 401 when unauthenticated (expected)
+| Endpoint | Expected |
+|----------|----------|
+| `GET /api/health/supabase` | 200 when configured |
+| `GET /api/auth/me` | 401 unauthenticated |
+| `POST /api/cron/process-dispatch-jobs` | 401 without secret; 200 with `CRON_SECRET` |
+
+---
+
+## Related runbooks
+
+- [Pilot-Execution-Runbook.md](./Pilot-Execution-Runbook.md)
+- [Tenant-Onboarding-Runbook.md](./Tenant-Onboarding-Runbook.md)
+- [Customer-Onboarding-Runbook.md](./Customer-Onboarding-Runbook.md)

@@ -1,7 +1,7 @@
 # TravelOS RBAC Security Model
 
-**Version:** 1.0 — MVP  
-**Last Updated:** 2026-06-03
+**Version:** 2.0 — Pilot (CRM + Portal + Payments + AI)  
+**Last Updated:** 2026-06-04
 
 ---
 
@@ -12,6 +12,14 @@ TravelOS implements Role-Based Access Control (RBAC) at three layers:
 1. **Database (RLS)** — Row Level Security policies enforce tenant isolation
 2. **API (Middleware)** — JWT role checked against required permission
 3. **UI (Refine Access Control)** — Buttons and routes hidden based on role
+
+**CRM permissions** (leads, opportunities, quotations) are defined in migrations `029`, `036` and enforced via `crm.*` permission strings — see `src/lib/auth/crm-rbac.ts`.
+
+**Customer portal** uses a separate auth path (`requirePortalApiAccess`) — not staff roles. Portal users have `user_type: customer` and RLS on portal tables (migrations `039`–`042`).
+
+**AI modules** (Sales 9C, Operations 9D) are read-only at the API layer; RLS migrations `059`, `063` restrict snapshot and recommendation tables.
+
+**Payments & WhatsApp** tenant settings are admin-configurable; gateway webhooks use server secrets, not user JWT.
 
 ---
 
@@ -111,6 +119,7 @@ TravelOS implements Role-Based Access Control (RBAC) at three layers:
 | ai.booking.use | ✓ | ✓ | ✓ | — |
 | ai.support.use | ✓ | ✓ | ✓ | ✓ |
 | ai.read | ✓ | ✓ | ✓ | ✓ |
+| ai.analytics.read | ✓ | ✓ | — | — |
 | ai.logs.read | ✓ | ✓ | — | — |
 | knowledge.manage | ✓ | ✓ | — | — |
 

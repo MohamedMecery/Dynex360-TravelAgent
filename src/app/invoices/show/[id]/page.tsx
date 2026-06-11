@@ -9,6 +9,7 @@ import { RecordMetadata } from "@/components/shared/record-metadata";
 import { withAuditUserSelect } from "@/lib/audit/record-metadata";
 import { useTranslation } from "@/i18n/locale-provider";
 import { useFormat } from "@/i18n/use-format";
+import { DownloadInvoicePdfButton } from "@/components/invoices/download-invoice-pdf-button";
 import { InvoiceBookingLineItems } from "@/components/invoices/invoice-booking-line-items";
 import { Invoice } from "@/types";
 
@@ -32,7 +33,11 @@ export default function InvoiceShowPage() {
           <h2 className="text-2xl font-bold">{invoice.invoice_number}</h2>
           <StatusBadge namespace="invoiceStatus" value={invoice.status} />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <DownloadInvoicePdfButton
+            invoiceId={invoice.id}
+            invoiceNumber={invoice.invoice_number}
+          />
           {invoice.status === "draft" && (
             <Button onClick={() => updateOne({ resource: "invoices", id: invoice.id, values: { status: "issued" } })}>
               {t("invoices.issue")}

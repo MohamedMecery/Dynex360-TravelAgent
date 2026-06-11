@@ -1,0 +1,250 @@
+{
+  "generatedAt": "2026-06-03T17:40:51.201Z",
+  "results": [
+    {
+      "section": "API security",
+      "item": "cross-tenant 404",
+      "status": "PASS",
+      "detail": "status=404"
+    },
+    {
+      "section": "API security",
+      "item": "unknown customer 404",
+      "status": "PASS"
+    },
+    {
+      "section": "Performance",
+      "item": "360 small time",
+      "status": "PASS",
+      "detail": "1246ms"
+    },
+    {
+      "section": "Performance",
+      "item": "360 small size",
+      "status": "PASS",
+      "detail": "2KB preview=2"
+    },
+    {
+      "section": "Performance",
+      "item": "360 medium time",
+      "status": "PASS",
+      "detail": "1035ms"
+    },
+    {
+      "section": "Performance",
+      "item": "360 medium size",
+      "status": "PASS",
+      "detail": "3KB preview=4"
+    },
+    {
+      "section": "Performance",
+      "item": "360 heavy time",
+      "status": "PASS",
+      "detail": "1399ms"
+    },
+    {
+      "section": "Performance",
+      "item": "360 heavy size",
+      "status": "PASS",
+      "detail": "70KB preview=15"
+    },
+    {
+      "section": "Worst-case timeline",
+      "item": "limit=200 duration",
+      "status": "PASS",
+      "detail": "863ms"
+    },
+    {
+      "section": "Worst-case timeline",
+      "item": "payload size",
+      "status": "PASS",
+      "detail": "72KB"
+    },
+    {
+      "section": "Worst-case timeline",
+      "item": "returned rows",
+      "status": "PASS",
+      "detail": "200"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab overview",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab timeline",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab opportunities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab activities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab bookings",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab invoices",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab payments",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Tab tickets",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Revenue tab hidden",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Financial KPIs hidden",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Timeline buckets + event_type",
+      "status": "PASS"
+    },
+    {
+      "section": "UI sales_agent",
+      "item": "Timeline pagination",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab overview",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab timeline",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab opportunities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab activities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab bookings",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab invoices",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab payments",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab tickets",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Tab revenue",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Financial KPIs visible",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Timeline buckets + event_type",
+      "status": "PASS"
+    },
+    {
+      "section": "UI finance_officer",
+      "item": "Timeline pagination",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab overview",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab timeline",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab opportunities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab activities",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab bookings",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab invoices",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab payments",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab tickets",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Tab revenue",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Financial KPIs visible",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Timeline buckets + event_type",
+      "status": "PASS"
+    },
+    {
+      "section": "UI tenant_admin",
+      "item": "Timeline pagination",
+      "status": "PASS"
+    }
+  ]
+}

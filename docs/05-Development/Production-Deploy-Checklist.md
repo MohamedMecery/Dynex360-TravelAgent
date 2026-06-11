@@ -1,8 +1,8 @@
 # Production Deploy Checklist (Pilot / Vercel)
 
-**Last updated:** 2026-06-03  
+**Last updated:** 2026-06-04 (Sprint 9E)  
 **Use when:** First deploy or promoting `main` to a live agency pilot.  
-**Related:** [Phase5-AI-Validation.md](./Phase5-AI-Validation.md) · [DemoScript.md](./DemoScript.md) · [E2E-CI-Setup.md](./E2E-CI-Setup.md) · [Glossary.md](../01-Product/Glossary.md)
+**Related:** [Production-Environment-Catalog.md](./Production-Environment-Catalog.md) · [Pilot-Execution-Runbook.md](./Pilot-Execution-Runbook.md) · [TravelOS-Pilot-Launch-Readiness-Report.md](../03-Architecture/TravelOS-Pilot-Launch-Readiness-Report.md) · [E2E-CI-Setup.md](./E2E-CI-Setup.md)
 
 ---
 
@@ -27,7 +27,7 @@ Complete in this order for a safe first pilot:
 | Step | Action | Done |
 |------|--------|:----:|
 | S1 | Create or select cloud project; note **Project URL** and **API keys** | ☐ |
-| S2 | Apply migrations: `npm run db:push` (migrations **001–022**; latest: invoice line snapshot `022`) | ☐ |
+| S2 | Apply migrations: `npm run db:push` (migrations **001–064**; CRM 025–038, portal 039–042, events 041/045, payments 047–050, WhatsApp 051–055, AI 056–064) | ☐ |
 | S3 | Run seed once if demo needed: `npm run db:seed` (uses service role locally only) | ☐ |
 | S4 | **Authentication → Hooks:** enable **Custom Access Token** hook (`009_auth_hook.sql` function) | ☐ |
 | S5 | **Authentication → URL configuration** — set **Site URL** to production app origin (see §3) | ☐ |
@@ -56,19 +56,58 @@ Set in **Project → Settings → Environment Variables** for **Production** (an
 | `ANTHROPIC_API_KEY` | Knowledge / Booking / Support agents (extractive fallback if missing) |
 | `OPENAI_API_KEY` | Optional — vector embeddings for RAG; FTS-only mode works without it |
 
+### Required for pilot (communications, payments, worker)
+
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | Canonical HTTPS URL (email, portal, redirects) |
+| `CRON_SECRET` | Async worker cron endpoint |
+| `RESEND_API_KEY` + `RESEND_FROM_EMAIL` | Transactional email |
+| `EMAIL_PROVIDER` | `resend` (default) or `smtp` |
+
+### Payments (Paymob) — live pilot
+
+| Variable | Purpose |
+|----------|---------|
+| `PAYMOB_API_KEY` | Paymob API |
+| `PAYMOB_INTEGRATION_ID` | Integration |
+| `PAYMOB_HMAC_SECRET` | Webhook verification |
+| **Do not set** | `PAYMOB_MOCK_MODE`, `PAYMOB_MOCK_WEBHOOKS` in production |
+
+### WhatsApp (Meta) — live pilot
+
+| Variable | Purpose |
+|----------|---------|
+| `WHATSAPP_META_*` | Cloud API credentials |
+| `WHATSAPP_WEBHOOK_VERIFY_TOKEN` | Webhook challenge |
+| **Do not set** | `WHATSAPP_MOCK_MODE=true` in production |
+
 ### Optional
 
 | Variable | Purpose |
 |----------|---------|
-| `NEXT_PUBLIC_APP_URL` | Canonical app URL for emails/links if added later |
+| `OPENAI_API_KEY` | Vector embeddings (FTS works without) |
+| `SMTP_*` | Alternative if `EMAIL_PROVIDER=smtp` |
+
+**Full catalog:** [Production-Environment-Catalog.md](./Production-Environment-Catalog.md)
 
 **Copy-paste template (fill values, do not commit):**
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_SITE_URL=
+CRON_SECRET=
 ANTHROPIC_API_KEY=
-OPENAI_API_KEY=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+```
+
+**Pre-flight validator:**
+
+```bash
+PRODUCTION_CHECK=1 npm run validate:production-env
 ```
 
 ---
@@ -102,18 +141,28 @@ https://*.vercel.app/**
 
 ---
 
-## 4. SMTP / user invites (tenant onboarding)
+## 4. Email (dual channel)
 
-Required if **tenant_admin** invites users by email.
+### 4a. Supabase Auth (invite + password reset)
 
 | Step | Action | Done |
 |------|--------|:----:|
-| M1 | **Project Settings → Auth → SMTP Settings** — configure provider (Resend, SendGrid, AWS SES, etc.) | ☐ |
-| M2 | Set **Sender email** and **Sender name** (e.g. `TravelOS <noreply@yourdomain.com>`) | ☐ |
-| M3 | Send test invite from **Users → Invite** in admin UI | ☐ |
-| M4 | Confirm invite link opens app and completes signup | ☐ |
+| M1 | **Project Settings → Auth → SMTP** — Resend/SendGrid/SES | ☐ |
+| M2 | Customize **Invite** and **Reset password** templates (EN/AR) | ☐ |
+| M3 | Test invite from **Users → Invite** | ☐ |
+| M4 | Test forgot password flow | ☐ |
 
-Without SMTP, create users manually in Supabase Auth + `users` table (dev only).
+### 4b. TravelOS EmailService (welcome, booking, support)
+
+| Step | Action | Done |
+|------|--------|:----:|
+| E1 | Apply migration `024_email_logs` (`npm run db:push`) | ☐ |
+| E2 | Set `RESEND_API_KEY` + `RESEND_FROM_EMAIL` on Vercel | ☐ |
+| E3 | Set `NEXT_PUBLIC_SITE_URL` to production URL | ☐ |
+| E4 | Complete onboarding → check `email_delivery_logs` for `welcome` | ☐ |
+| E5 | Confirm booking (customer with email) → `booking_confirmation` log | ☐ |
+
+See [EmailSetup.md](./EmailSetup.md).
 
 ---
 
@@ -129,21 +178,47 @@ Without SMTP, create users manually in Supabase Auth + `users` table (dev only).
 
 ---
 
-## 6. Post-deploy smoke (15 min)
+## 6. Cron worker (Sprint 8D)
 
-| # | Check | Pass |
-|---|-------|:----:|
-| P1 | Login / logout | ☐ |
-| P2 | Create or view customer, package, booking | ☐ |
-| P3 | Create invoice from booking — subtotal matches booking line items; **Issue** → frozen line snapshot (D-012) | ☐ |
-| P4 | `/ai/knowledge` — question returns answer | ☐ |
-| P5 | `/settings/knowledge` — documents listed | ☐ |
-| P6 | `/audit-logs` — rows visible for `tenant_admin` | ☐ |
-| P7 | Run [Phase5-AI-Validation.md](./Phase5-AI-Validation.md) sign-off when selling AI | ☐ |
+| Step | Action | Done |
+|------|--------|:----:|
+| C1 | Set `CRON_SECRET` on Vercel (32+ random bytes) | ☐ |
+| C2 | Cron schedule ships in `vercel.json` (`*/2 * * * *` → GET `/api/cron/process-dispatch-jobs`); Vercel sends `Authorization: Bearer <CRON_SECRET>` automatically. Verify the cron appears under Project → Settings → Cron Jobs after deploy (requires Pro for sub-daily) | ☐ |
+| C3 | `npm run verify:worker-health` — pending/dead-letter acceptable | ☐ |
+
+See [Production-Worker-Runbook.md](./Production-Worker-Runbook.md).
 
 ---
 
-## 7. Security reminders
+## 7. Post-deploy verification (gates)
+
+| # | Command | Pass |
+|---|---------|:----:|
+| P1 | `PRODUCTION_CHECK=1 npm run validate:production-env` | ☐ |
+| P2 | `GATE_BASE_URL=https://YOUR_APP npm run gate:portal` | ☐ |
+| P3 | `npm run gate:sprint8d:worker` | ☐ |
+| P4 | `npm run gate:sprint9a:payments` (mock OK on staging) | ☐ |
+| P5 | `npm run gate:commercial` | ☐ |
+| P6 | `npm run gate:production-matrix` (full matrix) | ☐ |
+| P7 | `/crm/operations` dashboard loads metrics | ☐ |
+
+Matrix doc: [Sprint-9E-Production-Verification-Matrix.md](../03-Architecture/Sprint-9E-Production-Verification-Matrix.md)
+
+---
+
+## 8. Post-deploy smoke (15 min)
+
+| # | Check | Pass |
+|---|-------|:----:|
+| P1 | Login / logout (staff + portal) | ☐ |
+| P2 | CRM lead → quotation → send | ☐ |
+| P3 | Portal quotation accept + checkout (if payments on) | ☐ |
+| P4 | `/crm/operations` — queue metrics | ☐ |
+| P5 | `/ai/sales` and `/ai/operations` — read-only insights | ☐ |
+
+---
+
+## 9. Security reminders
 
 - Never set `SUPABASE_SERVICE_ROLE_KEY` in `NEXT_PUBLIC_*` variables.
 - RLS is enforced for all tenant data; do not bypass in application code.
@@ -152,7 +227,7 @@ Without SMTP, create users manually in Supabase Auth + `users` table (dev only).
 
 ---
 
-## 8. Rollback
+## 10. Rollback
 
 - Vercel: redeploy previous deployment from **Deployments** tab.
 - Database: migrations are forward-only; restore from Supabase backup if a bad migration was applied.

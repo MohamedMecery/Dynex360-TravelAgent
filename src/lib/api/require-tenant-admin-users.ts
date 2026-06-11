@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { validateActiveAccountAccess } from "@/lib/auth/validate-active-account";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { requireActiveApiAccess } from "@/lib/auth/require-active-api-access";
 import { hasUsersPermission } from "@/lib/auth/users-permissions";
 import { UserManagementError } from "@/lib/users/guards";
 import { UserRole } from "@/types";
 
 export interface UsersApiContext {
-  supabase: Awaited<ReturnType<typeof createClient>>;
+  supabase: SupabaseClient;
   userId: string;
   tenantId: string;
   role: UserRole;
@@ -15,26 +15,12 @@ export interface UsersApiContext {
 export async function requireUsersApiAccess(
   permission: string
 ): Promise<UsersApiContext | NextResponse> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json(
-      { error: { code: "UNAUTHORIZED", message: "Authentication required" } },
-      { status: 401 }
-    );
-  }
-
-  const gate = await validateActiveAccountAccess(supabase, user);
+  const gate = await requireActiveApiAccess();
   if (gate instanceof NextResponse) {
     return gate;
   }
 
-  const { access } = gate;
-
-  if (!hasUsersPermission(access.role, permission)) {
+  if (!hasUsersPermission(gate.access.role, permission)) {
     return NextResponse.json(
       { error: { code: "FORBIDDEN", message: `Missing ${permission} permission` } },
       { status: 403 }
@@ -42,10 +28,10 @@ export async function requireUsersApiAccess(
   }
 
   return {
-    supabase,
-    userId: user.id,
-    tenantId: access.tenantId,
-    role: access.role,
+    supabase: gate.supabase,
+    userId: gate.user.id,
+    tenantId: gate.access.tenantId,
+    role: gate.access.role,
   };
 }
 

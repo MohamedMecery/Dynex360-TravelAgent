@@ -19,7 +19,108 @@
     "supportAgent": "وكيل الدعم",
     "bookingAgent": "وكيل الحجز",
     "aiHistory": "سجل المحادثات",
-    "auditLogs": "سجل التدقيق"
+    "aiAnalytics": "تحليلات الذكاء الاصطناعي",
+    "auditLogs": "سجل التدقيق",
+    "crmDashboard": "لوحة CRM",
+    "crmOperations": "العمليات",
+    "leads": "العملاء المحتملون",
+    "opportunities": "الفرص",
+    "quotations": "عروض الأسعار",
+    "activities": "الأنشطة"
+  },
+  "leads": {
+    "title": "العملاء المحتملون",
+    "create": "إضافة عميل محتمل",
+    "createTitle": "إضافة عميل محتمل",
+    "editTitle": "تعديل عميل محتمل",
+    "details": "تفاصيل العميل المحتمل",
+    "searchPlaceholder": "بحث بالاسم أو البريد أو الهاتف…",
+    "allStatuses": "كل الحالات",
+    "allSources": "كل المصادر",
+    "number": "رقم",
+    "name": "الاسم",
+    "sourceLabel": "المصدر",
+    "statusLabel": "الحالة",
+    "lastContact": "آخر تواصل",
+    "quickActions": "إجراءات سريعة",
+    "healthTitle": "صحة العميل المحتمل",
+    "status": {
+      "new": "جديد",
+      "contacted": "تم التواصل",
+      "qualified": "مؤهل",
+      "proposal_sent": "عرض مُرسل",
+      "negotiation": "تفاوض",
+      "won": "فوز",
+      "lost": "خسارة"
+    },
+    "source": {
+      "whatsapp": "واتساب",
+      "website": "الموقع",
+      "facebook": "فيسبوك",
+      "instagram": "إنستغرام",
+      "tiktok": "تيك توك",
+      "referral": "إحالة",
+      "walk_in": "زيارة مباشرة",
+      "phone_call": "هاتف",
+      "other": "أخرى"
+    }
+  },
+  "quotations": {
+    "title": "عروض الأسعار",
+    "create": "إنشاء عرض سعر",
+    "createTitle": "إنشاء عرض سعر",
+    "createFromOpportunity": "إنشاء عرض سعر",
+    "editTitle": "تعديل عرض السعر",
+    "details": "تفاصيل العرض",
+    "number": "رقم العرض",
+    "statusLabel": "الحالة",
+    "total": "الإجمالي",
+    "subtotal": "المجموع الفرعي",
+    "validUntil": "صالح حتى",
+    "discount": "خصم",
+    "tax": "ضريبة",
+    "lineItems": "بنود العرض",
+    "description": "الوصف",
+    "qty": "الكمية",
+    "unitPrice": "سعر الوحدة",
+    "lineTotal": "إجمالي البند",
+    "addLine": "إضافة بند",
+    "itemsRequired": "أضف بنداً واحداً على الأقل.",
+    "searchPlaceholder": "بحث برقم العرض…",
+    "allStatuses": "كل الحالات",
+    "notFound": "عرض السعر غير موجود.",
+    "send": "إرسال للعميل",
+    "submitApproval": "إرسال للموافقة",
+    "approve": "موافقة",
+    "rejectApproval": "إرجاع للمسودة",
+    "markViewed": "تعليم كمُشاهَد",
+    "accept": "تعليم كمقبول",
+    "reject": "رفض",
+    "rejectReason": "سبب الرفض",
+    "convert": "تحويل إلى حجز",
+    "viewBooking": "عرض الحجز",
+    "customerRequired": "اربط عميلاً بالفرصة قبل التحويل.",
+    "alreadyConverted": "هذا العرض مرتبط بحجز مسبقاً.",
+    "status": {
+      "draft": "مسودة",
+      "pending_approval": "بانتظار الموافقة",
+      "approved": "موافق عليه",
+      "sent": "مُرسل",
+      "viewed": "مُشاهَد",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "expired": "منتهي",
+      "converted_to_booking": "تم التحويل"
+    },
+    "itemType": {
+      "package": "باقة",
+      "hotel": "فندق",
+      "flight": "طيران",
+      "visa": "تأشيرة",
+      "transport": "نقل",
+      "insurance": "تأمين",
+      "other": "أخرى"
+    }
   },
   "common": {
     "loading": "جاري التحميل...",
@@ -323,6 +424,115 @@
     "noBookings": "لا توجد حجوزات بعد",
     "loadError": "تعذر تحميل إحصائيات لوحة التحكم"
   },
+  "crmDashboard": {
+    "title": "لوحة CRM",
+    "loadError": "تعذر تحميل لوحة CRM",
+    "noData": "لا توجد بيانات لهذه الفترة",
+    "daysSinceContact": "أيام منذ آخر تواصل",
+    "period": {
+      "month": "هذا الشهر",
+      "quarter": "هذا الربع"
+    },
+    "kpis": {
+      "leadsThisMonth": "عملاء محتملون جدد",
+      "openOpportunities": "فرص مفتوحة",
+      "forecastRevenue": "توقعات مرجّحة",
+      "closedRevenue": "إيرادات مغلقة (فوز)",
+      "activitiesDueToday": "مستحقة اليوم",
+      "activitiesOverdue": "أنشطة متأخرة",
+      "whatsapp7d": "واتساب (7 أيام)"
+    },
+    "charts": {
+      "leadTrend": "اتجاه العملاء المحتملين",
+      "opportunityFunnel": "قمع الفرص",
+      "revenueForecast": "توقعات الإيراد",
+      "leadSources": "مصادر العملاء المحتملين"
+    },
+    "lists": {
+      "overdueActivities": "أنشطة متأخرة",
+      "staleLeads": "عملاء محتملون راكدون (3+ أيام)"
+    }
+  },
+  "operations": {
+    "title": "العمليات",
+    "subtitle": "صحة قائمة الاتصالات ومقاييس التسليم (آخر 24 ساعة)",
+    "loadError": "تعذر تحميل مقاييس العمليات",
+    "forbidden": "لوحة العمليات متاحة لمديري الوكالة فقط",
+    "metrics": {
+      "pendingJobs": "مهام معلقة",
+      "failedJobs": "مهام فاشلة (قابلة لإعادة المحاولة)",
+      "deadLetterJobs": "مهام dead-letter",
+      "completedJobs24h": "مهام مكتملة (24 س)",
+      "emailsSent24h": "رسائل بريد مرسلة (24 س)",
+      "emailsFailed24h": "رسائل بريد فاشلة (24 س)",
+      "notificationsSent24h": "إشعارات داخل التطبيق (24 س)",
+      "notificationsFailed24h": "إشعارات فاشلة (24 س)",
+      "events24h": "أحداث النطاق (24 س)",
+      "throughputPerHour": "متوسط الأحداث / ساعة",
+      "whatsappSent24h": "واتساب مرسل (24 س)",
+      "whatsappDelivered24h": "واتساب مُسلّم (24 س)",
+      "whatsappRead24h": "واتساب مقروء (24 س)",
+      "whatsappFailed24h": "واتساب فاشل (24 س)",
+      "whatsappFailureRate24h": "نسبة فشل واتساب % (24 س)"
+    }
+  },
+  "whatsapp": {
+    "status": {
+      "pending": "قيد الانتظار",
+      "sent": "مرسل",
+      "delivered": "مُسلّم",
+      "read": "مقروء",
+      "failed": "فاشل"
+    },
+    "metaStatus": {
+      "pending": "بانتظار الموافقة",
+      "approved": "معتمد",
+      "rejected": "مرفوض"
+    },
+    "send": {
+      "title": "إرسال واتساب",
+      "button": "إرسال قالب",
+      "template": "القالب",
+      "selectTemplate": "اختر قالباً",
+      "variable": "متغير",
+      "success": "تم الإرسال",
+      "failed": "فشل الإرسال",
+      "noTemplates": "لا توجد قوالب معتمدة"
+    },
+    "history": {
+      "title": "رسائل واتساب",
+      "empty": "لا توجد رسائل واتساب بعد",
+      "loadError": "تعذر تحميل السجل"
+    },
+    "prefs": {
+      "title": "تفضيلات التواصل",
+      "optedIn": "الاشتراك في واتساب مفعّل",
+      "optedOut": "غير مشترك في واتساب",
+      "optIn": "اشتراك",
+      "optOut": "إلغاء الاشتراك",
+      "language": "اللغة المفضلة",
+      "langEn": "الإنجليزية",
+      "langAr": "العربية",
+      "quietStart": "بداية ساعات الهدوء",
+      "quietEnd": "نهاية ساعات الهدوء",
+      "saved": "تم حفظ التفضيلات",
+      "saveError": "تعذر حفظ التفضيلات"
+    },
+    "admin": {
+      "title": "قوالب واتساب",
+      "subtitle": "سجل قوالب Meta — القوالب المعتمدة فقط يمكن إرسالها",
+      "addTemplate": "إضافة قالب",
+      "internalName": "الاسم الداخلي",
+      "metaName": "اسم قالب Meta",
+      "eventType": "نوع الحدث",
+      "variableCount": "عدد المتغيرات",
+      "bodyPreview": "معاينة النص",
+      "create": "إنشاء قالب",
+      "listTitle": "القوالب",
+      "empty": "لا توجد قوالب",
+      "markApproved": "تعيين كمعتمد"
+    }
+  },
   "fields": {
     "name": "الاسم",
     "firstName": "الاسم الأول",
@@ -567,7 +777,20 @@
     "noBookingLines": "لا توجد بنود على هذا الحجز.",
     "linesSubtotal": "مجموع البنود",
     "issue": "إصدار الفاتورة",
-    "recordPayment": "تسجيل دفعة"
+    "recordPayment": "تسجيل دفعة",
+    "pdf": {
+      "title": "فاتورة",
+      "download": "تنزيل PDF",
+      "downloading": "جاري إنشاء PDF…",
+      "downloadSuccess": "تم تنزيل الفاتورة بصيغة PDF.",
+      "downloadError": "تعذّر تنزيل الفاتورة بصيغة PDF.",
+      "thankYou": "شكراً لتعاملكم معنا.",
+      "generatedBy": "صادر عن TravelOS",
+      "draftWatermark": "مسودة",
+      "bookingReference": "مرجع الحجز",
+      "discount": "خصم",
+      "notAvailable": "—"
+    }
   },
   "payments": {
     "title": "المدفوعات",
@@ -578,7 +801,20 @@
     "details": "تفاصيل الدفع",
     "cancelledBookingError": "لا يمكن تسجيل مدفوعات لحجز ملغى.",
     "selectActiveBooking": "اختر حجزاً نشطاً.",
-    "recordError": "تعذّر تسجيل الدفعة."
+    "recordError": "تعذّر تسجيل الدفعة.",
+    "gateway": {
+      "title": "المدفوعات الإلكترونية",
+      "empty": "لا توجد جلسات دفع إلكترونية بعد",
+      "loadFailed": "تعذّر تحميل سجل الدفع الإلكتروني",
+      "providerRef": "مرجع المزود",
+      "ledgerRecorded": "مسجّل في دفتر المالية",
+      "orderType": {
+        "quotation_deposit": "عربون عرض السعر",
+        "quotation_full": "دفع كامل لعرض السعر",
+        "booking_balance": "رصيد الحجز",
+        "invoice_pay": "دفع فاتورة"
+      }
+    }
   },
   "users": {
     "title": "المستخدمون",
@@ -742,6 +978,54 @@
       "delete": "حذف"
     }
   },
+  "aiAnalytics": {
+    "title": "تحليلات وكلاء الذكاء الاصطناعي",
+    "subtitle": "استخدام المستأجر، التقييمات، الدعم، وذكاء الحجز من بيانات الوكلاء الفعلية.",
+    "forbidden": "ليس لديك صلاحية عرض تحليلات الذكاء الاصطناعي.",
+    "loadError": "تعذر تحميل التحليلات.",
+    "noData": "لا توجد بيانات في هذه الفترة.",
+    "noFeedback": "—",
+    "insightsTitle": "رؤى",
+    "phase2Note": "المرحلة 2: مؤشرات التصعيد، اكتشاف المواضيع، معايير الاستخدام، وتتبع التكلفة.",
+    "presets": {
+      "today": "اليوم",
+      "7d": "آخر 7 أيام",
+      "30d": "آخر 30 يوماً",
+      "90d": "آخر 90 يوماً",
+      "custom": "مخصص"
+    },
+    "customFrom": "من",
+    "customTo": "إلى",
+    "kpis": {
+      "totalConversations": "محادثات الذكاء الاصطناعي",
+      "activeUsers": "مستخدمون نشطون",
+      "feedbackRate": "نسبة التقييم الإيجابي",
+      "ticketsCreated": "تذاكر دعم أُنشئت",
+      "ticketsResolved": "تذاكر دعم حُلّت"
+    },
+    "charts": {
+      "agentDistribution": "توزيع استخدام الوكلاء",
+      "conversationVolume": "حجم المحادثات",
+      "dailyActiveUsers": "المستخدمون النشطون يومياً",
+      "conversations": "محادثات",
+      "activeUsers": "مستخدمون"
+    },
+    "rankings": {
+      "documents": "أبرز مستندات المعرفة",
+      "packages": "أبرز الباقات (وكيل الحجز)",
+      "destinations": "أبرز الوجهات (وكيل الحجز)",
+      "document": "المستند",
+      "package": "الباقة",
+      "destination": "الوجهة",
+      "references": "مراجع",
+      "bookings": "مسودات حجز"
+    },
+    "export": {
+      "feedback": "تصدير تقييمات CSV",
+      "usage": "تصدير الاستخدام CSV",
+      "support": "تصدير الدعم CSV"
+    }
+  },
   "aiHistory": {
     "title": "سجل محادثات الذكاء الاصطناعي",
     "subtitle": "استأنف جلسات الوكلاء السابقة. تأكيد مسودات الحجز يبقى في شاشة الحجوزات.",
@@ -857,5 +1141,243 @@
     "notHelpful": "غير مفيدة",
     "thanks": "شكراً على ملاحظاتك.",
     "errorGeneric": "تعذّر حفظ الملاحظات."
+  },
+  "email": {
+    "common": {
+      "supportContact": "للاستفسار: {email}",
+      "supportFallback": "تواصل مع مسؤول الوكالة للدعم.",
+      "poweredBy": "أُرسل عبر TravelOS"
+    },
+    "welcome": {
+      "subject": "مرحباً بك في {company}",
+      "title": "مرحباً بك في {company}",
+      "greeting": "مرحباً {name}،",
+      "intro": "حسابك أصبح نشطاً. دليل البدء السريع:",
+      "tip1": "افتح لوحة التحكم لمتابعة الحجوزات والإيرادات.",
+      "tip2": "استخدم وكلاء الذكاء الاصطناعي للمعرفة ومسودات الحجز والدعم.",
+      "tip3": "أدر العملاء والباقات والمدفوعات من القائمة الجانبية.",
+      "cta": "الذهاب إلى لوحة التحكم"
+    },
+    "bookingConfirmation": {
+      "subject": "تأكيد الحجز — {reference}",
+      "title": "تم تأكيد حجزك",
+      "intro": "شكراً لك. تم تأكيد الحجز التالي:",
+      "reference": "المرجع",
+      "customer": "العميل",
+      "package": "الباقة",
+      "destination": "الوجهة",
+      "travelDate": "تاريخ السفر",
+      "cta": "عرض الحجز"
+    },
+    "supportTicket": {
+      "subject": "تذكرة دعم {ticket}",
+      "title": "تذكرة {ticket}",
+      "status": "الحالة",
+      "subjectLabel": "الموضوع",
+      "cta": "فتح التذكرة",
+      "eventAssigned": "تم تعيينك على التذكرة {ticket}.",
+      "eventStatus": "حالة التذكرة {ticket} أصبحت {status}."
+    },
+    "quotationAccepted": {
+      "subject": "تم قبول عرض السعر {number}",
+      "title": "شكراً — تم قبول عرض السعر",
+      "intro": "سجّلنا قبولك لعرض السعر التالي:",
+      "number": "عرض السعر",
+      "customer": "العميل",
+      "total": "الإجمالي",
+      "validUntil": "صالح حتى",
+      "cta": "عرض في البوابة"
+    },
+    "quotationRejected": {
+      "subject": "تم رفض عرض السعر {number}",
+      "title": "تم رفض عرض السعر",
+      "intro": "سجّلنا رفضك لعرض السعر التالي:",
+      "number": "عرض السعر",
+      "customer": "العميل",
+      "total": "الإجمالي",
+      "reason": "السبب",
+      "cta": "عرض في البوابة"
+    }
+  },
+  "portal": {
+    "title": "بوابة العملاء",
+    "subtitle": "اطّلع على عروض الأسعار والحجوزات",
+    "staffPrompt": "موظفو الوكالة؟",
+    "login": {
+      "title": "تسجيل دخول العميل",
+      "subtitle": "الوصول إلى عروض الأسعار والحجوزات"
+    },
+    "forgot": {
+      "subtitle": "سنرسل رابطاً لإعادة تعيين كلمة مرور البوابة"
+    },
+    "nav": {
+      "dashboard": "لوحة التحكم",
+      "quotations": "عروض الأسعار",
+      "bookings": "الحجوزات",
+      "notifications": "الإشعارات",
+      "profile": "الملف الشخصي",
+      "preferences": "التفضيلات"
+    },
+    "preferences": {
+      "title": "تفضيلات التواصل",
+      "whatsappTitle": "إشعارات واتساب",
+      "whatsappDescription": "استلام تحديثات القوالب حول العروض والمدفوعات والحجوزات. قوالب فقط — بدون محادثة.",
+      "optedIn": "أنت مشترك في واتساب",
+      "optedOut": "أنت غير مشترك في واتساب",
+      "optIn": "الاشتراك في واتساب",
+      "optOut": "إلغاء الاشتراك",
+      "language": "اللغة المفضلة",
+      "langEn": "الإنجليزية",
+      "langAr": "العربية",
+      "quietStart": "بداية ساعات الهدوء",
+      "quietEnd": "نهاية ساعات الهدوء",
+      "saved": "تم حفظ التفضيلات",
+      "saveError": "تعذر حفظ التفضيلات"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "welcome": "مرحباً",
+      "openQuotations": "عروض أسعار مفتوحة",
+      "activeBookings": "حجوزات نشطة",
+      "viewQuotations": "عرض جميع عروض الأسعار",
+      "viewBookings": "عرض جميع الحجوزات",
+      "recentActivity": "النشاط الأخير"
+    },
+    "quotations": {
+      "title": "عروض الأسعار",
+      "empty": "لا توجد عروض أسعار متاحة",
+      "notFound": "عرض السعر غير موجود",
+      "back": "العودة إلى عروض الأسعار",
+      "validUntil": "صالح حتى",
+      "subtotal": "المجموع الفرعي",
+      "total": "الإجمالي",
+      "items": "البنود",
+      "itemDescription": "الوصف",
+      "itemType": "النوع",
+      "qty": "الكمية",
+      "unitPrice": "سعر الوحدة",
+      "lineTotal": "إجمالي البند",
+      "terms": "الشروط والأحكام"
+    },
+    "bookings": {
+      "title": "حجوزاتك",
+      "empty": "لا توجد حجوزات بعد",
+      "notFound": "الحجز غير موجود",
+      "back": "العودة إلى الحجوزات",
+      "travelDate": "تاريخ السفر",
+      "destination": "الوجهة",
+      "total": "الإجمالي",
+      "travelers": "المسافرون",
+      "leadTraveler": "المسافر الرئيسي",
+      "history": "سجل الحالة"
+    },
+    "profile": {
+      "title": "الحساب",
+      "accountType": "نوع الحساب",
+      "customerEmail": "البريد الإلكتروني للتواصل",
+      "phone": "الهاتف",
+      "readOnlyNotice": "هذه البوابة للعرض فقط. تواصل مع وكالة السفر لإجراء أي تغييرات."
+    },
+    "activity": {
+      "quotation": "عرض سعر",
+      "booking": "حجز"
+    },
+    "errors": {
+      "staffAccount": "هذا حساب موظف. يرجى استخدام تسجيل دخول الموظفين.",
+      "noPortalAccess": "لا يوجد وصول لبوابة العملاء لهذا الحساب.",
+      "loadFailed": "تعذّر تحميل البيانات. حاول مرة أخرى."
+    },
+    "actions": {
+      "prompt": "راجع عرض السعر واختر إجراءً.",
+      "accept": "قبول عرض السعر",
+      "accepting": "جاري القبول…",
+      "reject": "رفض عرض السعر",
+      "rejecting": "جاري الرفض…",
+      "confirmReject": "تأكيد الرفض",
+      "rejectReason": "السبب (اختياري)",
+      "rejectReasonPlaceholder": "أخبرنا عن سبب الرفض…",
+      "failed": "فشل الإجراء. حاول مرة أخرى."
+    },
+    "timeline": {
+      "title": "سجل النشاط",
+      "created": "تم إنشاء عرض السعر",
+      "sent": "أُرسل إليك",
+      "viewed": "تمت المشاهدة",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "reason": "السبب"
+    },
+    "pdf": {
+      "download": "تحميل PDF",
+      "downloading": "جاري إنشاء PDF…",
+      "failed": "تعذّر تحميل PDF"
+    },
+    "documents": {
+      "title": "المستندات",
+      "empty": "لا توجد مستندات بعد",
+      "download": "تحميل"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "empty": "لا توجد إشعارات بعد",
+      "markRead": "تعليم كمقروء",
+      "markAllRead": "تعليم الكل كمقروء",
+      "view": "عرض التفاصيل"
+    },
+    "payments": {
+      "payNow": "ادفع الآن",
+      "payPrompt": "أكمل دفعة الحجز عبر الإنترنت لتأكيد عرض السعر.",
+      "starting": "جاري بدء الدفع…",
+      "checkoutFailed": "تعذّر بدء الدفع. حاول مرة أخرى.",
+      "checkoutStatus": "حالة الدفع",
+      "status": "الحالة",
+      "awaitingPayment": "بانتظار تأكيد الدفع.",
+      "providerRef": "مرجع المزود",
+      "orderNotFound": "لم يتم العثور على جلسة الدفع",
+      "receiptPlaceholder": "تحميل الإيصال سيتوفر في تحديث لاحق.",
+      "viewBookings": "عرض الحجوزات",
+      "viewBooking": "عرض الحجز",
+      "attemptHistory": "محاولات الدفع",
+      "simulatePayment": "إتمام دفع تجريبي",
+      "simulateFailed": "فشل محاكاة الدفع"
+    }
+  },
+  "notifications": {
+    "inbox": {
+      "title": "صندوق الوارد",
+      "empty": "لا توجد إشعارات بعد",
+      "markRead": "تعليم كمقروء",
+      "markAllRead": "تعليم الكل كمقروء",
+      "open": "فتح",
+      "highPriority": "أولوية عالية"
+    },
+    "errors": {
+      "loadFailed": "تعذر تحميل الإشعارات"
+    }
+  },
+  "quotationStatus": {
+    "draft": "مسودة",
+    "pending_approval": "بانتظار الموافقة",
+    "approved": "معتمد",
+    "sent": "مُرسل",
+    "viewed": "تمت المشاهدة",
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
+    "expired": "منتهي",
+    "converted_to_booking": "تم التحويل"
+  },
+  "quotationItemType": {
+    "package": "باقة",
+    "hotel": "فندق",
+    "flight": "طيران",
+    "visa": "تأشيرة",
+    "transport": "نقل",
+    "insurance": "تأمين",
+    "other": "أخرى"
+  },
+  "pricingTier": {
+    "adult": "بالغ",
+    "child": "طفل",
+    "infant": "رضيع"
   }
 }

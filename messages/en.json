@@ -19,7 +19,18 @@
     "supportAgent": "Support Agent",
     "bookingAgent": "Booking Agent",
     "aiHistory": "AI History",
-    "auditLogs": "Audit Log"
+    "aiAnalytics": "AI Analytics",
+    "auditLogs": "Audit Log",
+    "crmDashboard": "CRM Dashboard",
+    "crmOperations": "Operations",
+    "salesInsights": "Sales Insights",
+    "operationsInsights": "Operations Insights",
+    "salesAgent": "Sales Assistant",
+    "operationsAgent": "Operations Assistant",
+    "leads": "Leads",
+    "opportunities": "Opportunities",
+    "quotations": "Quotations",
+    "activities": "Activities"
   },
   "common": {
     "loading": "Loading...",
@@ -323,6 +334,179 @@
     "noBookings": "No bookings yet",
     "loadError": "Failed to load dashboard statistics"
   },
+  "crmDashboard": {
+    "title": "CRM Dashboard",
+    "loadError": "Failed to load CRM dashboard",
+    "noData": "No data for this period",
+    "daysSinceContact": "Days since contact",
+    "period": {
+      "month": "This month",
+      "quarter": "This quarter"
+    },
+    "kpis": {
+      "leadsThisMonth": "New leads",
+      "openOpportunities": "Open opportunities",
+      "forecastRevenue": "Weighted forecast",
+      "closedRevenue": "Closed won revenue",
+      "activitiesDueToday": "Due today",
+      "activitiesOverdue": "Overdue activities",
+      "whatsapp7d": "WhatsApp (7 days)"
+    },
+    "charts": {
+      "leadTrend": "Lead trend",
+      "opportunityFunnel": "Opportunity funnel",
+      "revenueForecast": "Revenue forecast",
+      "leadSources": "Lead sources"
+    },
+    "lists": {
+      "overdueActivities": "Overdue activities",
+      "staleLeads": "Stale leads (3+ days)",
+      "hotLeads": "Hot leads",
+      "atRiskOpportunities": "At-risk opportunities"
+    },
+    "salesAi": {
+      "openRecommendations": "Open recommendations"
+    },
+    "opsAi": {
+      "openRecommendations": "Open ops recommendations",
+      "atRiskBookings": "At-risk bookings",
+      "departures7d": "Departures (7 days)"
+    }
+  },
+  "opsAi": {
+    "panelTitle": "Operations Assistant",
+    "stripTitle": "Operations readiness",
+    "health": "Health",
+    "readiness": "Readiness",
+    "status": "Status",
+    "lowConfidence": "Low confidence — limited booking data",
+    "recommendations": "Recommended actions",
+    "dismiss": "Dismiss",
+    "ask": "Ask",
+    "askPlaceholder": "Ask about this booking…",
+    "insightsLink": "View operations insights",
+    "insightsTitle": "Operations Insights",
+    "loadError": "Failed to load operations insights",
+    "openRecommendations": "Open recommendations",
+    "atRiskBookings": "At-risk bookings",
+    "departures7d": "Departures (7 days)",
+    "paymentGaps": "Payment gaps pre-departure",
+    "readinessSummary": "Readiness summary",
+    "actionBacklog": "Action backlog",
+    "missingDocuments": "Missing documents",
+    "travelerActions": "Traveler actions",
+    "voucherBacklog": "Voucher backlog",
+    "upcomingDepartures": "Upcoming departures (30 days)",
+    "nextDeparture": "Next departure",
+    "selectBookingHint": "Open a booking and use Operations Assistant from the booking detail screen."
+  },
+  "salesAi": {
+    "panelTitle": "Sales Assistant",
+    "health": "Health",
+    "priority": "Priority",
+    "winProb": "Win probability",
+    "lowConfidence": "Low confidence — limited data",
+    "recommendations": "Recommended actions",
+    "dismiss": "Dismiss",
+    "ask": "Ask",
+    "askPlaceholder": "Ask about this record…",
+    "insightsLink": "View sales insights",
+    "insightsTitle": "Sales Insights",
+    "loadError": "Failed to load sales insights",
+    "acceptanceRate": "Quotation acceptance rate",
+    "paymentConversion": "Payment conversion",
+    "openRecommendations": "Open recommendations",
+    "leadFunnel": "Lead funnel",
+    "quotationFunnel": "Quotation funnel",
+    "topPackages": "Top packages",
+    "topDestinations": "Top destinations",
+    "lostReasons": "Lost reasons",
+    "repLeaderboard": "Rep leaderboard",
+    "rep": "Rep",
+    "won": "Won",
+    "revenue": "Revenue",
+    "openOpps": "Open opps"
+  },
+  "operations": {
+    "title": "Operations",
+    "subtitle": "Communication queue health and delivery metrics (last 24 hours)",
+    "loadError": "Failed to load operations metrics",
+    "forbidden": "Operations dashboard is available to tenant administrators only",
+    "metrics": {
+      "pendingJobs": "Pending jobs",
+      "failedJobs": "Failed jobs (retryable)",
+      "deadLetterJobs": "Dead-letter jobs",
+      "completedJobs24h": "Jobs completed (24h)",
+      "emailsSent24h": "Emails sent (24h)",
+      "emailsFailed24h": "Emails failed (24h)",
+      "notificationsSent24h": "In-app notifications sent (24h)",
+      "notificationsFailed24h": "In-app notifications failed (24h)",
+      "events24h": "Domain events (24h)",
+      "throughputPerHour": "Avg events / hour",
+      "whatsappSent24h": "WhatsApp sent (24h)",
+      "whatsappDelivered24h": "WhatsApp delivered (24h)",
+      "whatsappRead24h": "WhatsApp read (24h)",
+      "whatsappFailed24h": "WhatsApp failed (24h)",
+      "whatsappFailureRate24h": "WhatsApp failure rate % (24h)"
+    }
+  },
+  "whatsapp": {
+    "status": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "delivered": "Delivered",
+      "read": "Read",
+      "failed": "Failed"
+    },
+    "metaStatus": {
+      "pending": "Pending approval",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "send": {
+      "title": "Send WhatsApp",
+      "button": "Send template message",
+      "template": "Template",
+      "selectTemplate": "Select a template",
+      "variable": "Variable",
+      "success": "Message sent",
+      "failed": "Send failed",
+      "noTemplates": "No approved templates available"
+    },
+    "history": {
+      "title": "WhatsApp messages",
+      "empty": "No WhatsApp messages yet",
+      "loadError": "Failed to load message history"
+    },
+    "prefs": {
+      "title": "Communication preferences",
+      "optedIn": "WhatsApp opt-in active",
+      "optedOut": "Not opted in to WhatsApp",
+      "optIn": "Opt in",
+      "optOut": "Opt out",
+      "language": "Preferred language",
+      "langEn": "English",
+      "langAr": "Arabic",
+      "quietStart": "Quiet hours start",
+      "quietEnd": "Quiet hours end",
+      "saved": "Preferences saved",
+      "saveError": "Failed to save preferences"
+    },
+    "admin": {
+      "title": "WhatsApp templates",
+      "subtitle": "Meta Cloud template registry — only approved templates can send",
+      "addTemplate": "Add template",
+      "internalName": "Internal name",
+      "metaName": "Meta template name",
+      "eventType": "Event type (e.g. quotation.sent)",
+      "variableCount": "Variable count",
+      "bodyPreview": "Body preview",
+      "create": "Create template",
+      "listTitle": "Templates",
+      "empty": "No templates configured",
+      "markApproved": "Mark approved"
+    }
+  },
   "fields": {
     "name": "Name",
     "firstName": "First Name",
@@ -364,6 +548,252 @@
     "selectCity": "— Select city —",
     "selectDestination": "— Select destination —",
     "selectBooking": "Select booking..."
+  },
+  "leads": {
+    "title": "Leads",
+    "create": "Create Lead",
+    "searchPlaceholder": "Search name, email, phone, number…",
+    "allStatuses": "All statuses",
+    "allSources": "All sources",
+    "number": "Lead #",
+    "name": "Name",
+    "sourceLabel": "Source",
+    "statusLabel": "Status",
+    "lastContact": "Last contact",
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "proposal_sent": "Proposal sent",
+      "negotiation": "Negotiation",
+      "won": "Won",
+      "lost": "Lost"
+    },
+    "source": {
+      "whatsapp": "WhatsApp",
+      "website": "Website",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "referral": "Referral",
+      "walk_in": "Walk-in",
+      "phone_call": "Phone",
+      "other": "Other"
+    },
+    "createTitle": "Create Lead",
+    "editTitle": "Edit Lead",
+    "details": "Lead details",
+    "duplicateExactTitle": "Exact duplicate",
+    "duplicateExactHint": "This email or phone already belongs to another lead. Change the contact details or open the existing lead.",
+    "duplicatePossibleTitle": "Possible duplicate",
+    "duplicatePossibleNote": "Similar phone number — you may still save if this is a different person.",
+    "duplicateTitle": "Possible duplicate lead",
+    "duplicateHint": "Another lead may match this contact. Review before saving.",
+    "duplicateProceed": "Save anyway",
+    "duplicateBlocked": "Save blocked until you review duplicates or choose Save anyway.",
+    "duplicateMatch": {
+      "email": "email",
+      "mobile": "mobile",
+      "whatsapp": "WhatsApp"
+    },
+    "createError": "Could not create lead.",
+    "updateError": "Could not update lead.",
+    "nameRequired": "Name is required.",
+    "preferredChannel": "Preferred channel",
+    "channel": { "in_person": "In person" },
+    "destination": "Destination",
+    "budget": "Expected budget",
+    "currency": "Currency",
+    "pax": "Travelers",
+    "travelDate": "Travel date",
+    "lostReason": "Lost reason",
+    "healthTitle": "Lead health",
+    "healthLoadError": "Could not load health score.",
+    "healthNeverContacted": "No contact logged yet.",
+    "healthDaysSince": "Last contact {days} day(s) ago",
+    "health": {
+      "healthy": "Healthy",
+      "needs_follow_up": "Needs follow-up",
+      "critical": "Critical"
+    },
+    "healthFactor": {
+      "missing_phone": "No phone or WhatsApp on file",
+      "never_contacted": "Never contacted",
+      "stale_3d": "No contact in 3+ days",
+      "stale_7d": "No contact in 7+ days",
+      "overdue_activities": "Overdue follow-ups",
+      "new_not_followed_up": "New lead not followed up",
+      "terminal_status": "Closed lead"
+    },
+    "quickActions": "Quick actions",
+    "openWhatsApp": "Open WhatsApp",
+    "logWhatsApp": "Log WhatsApp activity",
+    "whatsappLogged": "WhatsApp activity logged.",
+    "convertOpportunity": "Create opportunity",
+    "convertCustomer": "Convert to customer",
+    "opportunityCreated": "Opportunity {number} created.",
+    "assign": "Assign",
+    "assigned": "Owner updated.",
+    "viewCustomer": "View customer",
+    "actionError": "Action failed."
+  },
+  "opportunities": {
+    "title": "Opportunities",
+    "create": "Create opportunity",
+    "createTitle": "Create opportunity",
+    "editTitle": "Edit opportunity",
+    "details": "Opportunity details",
+    "number": "Opp #",
+    "stageLabel": "Stage",
+    "revenue": "Est. revenue",
+    "probability": "Probability (%)",
+    "closeDate": "Expected close",
+    "forecastTitle": "Pipeline forecast",
+    "forecastTotal": "Weighted pipeline",
+    "createBooking": "Create draft booking",
+    "createBookingCustom": "Custom booking (no package)",
+    "createBookingPackage": "Package booking",
+    "bookingCreated": "Draft booking {reference} created.",
+    "needsCustomer": "Link or convert to a customer before creating a booking.",
+    "allStages": "All stages",
+    "stage": {
+      "discovery": "Discovery",
+      "proposal": "Proposal",
+      "negotiation": "Negotiation",
+      "verbal_approval": "Verbal approval",
+      "closed_won": "Closed won",
+      "closed_lost": "Closed lost"
+    },
+    "leadSource": "Lead source",
+    "whatsapp": "WhatsApp",
+    "pax": "Travelers",
+    "stageHistory": "Stage history",
+    "noStageHistory": "No stage changes recorded yet.",
+    "bookingStageRequired": "Move to Verbal Approval or Closed Won before creating a booking.",
+    "adminOverrideBooking": "Tenant admin: override stage requirement"
+  },
+  "quotations": {
+    "title": "Quotations",
+    "create": "Create quotation",
+    "createTitle": "Create quotation",
+    "createFromOpportunity": "Create quotation",
+    "editTitle": "Edit quotation",
+    "details": "Quotation details",
+    "number": "Quote #",
+    "statusLabel": "Status",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "validUntil": "Valid until",
+    "discount": "Discount",
+    "tax": "Tax",
+    "lineItems": "Line items",
+    "description": "Description",
+    "qty": "Qty",
+    "unitPrice": "Unit price",
+    "lineTotal": "Line total",
+    "addLine": "Add line",
+    "itemsRequired": "Add at least one line item.",
+    "searchPlaceholder": "Search by quote number…",
+    "allStatuses": "All statuses",
+    "notFound": "Quotation not found.",
+    "send": "Send to customer",
+    "submitApproval": "Submit for approval",
+    "approve": "Approve",
+    "rejectApproval": "Return to draft",
+    "markViewed": "Mark as viewed",
+    "accept": "Mark accepted",
+    "reject": "Reject",
+    "rejectReason": "Rejection reason",
+    "convert": "Convert to booking",
+    "viewBooking": "View booking",
+    "customerRequired": "Link a customer on the opportunity before converting.",
+    "alreadyConverted": "This quotation is already linked to a booking.",
+    "status": {
+      "draft": "Draft",
+      "pending_approval": "Pending approval",
+      "approved": "Approved",
+      "sent": "Sent",
+      "viewed": "Viewed",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "expired": "Expired",
+      "converted_to_booking": "Converted"
+    },
+    "itemType": {
+      "package": "Package",
+      "hotel": "Hotel",
+      "flight": "Flight",
+      "visa": "Visa",
+      "transport": "Transport",
+      "insurance": "Insurance",
+      "other": "Other"
+    }
+  },
+  "activities": {
+    "title": "Activities",
+    "create": "Log activity",
+    "createTitle": "Log activity",
+    "editTitle": "Edit activity",
+    "details": "Activity details",
+    "subject": "Subject",
+    "typeLabel": "Type",
+    "statusLabel": "Status",
+    "due": "Due",
+    "completed": "Completed",
+    "timeline": "Timeline",
+    "logActivity": "Log activity",
+    "noTimeline": "No activities yet.",
+    "engagement": "Engagement",
+    "count": "Activity count",
+    "lastActivity": "Last activity",
+    "views": {
+      "timeline": "Timeline",
+      "upcoming": "Upcoming",
+      "overdue": "Overdue",
+      "my": "My activities"
+    },
+    "type": {
+      "call": "Call",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "meeting": "Meeting",
+      "task": "Task"
+    },
+    "status": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "directionLabel": "Direction",
+    "eventTypeLabel": "Timeline event",
+    "direction": {
+      "incoming": "Incoming",
+      "outgoing": "Outgoing"
+    },
+    "eventType": {
+      "activity.call.incoming": "Incoming call",
+      "activity.call.outgoing": "Outgoing call",
+      "activity.whatsapp.incoming": "Incoming WhatsApp",
+      "activity.whatsapp.outgoing": "Outgoing WhatsApp",
+      "activity.email.incoming": "Incoming email",
+      "activity.email.outgoing": "Outgoing email",
+      "activity.meeting": "Meeting",
+      "activity.task": "Task",
+      "opportunity.stage_changed": "Stage change",
+      "lead_created": "Lead created",
+      "opportunity_created": "Opportunity created",
+      "booking_created": "Booking created",
+      "invoice_created": "Invoice created",
+      "payment_received": "Payment received",
+      "ticket_created": "Support ticket created",
+      "quotation_created": "Quotation created",
+      "quotation_sent": "Quotation sent",
+      "quotation_viewed": "Quotation viewed",
+      "quotation_accepted": "Quotation accepted",
+      "quotation_rejected": "Quotation rejected",
+      "quotation_converted": "Quotation converted to booking"
+    }
   },
   "audit": {
     "createdBy": "Created by {user} on {date}",
@@ -413,6 +843,45 @@
     "confirmDeleteAddress": "Delete this address?",
     "bookingHistory": "Booking history",
     "noBookings": "No bookings for this customer yet."
+  },
+  "customer360": {
+    "loadError": "Could not load customer profile.",
+    "customerSince": "Customer since",
+    "viewFullTimeline": "View full timeline",
+    "loadMore": "Load more",
+    "noOpportunities": "No opportunities for this customer.",
+    "noInvoices": "No invoices for this customer.",
+    "noPayments": "No payments for this customer.",
+    "noTickets": "No support tickets for this customer.",
+    "kpi": {
+      "bookings": "Bookings",
+      "confirmed": "Confirmed",
+      "openOpportunities": "Open opportunities",
+      "lifetimeValue": "Lifetime customer value",
+      "lcvHint": "Sum of completed payments",
+      "outstanding": "Outstanding balance"
+    },
+    "revenue": {
+      "ytd": "YTD revenue",
+      "avgBooking": "Avg. booking value"
+    },
+    "bucket": {
+      "all": "All",
+      "sales": "Sales",
+      "operations": "Operations",
+      "support": "Support"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "timeline": "Timeline",
+      "opportunities": "Opportunities",
+      "activities": "Activities",
+      "bookings": "Bookings",
+      "invoices": "Invoices",
+      "payments": "Payments",
+      "tickets": "Support tickets",
+      "revenue": "Revenue"
+    }
   },
   "addressType": {
     "billing": "Billing",
@@ -567,7 +1036,20 @@
     "noBookingLines": "This booking has no line items to display.",
     "linesSubtotal": "Lines subtotal",
     "issue": "Issue Invoice",
-    "recordPayment": "Record Payment"
+    "recordPayment": "Record Payment",
+    "pdf": {
+      "title": "Invoice",
+      "download": "Download PDF",
+      "downloading": "Generating PDF…",
+      "downloadSuccess": "Invoice PDF downloaded.",
+      "downloadError": "Could not download invoice PDF.",
+      "thankYou": "Thank you for your business.",
+      "generatedBy": "Generated by TravelOS",
+      "draftWatermark": "DRAFT",
+      "bookingReference": "Booking reference",
+      "discount": "Discount",
+      "notAvailable": "—"
+    }
   },
   "payments": {
     "title": "Payments",
@@ -578,7 +1060,20 @@
     "details": "Payment Details",
     "cancelledBookingError": "Payments cannot be recorded for a cancelled booking.",
     "selectActiveBooking": "Select an active booking.",
-    "recordError": "Could not record payment."
+    "recordError": "Could not record payment.",
+    "gateway": {
+      "title": "Online payments",
+      "empty": "No online checkout sessions yet",
+      "loadFailed": "Could not load online payment history",
+      "providerRef": "Provider reference",
+      "ledgerRecorded": "Recorded in ledger",
+      "orderType": {
+        "quotation_deposit": "Quotation deposit",
+        "quotation_full": "Quotation full payment",
+        "booking_balance": "Booking balance",
+        "invoice_pay": "Invoice payment"
+      }
+    }
   },
   "users": {
     "title": "Users",
@@ -742,6 +1237,54 @@
       "delete": "Delete"
     }
   },
+  "aiAnalytics": {
+    "title": "AI Agent Analytics",
+    "subtitle": "Tenant usage, feedback, support, and booking intelligence from live agent data.",
+    "forbidden": "You do not have permission to view AI analytics.",
+    "loadError": "Failed to load analytics.",
+    "noData": "No data in this period.",
+    "noFeedback": "—",
+    "insightsTitle": "Insights",
+    "phase2Note": "Phase 2: escalation proxies, topic detection, utilization benchmarks, and cost tracking.",
+    "presets": {
+      "today": "Today",
+      "7d": "Last 7 days",
+      "30d": "Last 30 days",
+      "90d": "Last 90 days",
+      "custom": "Custom"
+    },
+    "customFrom": "From",
+    "customTo": "To",
+    "kpis": {
+      "totalConversations": "AI Conversations",
+      "activeUsers": "Active AI Users",
+      "feedbackRate": "Feedback Rate (helpful)",
+      "ticketsCreated": "Support Tickets Created",
+      "ticketsResolved": "Support Tickets Resolved"
+    },
+    "charts": {
+      "agentDistribution": "Agent usage distribution",
+      "conversationVolume": "Conversation volume",
+      "dailyActiveUsers": "Daily active users",
+      "conversations": "Conversations",
+      "activeUsers": "Users"
+    },
+    "rankings": {
+      "documents": "Top knowledge documents",
+      "packages": "Top packages (Booking Agent)",
+      "destinations": "Top destinations (Booking Agent)",
+      "document": "Document",
+      "package": "Package",
+      "destination": "Destination",
+      "references": "References",
+      "bookings": "Draft bookings"
+    },
+    "export": {
+      "feedback": "Export feedback CSV",
+      "usage": "Export usage CSV",
+      "support": "Export support CSV"
+    }
+  },
   "aiHistory": {
     "title": "AI Conversation History",
     "subtitle": "Resume prior agent sessions. Booking drafts still require confirmation in Bookings.",
@@ -857,5 +1400,243 @@
     "notHelpful": "Not helpful",
     "thanks": "Thanks for your feedback.",
     "errorGeneric": "Could not save feedback."
+  },
+  "email": {
+    "common": {
+      "supportContact": "Questions? Contact us at {email}",
+      "supportFallback": "Contact your agency administrator for support.",
+      "poweredBy": "Sent via TravelOS"
+    },
+    "welcome": {
+      "subject": "Welcome to {company}",
+      "title": "Welcome to {company}",
+      "greeting": "Hello {name},",
+      "intro": "Your account is active. Here is a quick start guide:",
+      "tip1": "Open the dashboard to see bookings and revenue.",
+      "tip2": "Use AI agents for knowledge, booking drafts, and support.",
+      "tip3": "Manage customers, packages, and payments from the sidebar.",
+      "cta": "Go to dashboard"
+    },
+    "bookingConfirmation": {
+      "subject": "Booking confirmed — {reference}",
+      "title": "Your booking is confirmed",
+      "intro": "Thank you. The following booking has been confirmed:",
+      "reference": "Reference",
+      "customer": "Customer",
+      "package": "Package",
+      "destination": "Destination",
+      "travelDate": "Travel date",
+      "cta": "View booking"
+    },
+    "supportTicket": {
+      "subject": "Support ticket {ticket}",
+      "title": "Ticket {ticket}",
+      "status": "Status",
+      "subjectLabel": "Subject",
+      "cta": "Open ticket",
+      "eventAssigned": "You have been assigned to ticket {ticket}.",
+      "eventStatus": "Ticket {ticket} status is now {status}."
+    },
+    "quotationAccepted": {
+      "subject": "Quotation {number} accepted",
+      "title": "Thank you — quotation accepted",
+      "intro": "We have recorded your acceptance of the following quotation:",
+      "number": "Quotation",
+      "customer": "Customer",
+      "total": "Total",
+      "validUntil": "Valid until",
+      "cta": "View in portal"
+    },
+    "quotationRejected": {
+      "subject": "Quotation {number} declined",
+      "title": "Quotation declined",
+      "intro": "We have recorded your decision to decline the following quotation:",
+      "number": "Quotation",
+      "customer": "Customer",
+      "total": "Total",
+      "reason": "Reason",
+      "cta": "View in portal"
+    }
+  },
+  "portal": {
+    "title": "Customer Portal",
+    "subtitle": "View your quotations and bookings",
+    "staffPrompt": "Agency staff?",
+    "login": {
+      "title": "Customer sign in",
+      "subtitle": "Access your travel quotations and bookings"
+    },
+    "forgot": {
+      "subtitle": "We will email you a link to reset your portal password"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "quotations": "Quotations",
+      "bookings": "Bookings",
+      "notifications": "Notifications",
+      "profile": "Profile",
+      "preferences": "Preferences"
+    },
+    "preferences": {
+      "title": "Communication preferences",
+      "whatsappTitle": "WhatsApp notifications",
+      "whatsappDescription": "Receive template updates about quotations, payments, and bookings. Template-only — no chat replies.",
+      "optedIn": "You are opted in to WhatsApp",
+      "optedOut": "You are not opted in to WhatsApp",
+      "optIn": "Opt in to WhatsApp",
+      "optOut": "Opt out",
+      "language": "Preferred language",
+      "langEn": "English",
+      "langAr": "Arabic",
+      "quietStart": "Quiet hours start",
+      "quietEnd": "Quiet hours end",
+      "saved": "Preferences saved",
+      "saveError": "Failed to save preferences"
+    },
+    "dashboard": {
+      "title": "Your dashboard",
+      "welcome": "Welcome back",
+      "openQuotations": "Open quotations",
+      "activeBookings": "Active bookings",
+      "viewQuotations": "View all quotations",
+      "viewBookings": "View all bookings",
+      "recentActivity": "Recent activity"
+    },
+    "quotations": {
+      "title": "Your quotations",
+      "empty": "No quotations available yet",
+      "notFound": "Quotation not found",
+      "back": "Back to quotations",
+      "validUntil": "Valid until",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "items": "Line items",
+      "itemDescription": "Description",
+      "itemType": "Type",
+      "qty": "Qty",
+      "unitPrice": "Unit price",
+      "lineTotal": "Line total",
+      "terms": "Terms & conditions"
+    },
+    "bookings": {
+      "title": "Your bookings",
+      "empty": "No bookings yet",
+      "notFound": "Booking not found",
+      "back": "Back to bookings",
+      "travelDate": "Travel date",
+      "destination": "Destination",
+      "total": "Total",
+      "travelers": "Travelers",
+      "leadTraveler": "Lead traveler",
+      "history": "Status history"
+    },
+    "profile": {
+      "title": "Account",
+      "accountType": "Account type",
+      "customerEmail": "Contact email",
+      "phone": "Phone",
+      "readOnlyNotice": "This portal is read-only. Contact your travel agency to make changes."
+    },
+    "activity": {
+      "quotation": "Quotation",
+      "booking": "Booking"
+    },
+    "errors": {
+      "staffAccount": "This is an agency staff account. Please use the staff login.",
+      "noPortalAccess": "No customer portal access found for this account.",
+      "loadFailed": "Could not load data. Please try again."
+    },
+    "actions": {
+      "prompt": "Review this quotation and choose an action.",
+      "accept": "Accept quotation",
+      "accepting": "Accepting…",
+      "reject": "Reject quotation",
+      "rejecting": "Rejecting…",
+      "confirmReject": "Confirm rejection",
+      "rejectReason": "Reason (optional)",
+      "rejectReasonPlaceholder": "Tell us why you are declining…",
+      "failed": "Action failed. Please try again."
+    },
+    "timeline": {
+      "title": "Activity timeline",
+      "created": "Quotation created",
+      "sent": "Sent to you",
+      "viewed": "Viewed",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "reason": "Reason"
+    },
+    "pdf": {
+      "download": "Download PDF",
+      "downloading": "Generating PDF…",
+      "failed": "Could not download PDF"
+    },
+    "documents": {
+      "title": "Documents",
+      "empty": "No documents available yet",
+      "download": "Download"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No notifications yet",
+      "markRead": "Mark as read",
+      "markAllRead": "Mark all as read",
+      "view": "View details"
+    },
+    "payments": {
+      "payNow": "Pay now",
+      "payPrompt": "Complete your deposit online to secure this quotation.",
+      "starting": "Starting checkout…",
+      "checkoutFailed": "Could not start checkout. Please try again.",
+      "checkoutStatus": "Checkout status",
+      "status": "Status",
+      "awaitingPayment": "Waiting for payment confirmation.",
+      "providerRef": "Reference",
+      "orderNotFound": "Payment session not found",
+      "receiptPlaceholder": "Receipt download will be available in a future update.",
+      "viewBookings": "View your bookings",
+      "viewBooking": "View booking",
+      "attemptHistory": "Payment attempts",
+      "simulatePayment": "Complete test payment (sandbox)",
+      "simulateFailed": "Test payment simulation failed"
+    }
+  },
+  "notifications": {
+    "inbox": {
+      "title": "Inbox",
+      "empty": "No notifications yet",
+      "markRead": "Mark as read",
+      "markAllRead": "Mark all as read",
+      "open": "Open",
+      "highPriority": "High priority"
+    },
+    "errors": {
+      "loadFailed": "Could not load notifications"
+    }
+  },
+  "quotationStatus": {
+    "draft": "Draft",
+    "pending_approval": "Pending approval",
+    "approved": "Approved",
+    "sent": "Sent",
+    "viewed": "Viewed",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "expired": "Expired",
+    "converted_to_booking": "Converted"
+  },
+  "quotationItemType": {
+    "package": "Package",
+    "hotel": "Hotel",
+    "flight": "Flight",
+    "visa": "Visa",
+    "transport": "Transport",
+    "insurance": "Insurance",
+    "other": "Other"
+  },
+  "pricingTier": {
+    "adult": "Adult",
+    "child": "Child",
+    "infant": "Infant"
   }
 }

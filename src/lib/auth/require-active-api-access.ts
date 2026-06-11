@@ -1,23 +1,26 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   ActiveAccountContext,
   validateActiveAccountAccess,
 } from "@/lib/auth/validate-active-account";
+import { createApiClient, type ApiAuthMode } from "@/lib/supabase/api-client";
 
 export type { ActiveAccountContext };
 
 export interface ActiveApiContext extends ActiveAccountContext {
-  supabase: Awaited<ReturnType<typeof createClient>>;
+  supabase: SupabaseClient;
+  authMode: ApiAuthMode;
 }
 
 /**
  * Authenticated + active account + JWT/DB consistency for API routes.
+ * Supports SSR cookies (web) and Authorization: Bearer (mobile).
  */
 export async function requireActiveApiAccess(): Promise<
   ActiveApiContext | NextResponse
 > {
-  const supabase = await createClient();
+  const { supabase, authMode } = await createApiClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -34,5 +37,5 @@ export async function requireActiveApiAccess(): Promise<
     return gate;
   }
 
-  return { ...gate, supabase };
+  return { ...gate, supabase, authMode };
 }

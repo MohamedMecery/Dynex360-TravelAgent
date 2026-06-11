@@ -13,6 +13,8 @@ const AGENT_ROUTES: Record<AiAgentKey, string> = {
   knowledge: "/ai/knowledge",
   booking: "/ai/booking",
   support: "/ai/support",
+  sales: "/ai/sales",
+  operations: "/ai/operations",
 };
 
 function isTenantWideAiViewer(role: UserRole | undefined): boolean {

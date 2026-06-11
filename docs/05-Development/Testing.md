@@ -1,6 +1,6 @@
 # TravelOS Testing Strategy
 
-**Version:** 1.1 — MVP (E2E implemented)
+**Version:** 2.0 — Pilot gates (Sprint 9E)
 
 ---
 
@@ -27,6 +27,7 @@ Automated critical flows in `e2e/`:
 | `booking-flow.spec.ts` | Customer → package publish → booking → confirm → payment |
 | `ai-agents.spec.ts` | AI pages + draft builder (UI); live chat API tests when `E2E_RUN_AI_API=1` |
 | `invoice-snapshot.spec.ts` | Invoice from `DEMO-BK-005` → draft lines → Issue → frozen snapshot badge |
+| `invoice-pdf.spec.ts` | Invoice show → Download PDF → `application/pdf` response |
 
 ### Prerequisites
 
@@ -72,6 +73,34 @@ npm run test:e2e:report
 ```
 
 E2E tests use **unique timestamps** in data (emails, package titles) so re-runs do not collide with prior records.
+
+---
+
+## Sprint gate scripts (pilot verification)
+
+HTTP and DB gates run against `GATE_BASE_URL` (default `http://localhost:3000`). Requires `.env.local` with Supabase keys; portal gates need `node scripts/provision-portal-test-account.mjs`.
+
+| Command | Sprint | Coverage |
+|---------|--------|----------|
+| `npm run validate:production-env` | 9E | Env catalog / mock detection |
+| `npm run verify:worker-health` | 9E | Queue depth, cron smoke |
+| `npm run gate:commercial` | 9E | Full commercial journey |
+| `npm run gate:production-matrix` | 9E | All subsystem gates |
+| `npm run gate:sprint7b:foundation` | 7B | API auth Bearer + cookie |
+| `npm run gate:sprint6:dashboard` | 6 | CRM dashboard RPC |
+| `npm run gate:portal` | 8A–C | Portal APIs + notifications |
+| `npm run gate:sprint8c:events` | 8C | Domain events |
+| `npm run gate:sprint8d:worker` | 8D | Dispatch worker |
+| `npm run gate:sprint9a:payments` | 9A | Checkout + Paymob webhook |
+| `npm run gate:sprint9b:whatsapp` | 9B | WhatsApp dispatch |
+| `npm run gate:sprint9c:sales-ai` | 9C | Sales AI schema/RPC |
+| `npm run gate:sprint9d:operations-ai` | 9D | Ops AI schema/RPC |
+| `npm run test:crm-rls` | CRM | RLS policy smoke |
+| `npm run test:customer360-gate` | 5 | Customer 360 validation |
+
+**Unified commercial path:** `npm run gate:commercial` — see [Sprint-9E-Production-Verification-Matrix.md](../03-Architecture/Sprint-9E-Production-Verification-Matrix.md).
+
+**Playwright portal spec:** `e2e/portal-gate.spec.ts` (UI layer; optional alongside HTTP gate).
 
 ### CI
 

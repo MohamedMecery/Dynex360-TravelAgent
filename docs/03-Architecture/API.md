@@ -1,21 +1,46 @@
 # TravelOS API Specification
 
-**Version:** 1.0 — MVP  
+**Version:** 1.1 — Mobile foundation (Sprint 7B)  
 **Base URL:** `/api`  
-**Auth:** Bearer JWT (Supabase Auth)  
+**Auth:** Supabase session — **Bearer JWT** (mobile) or **SSR cookies** (web)  
 **Content-Type:** `application/json`
 
 ---
 
 ## Common Conventions
 
-### Authentication Header
+### Authentication (dual transport)
+
+All protected routes use `requireActiveApiAccess()`:
+
+| Transport | Client | Header / mechanism |
+|-----------|--------|-------------------|
+| **Web** | Next.js browser | Supabase SSR auth cookies (automatic on `fetch("/api/...")`) |
+| **Mobile** | Expo / React Native | `Authorization: Bearer <supabase_access_token>` |
+
+Implementation: `src/lib/supabase/api-client.ts` resolves cookie or Bearer before `getUser()`.
+
+**Middleware:** `/api/*` paths are not redirected to `/login`; handlers return JSON `401`/`403`.
+
+JWT `app_metadata` claims (UX only): `tenant_id`, `role`, `account_status`. Authoritative access is always DB-backed (`users`, `user_roles`).
+
+### Authentication Header (mobile)
 
 ```
-Authorization: Bearer {jwt_token}
+Authorization: Bearer {supabase_access_token}
 ```
 
-JWT custom claims: `tenant_id`, `role`
+### Mobile example
+
+```typescript
+const { data: { session } } = await supabase.auth.getSession();
+const res = await fetch(`${API_URL}/api/auth/me`, {
+  headers: {
+    Authorization: `Bearer ${session?.access_token}`,
+    Accept: "application/json",
+  },
+});
+```
 
 ### Pagination
 
@@ -59,9 +84,11 @@ Response envelope:
 
 ### GET /api/auth/me
 
-Returns current user profile.
+Returns current user profile (web + mobile).
 
-**Permission:** Authenticated
+**Permission:** Authenticated (active account)
+
+**Query:** `include_permissions` — `true` | `1` to include `permissions[]` (effective role hints).
 
 **Response 200:**
 ```json
@@ -72,10 +99,13 @@ Returns current user profile.
     "full_name": "Jane Agent",
     "tenant_id": "uuid",
     "role": "sales_agent",
-    "status": "active"
+    "account_status": "active",
+    "permissions": ["crm.leads.read", "crm.leads.write", "bookings.read"]
   }
 }
 ```
+
+`permissions` is omitted unless `include_permissions` is set.
 
 ---
 
@@ -115,6 +145,29 @@ Update user (role, status).
 Deactivate user.
 
 **Permission:** users.delete
+
+### GET /api/users/assignees
+
+Active assignable users in the current tenant (CRM assignment pickers).
+
+**Permission:** CRM read/write or `users.read` (see `canReadAssignees`)
+
+**Query:** `search` (optional)
+
+**Response 200:**
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "email": "agent@agency.com",
+      "full_name": "Jane Agent",
+      "role": "sales_agent"
+    }
+  ],
+  "meta": { "total": 1 }
+}
+```
 
 ---
 
@@ -269,8 +322,22 @@ Returns package with itinerary and pricing.
 
 ### GET /api/bookings
 
-**Permission:** bookings.read  
-**Query:** `status`, `payment_status`, `customer_id`, `date_from`, `date_to`, `search`, `page`, `limit`
+**Permission:** `bookings.read`  
+**Query:** `status`, `payment_status`, `customer_id`, `date_from` (YYYY-MM-DD), `date_to`, `search` (reference), `page`, `limit`
+
+**Response 200:** Paginated `data` with optional `customers`, `packages` embeds.
+
+### GET /api/bookings/:id
+
+**Permission:** `bookings.read`
+
+**Response 200:** Booking with `booking_items`, `booking_travelers`, `booking_status_history` (last 50).
+
+### PATCH /api/bookings/:id/status
+
+**Permission:** Status-specific (`bookings.confirm`, etc.)
+
+**Request:** `{ "status": "confirmed" }`
 
 ### POST /api/bookings
 
@@ -394,6 +461,29 @@ Returns booking with travelers, items, payments, history.
 
 ---
 
+## CRM Dashboard
+
+### GET /api/crm/dashboard
+
+CRM pipeline KPIs, charts, and action lists (distinct from operations `GET /api/dashboard/stats`).
+
+**Permission:** `crm.dashboard.read`  
+**Financial KPIs/charts:** included only when the caller has `dashboard.financial` (tenant_admin, finance_officer).
+
+**Query parameters:**
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `period` | `month` \| `quarter` \| `custom` | Default `month` (calendar month UTC) |
+| `from` | ISO8601 | Required when `period=custom` |
+| `to` | ISO8601 | Required when `period=custom` |
+
+**Response 200:** See `CRM-Phase7-Implementation-Spec.md` §9.2 (`period`, `kpis`, `charts`, `lists`).
+
+**Errors:** `400` validation, `403` missing CRM dashboard permission.
+
+---
+
 ## Screen-to-API Traceability
 
 | Screen | API Calls |
@@ -410,4 +500,5 @@ Returns booking with travelers, items, payments, history.
 | Payment List | GET /api/payments |
 | Record Payment | POST /api/payments |
 | Dashboard | GET /api/dashboard/stats |
+| CRM Dashboard | GET /api/crm/dashboard |
 | User Management | GET/POST/PUT/DELETE /api/users |

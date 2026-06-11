@@ -1,0 +1,31 @@
+u want, I can turn this into a one-page PDF/demo script section in DemoScript.md or an Arabic client-facing paragraph for WhatsApp/email.
+
+
+Created a detailed guide at docs/05-Development/AI-Agents-Guide.md.
+
+It covers:
+
+Contents
+Overview — three agents, hard rules (no auto-confirm, no payments, tenant isolation)
+Setup — admin:create, db:push, db:seed, env vars, demo data (DEMO-BK-005, 4 knowledge docs)
+Roles — who can use each agent and manage the knowledge base
+Knowledge Agent — UI steps, KB upload at /settings/knowledge, sample prompts, test table K1–K5
+Booking Agent — chat mode + Draft builder flow (Preview → Confirm → confirm in Bookings UI), sample prompts, test table B1–B7
+Support Agent — booking lookup, force ticket, escalation keywords, ticket actions, test table S1–S5
+End-to-end scenarios — Sales day, Finance handoff, Escalation
+API testing — Postman-style examples for advanced QA
+Troubleshooting — common failures and fixes
+Sign-off — links to Phase5-AI-Validation.md
+Also linked from:
+
+DemoScript.md
+Phase5-AI-Validation.md
+AI-Agents.md
+Quick start for testing
+npm run admin:create
+npm run db:push
+npm run db:seed
+npm run dev
+Sign in as tenant admin → run scenarios in §6 of the guide, or follow the checklist in Phase5-AI-Validation.md.
+
+If you want an Arabic version of the same guide, say the word and I’ll add AI-Agents-Guide-AR.md.

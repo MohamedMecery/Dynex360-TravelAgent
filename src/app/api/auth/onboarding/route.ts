@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createApiClient } from "@/lib/supabase/api-client";
 import { resolveDbUserAccess } from "@/lib/auth/resolve-db-user-access";
+import { sendWelcomeEmail } from "@/lib/email/notifications/welcome";
 import { activatePendingTenantUser } from "@/lib/users/activate-pending-user";
 import { setPasswordSchema } from "@/lib/validation/auth-password";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const supabase = await createClient();
+    const { supabase } = await createApiClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -74,6 +75,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     await activatePendingTenantUser(user.id);
+
+    const { data: profile } = await supabase
+      .from("users")
+      .select("full_name, email, tenant_id")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    const welcomeEmail = profile?.email ?? user.email;
+    if (profile?.tenant_id && welcomeEmail) {
+      void sendWelcomeEmail(supabase, {
+        tenantId: profile.tenant_id,
+        to: welcomeEmail,
+        userName: profile?.full_name?.trim() || welcomeEmail,
+      });
+    }
 
     await supabase.auth.signOut();
 

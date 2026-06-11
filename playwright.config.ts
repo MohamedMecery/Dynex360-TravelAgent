@@ -55,7 +55,14 @@ export default defineConfig({
         storageState: authFile,
       },
       dependencies: ["setup"],
-      testIgnore: /auth\.setup\.ts/,
+      testIgnore: [/auth\.setup\.ts/, /customer360-gate\.spec\.ts/],
+    },
+    {
+      name: "gate",
+      testMatch: /customer360-gate\.spec\.ts|portal-gate\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+      },
     },
   ],
   webServer: process.env.E2E_SKIP_WEBSERVER

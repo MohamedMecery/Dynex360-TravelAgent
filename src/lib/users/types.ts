@@ -9,6 +9,14 @@ export interface TenantUserListItem {
   created_at: string;
 }
 
+/** Minimal user row for CRM assignment pickers. */
+export interface AssigneeListItem {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: UserRole | null;
+}
+
 export interface InviteUserResult {
   user: TenantUserListItem;
   /** Manual fallback when Supabase did not send invite email (copy to invitee). */

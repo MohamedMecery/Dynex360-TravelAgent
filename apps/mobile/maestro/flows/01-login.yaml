@@ -1,0 +1,14 @@
+appId: ${MAESTRO_APP_ID}
+---
+- launchApp
+- assertVisible: "TravelOS"
+- tapOn:
+    text: "Email|البريد الإلكتروني"
+- inputText: ${TEST_EMAIL}
+- tapOn:
+    text: "Password|كلمة المرور"
+- inputText: ${TEST_PASSWORD}
+- tapOn:
+    text: "Sign in|تسجيل الدخول"
+- assertVisible:
+    text: "Home|الرئيسية|Leads|العملاء"

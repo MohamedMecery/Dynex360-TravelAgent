@@ -1,0 +1,6 @@
+# Maestro — TravelOS Mobile E2E (Sprint 7E)
+# Requires: dev client or release build + GATE_TEST_* env in flow env
+env:
+  MAESTRO_APP_ID: host.exp.Exponent
+  TEST_EMAIL: wp3a-sales@demo.travelos.local
+  TEST_PASSWORD: TravelOS@2026

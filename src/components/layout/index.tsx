@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLogout, useGetIdentity, useCan } from "@refinedev/core";
 import { resources } from "@/providers/resources";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { StaffInboxLink } from "@/components/layout/staff-inbox-link";
 import { useTranslation } from "@/i18n/locale-provider";
 import { cn } from "@/lib/utils";
 import { UserRole } from "@/types";
@@ -58,7 +59,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     pathname === "/forgot-password" ||
     pathname === "/reset-password" ||
     pathname === "/onboarding" ||
-    pathname.startsWith("/auth/");
+    pathname.startsWith("/auth/") ||
+    pathname === "/portal" ||
+    pathname.startsWith("/portal/");
 
   if (isPublicRoute) {
     return <>{children}</>;
@@ -79,6 +82,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {t("nav.home")}
           </Link>
           <LanguageSwitcher className="mt-3" />
+          <StaffInboxLink />
         </div>
         <nav className="flex-1 space-y-1">
           {resources.map((resource) => {
@@ -90,7 +94,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
               resource.name === "users" ||
               resource.name === "settings" ||
               resource.name === "audit_logs" ||
-              resource.name === "ai-conversations"
+              resource.name === "ai-conversations" ||
+              resource.name === "ai-analytics" ||
+              resource.name === "leads" ||
+              resource.name === "crm-dashboard" ||
+              resource.name === "crm-operations"
             ) {
               return (
                 <NavResourceLink

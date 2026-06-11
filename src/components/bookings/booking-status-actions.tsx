@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCan, useGetIdentity, useUpdate } from "@refinedev/core";
+import { useCan, useGetIdentity } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import {
   canCancelBooking,
@@ -32,7 +32,7 @@ export function BookingStatusActions({
   const { success, error: toastError } = useToast();
   const { data: identity } = useGetIdentity<{ role?: UserRole }>();
   const role = identity?.role;
-  const { mutate: updateOne, isLoading } = useUpdate();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { data: canConfirm } = useCan({
@@ -74,26 +74,35 @@ export function BookingStatusActions({
       return;
     }
 
-    updateOne(
-      { resource: "bookings", id: bookingId, values: { status: nextStatus } },
-      {
-        onSuccess: () => {
-          setError(null);
-          success(successMessageForStatus(nextStatus));
-          onStatusChange?.();
-        },
-        onError: (err) => {
-          const message =
-            err instanceof Error ? err.message : t("bookings.statusUpdateError");
-          const displayMessage =
-            message.toLowerCase().includes("cancelled") || message.includes("transition")
-              ? t("bookings.statusTransitionError")
-              : message;
-          setError(displayMessage);
-          toastError(displayMessage);
-        },
+    setLoading(true);
+    void (async () => {
+      try {
+        const response = await fetch(`/api/bookings/${bookingId}/status`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: nextStatus }),
+        });
+        const body = (await response.json()) as { error?: { message?: string } };
+
+        if (!response.ok) {
+          throw new Error(body.error?.message ?? t("bookings.statusUpdateError"));
+        }
+
+        setError(null);
+        success(successMessageForStatus(nextStatus));
+        onStatusChange?.();
+      } catch (err) {
+        const message = err instanceof Error ? err.message : t("bookings.statusUpdateError");
+        const displayMessage =
+          message.toLowerCase().includes("cancelled") || message.includes("transition")
+            ? t("bookings.statusTransitionError")
+            : message;
+        setError(displayMessage);
+        toastError(displayMessage);
+      } finally {
+        setLoading(false);
       }
-    );
+    })();
   };
 
   const confirmWithDialog = (messageKey: string, nextStatus: BookingStatus) => {
@@ -119,7 +128,7 @@ export function BookingStatusActions({
           <Button
             size={buttonSize}
             onClick={() => confirmWithDialog("bookings.confirmBookingMessage", "confirmed")}
-            disabled={isLoading || !showConfirm}
+            disabled={loading || !showConfirm}
           >
             {t("bookings.confirm")}
           </Button>
@@ -128,7 +137,7 @@ export function BookingStatusActions({
           <Button
             size={buttonSize}
             onClick={() => confirmWithDialog("bookings.completeBookingMessage", "completed")}
-            disabled={isLoading || !showComplete}
+            disabled={loading || !showComplete}
           >
             {t("bookings.complete")}
           </Button>
@@ -138,7 +147,7 @@ export function BookingStatusActions({
             size={buttonSize}
             variant="destructive"
             onClick={() => confirmWithDialog("bookings.cancelConfirmMessage", "cancelled")}
-            disabled={isLoading || !showCancel}
+            disabled={loading || !showCancel}
           >
             {t("bookings.cancelBooking")}
           </Button>

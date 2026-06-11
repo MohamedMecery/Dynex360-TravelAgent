@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo } from "react";
+import { Suspense, useCallback, useEffect, useMemo } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { useList, useNavigation } from "@refinedev/core";
 import { useSearchParams } from "next/navigation";
@@ -67,25 +67,28 @@ function InvoiceCreateContent() {
     queryOptions: { enabled: !!bookingId },
   });
 
-  const lineItems = lineItemsData?.data ?? [];
+  const lineItems = useMemo(() => lineItemsData?.data ?? [], [lineItemsData?.data]);
 
-  const applyBookingAmounts = (id: string) => {
-    const booking = (bookingsData?.data ?? []).find((b) => b.id === id);
-    if (!booking) return;
+  const applyBookingAmounts = useCallback(
+    (id: string) => {
+      const booking = (bookingsData?.data ?? []).find((b) => b.id === id);
+      if (!booking) return;
 
-    const { subtotal: nextSubtotal } = resolveInvoiceSubtotalFromBooking(
-      lineItems,
-      Number(booking.total_amount)
-    );
+      const { subtotal: nextSubtotal } = resolveInvoiceSubtotalFromBooking(
+        lineItems,
+        Number(booking.total_amount)
+      );
 
-    setValue("subtotal", nextSubtotal);
-    setValue("currency", booking.currency);
-  };
+      setValue("subtotal", nextSubtotal);
+      setValue("currency", booking.currency);
+    },
+    [bookingsData?.data, lineItems, setValue]
+  );
 
   useEffect(() => {
     if (!bookingId || !bookingsData?.data) return;
     applyBookingAmounts(bookingId);
-  }, [bookingId, bookingsData?.data, lineItems, setValue]);
+  }, [bookingId, bookingsData?.data, applyBookingAmounts]);
 
   const subtotalSource: InvoiceSubtotalSource | null = useMemo(() => {
     if (!bookingId) return null;

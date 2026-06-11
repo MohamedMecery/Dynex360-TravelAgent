@@ -1,0 +1,7 @@
+feat: audit log UI, AI history, and MVP polish (B+D+E)
+
+Add tenant audit log viewer, AI conversation history with resume,
+knowledge reindex from storage/chunks, and booking agent draft-update UX.
+Extend GridActionButton RBAC pattern to remaining list pages,
+RecordMetadata on show views, migration 021 audit user triggers,
+product glossary D-011, docs/RBAC sync, and Playwright AI smoke tests.

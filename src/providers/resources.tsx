@@ -1,7 +1,11 @@
 import { ResourceProps } from "@refinedev/core";
 import {
   Users, Package, CalendarCheck, CreditCard, LayoutDashboard, Settings,
-  MapPin, UserCircle, FileText, BookOpen, Headphones, History, ScrollText,
+  MapPin, UserCircle, FileText, BookOpen, Headphones, History, ScrollText, BarChart3,
+  UserPlus,
+  Target,
+  CalendarClock,
+  Gauge,
 } from "lucide-react";
 
 export const resources: ResourceProps[] = [
@@ -9,6 +13,116 @@ export const resources: ResourceProps[] = [
     name: "dashboard",
     list: "/dashboard",
     meta: { label: "Dashboard", labelKey: "nav.dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
+  },
+  {
+    name: "crm-dashboard",
+    list: "/crm/dashboard",
+    meta: {
+      label: "CRM Dashboard",
+      labelKey: "nav.crmDashboard",
+      parent: "crm",
+      icon: <BarChart3 className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "crm-operations",
+    list: "/crm/operations",
+    meta: {
+      label: "Operations",
+      labelKey: "nav.crmOperations",
+      parent: "crm",
+      icon: <Gauge className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "crm-sales-insights",
+    list: "/crm/sales-insights",
+    meta: {
+      label: "Sales Insights",
+      labelKey: "nav.salesInsights",
+      parent: "crm",
+      icon: <BarChart3 className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "crm-operations-insights",
+    list: "/crm/operations-insights",
+    meta: {
+      label: "Operations Insights",
+      labelKey: "nav.operationsInsights",
+      parent: "crm",
+      icon: <Gauge className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "ai-operations",
+    list: "/ai/operations",
+    meta: {
+      label: "Operations Assistant",
+      labelKey: "nav.operationsAgent",
+      icon: <CalendarCheck className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "ai-sales",
+    list: "/ai/sales",
+    meta: {
+      label: "Sales Assistant",
+      labelKey: "nav.salesAgent",
+      icon: <Target className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "leads",
+    list: "/crm/leads",
+    create: "/crm/leads/create",
+    edit: "/crm/leads/edit/:id",
+    show: "/crm/leads/show/:id",
+    meta: {
+      label: "Leads",
+      labelKey: "nav.leads",
+      parent: "crm",
+      icon: <UserPlus className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "opportunities",
+    list: "/crm/opportunities",
+    create: "/crm/opportunities/create",
+    edit: "/crm/opportunities/edit/:id",
+    show: "/crm/opportunities/show/:id",
+    meta: {
+      label: "Opportunities",
+      labelKey: "nav.opportunities",
+      parent: "crm",
+      icon: <Target className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "quotations",
+    list: "/crm/quotations",
+    create: "/crm/quotations/create",
+    edit: "/crm/quotations/edit/:id",
+    show: "/crm/quotations/show/:id",
+    meta: {
+      label: "Quotations",
+      labelKey: "nav.quotations",
+      parent: "crm",
+      icon: <FileText className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "activities",
+    list: "/crm/activities",
+    create: "/crm/activities/create",
+    edit: "/crm/activities/edit/:id",
+    show: "/crm/activities/show/:id",
+    meta: {
+      label: "Activities",
+      labelKey: "nav.activities",
+      parent: "crm",
+      icon: <CalendarClock className="h-4 w-4" />,
+    },
   },
   {
     name: "customers",
@@ -106,6 +220,15 @@ export const resources: ResourceProps[] = [
       label: "AI History",
       labelKey: "nav.aiHistory",
       icon: <History className="h-4 w-4" />,
+    },
+  },
+  {
+    name: "ai-analytics",
+    list: "/ai/analytics",
+    meta: {
+      label: "AI Analytics",
+      labelKey: "nav.aiAnalytics",
+      icon: <BarChart3 className="h-4 w-4" />,
     },
   },
   {

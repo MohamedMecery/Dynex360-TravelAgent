@@ -41,7 +41,7 @@ export function PackageItineraryEditor({ packageId, readOnly = false }: PackageI
   const { mutate: updateDay, isLoading: updating } = useUpdate();
   const { mutate: deleteDay } = useDelete();
 
-  const days = data?.data ?? [];
+  const days = useMemo(() => data?.data ?? [], [data?.data]);
 
   const nextDayNumber = useMemo(() => {
     if (days.length === 0) return 1;

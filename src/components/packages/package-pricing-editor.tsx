@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useList } from "@refinedev/core";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
@@ -39,7 +39,7 @@ export function PackagePricingEditor({ packageId, readOnly = false }: PackagePri
     pagination: { pageSize: 10 },
   });
 
-  const pricingRows = data?.data ?? [];
+  const pricingRows = useMemo(() => data?.data ?? [], [data?.data]);
 
   const syncFromRows = useCallback((rows: PackagePricing[]) => {
     const next = emptyAmounts();

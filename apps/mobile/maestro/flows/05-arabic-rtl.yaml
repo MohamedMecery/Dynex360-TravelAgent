@@ -1,0 +1,9 @@
+appId: ${MAESTRO_APP_ID}
+---
+- runFlow: 01-login.yaml
+- tapOn:
+    text: "More|المزيد"
+- tapOn:
+    text: "Language|اللغة"
+- tapOn: "العربية"
+- assertVisible: "المزيد"

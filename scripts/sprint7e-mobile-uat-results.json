@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-06-03T20:18:25.285Z",
+  "results": [
+    {
+      "section": "Setup",
+      "item": "BASE_URL reachable",
+      "status": "SKIP",
+      "detail": "http://localhost:3000"
+    },
+    {
+      "section": "Auth",
+      "item": "sales_agent Bearer sign-in",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Auth",
+      "item": "tenant_admin Bearer sign-in",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Auth",
+      "item": "finance_officer Bearer sign-in",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Auth",
+      "item": "GET /api/auth/me (mobile bootstrap)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Dashboard",
+      "item": "GET /api/crm/dashboard",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Leads",
+      "item": "GET /api/leads paginated",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Opportunities",
+      "item": "GET /api/opportunities",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Activities",
+      "item": "GET /api/activities",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Quotations",
+      "item": "GET /api/quotations list",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Quotations",
+      "item": "GET /api/quotations?search= (server-side)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Bookings",
+      "item": "GET /api/bookings",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Bookings",
+      "item": "finance_officer read bookings",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Bookings",
+      "item": "finance_officer status update forbidden",
+      "status": "PASS",
+      "detail": "status 403"
+    },
+    {
+      "section": "Quotation workflow",
+      "item": "create draft",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Quotation workflow",
+      "item": "send → sent",
+      "status": "PASS",
+      "detail": "got sent"
+    },
+    {
+      "section": "Quotation workflow",
+      "item": "mark-viewed → viewed",
+      "status": "PASS",
+      "detail": "got viewed"
+    },
+    {
+      "section": "Quotation workflow",
+      "item": "accept → accepted",
+      "status": "PASS",
+      "detail": "got accepted"
+    },
+    {
+      "section": "Quotation workflow",
+      "item": "convert → converted_to_booking",
+      "status": "PASS",
+      "detail": "got converted_to_booking"
+    },
+    {
+      "section": "Customer 360",
+      "item": "GET summary",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Customer 360",
+      "item": "GET timeline",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Customer 360",
+      "item": "quotation timeline events",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Customer 360",
+      "item": "timeline pagination meta",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "section": "Security",
+      "item": "unauthenticated /api/leads → 401",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

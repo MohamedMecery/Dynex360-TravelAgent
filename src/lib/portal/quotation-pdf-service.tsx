@@ -1,5 +1,7 @@
+/** @jsxRuntime classic */
+/** @jsx ExternalReact.createElement */
 import fs from "node:fs";
-import React from "react";
+import ExternalReact from "@travelos/external-react";
 import {
   Document,
   Image as PdfImage,
@@ -7,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  renderToBuffer,
 } from "@react-pdf/renderer";
 import { isRtlLocale } from "@/i18n/config";
 import type { QuotationPdfViewModel } from "@/lib/portal/quotation-pdf-types";
@@ -134,7 +137,9 @@ export function QuotationPdfDocument({ model }: { model: QuotationPdfViewModel }
 }
 
 export async function renderQuotationPdfBuffer(model: QuotationPdfViewModel): Promise<Buffer> {
-  const { renderToBuffer } = await import("@react-pdf/renderer");
+  // Static import keeps a single @react-pdf/renderer instance — a dynamic
+  // import resolved a second copy under the Next build and the renderer
+  // rejected elements created by the other copy (React error #31).
   ensureInvoicePdfFontsRegistered();
   return renderToBuffer(<QuotationPdfDocument model={model} />);
 }

@@ -164,7 +164,8 @@ async function main() {
   const stamp = Date.now();
   const leadRes = await api("POST", "/api/leads", staffToken, {
     full_name: `Gate Lead ${stamp}`,
-    mobile: "01001234567",
+    // unique per run so duplicate-lead detection doesn't trip on re-runs
+    mobile: `010${String(stamp).slice(-8)}`,
     source: "website",
     currency: "EGP",
     expected_budget: 50000,

@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
-  "generatedAt": "2026-06-12T05:53:53.535Z",
+  "generatedAt": "2026-06-12T05:55:59.893Z",
   "results": [
     {
       "section": "Setup",
@@ -35,7 +35,7 @@
       "section": "Performance",
       "item": "GET dashboard duration",
       "status": "PASS",
-      "detail": "445ms"
+      "detail": "393ms"
     },
     {
       "section": "Performance",

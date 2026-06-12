@@ -1,4 +1,7 @@
+/** @jsxRuntime classic */
+/** @jsx ExternalReact.createElement */
 import fs from "node:fs";
+import ExternalReact from "@travelos/external-react";
 import {
   Document,
   Image as PdfImage,

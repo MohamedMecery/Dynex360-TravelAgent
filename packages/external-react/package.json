@@ -1,0 +1,15 @@
+{
+  "name": "@travelos/external-react",
+  "version": "1.1.0",
+  "private": true,
+  "description": "ESM-only re-export of the node_modules React instance. Server-external + ESM-only so Next must import() it natively — its 'react' import then resolves OUTSIDE Next's require hook, yielding the same React copy @react-pdf/renderer's pure-ESM dist uses. PDF element trees must be created with this copy or the PDF reconciler rejects them (React error #31).",
+  "type": "module",
+  "main": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs"
+    }
+  }
+}

@@ -289,6 +289,8 @@ async function seedPayments(tenantId, bookingTotals) {
   const rows = [];
   for (const p of PAYMENTS) {
     const booking = BOOKINGS[p.bookingIdx];
+    // The 018 booking guard rejects payments on cancelled bookings
+    if (booking.status === "cancelled") continue;
     const total = bookingTotals.get(p.bookingIdx) ?? 0;
     const amount = Math.round(total * p.fraction * 100) / 100;
     if (amount <= 0) continue;

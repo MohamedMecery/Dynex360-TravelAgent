@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-12T05:53:29.045Z",
-  "quotationId": "3e5b0856-070e-4a70-9125-c6dc1795b7c4",
-  "bookingId": "ab49b02e-2504-4034-94c0-9c32a7228fd3",
+  "generatedAt": "2026-06-12T05:57:20.931Z",
+  "quotationId": "6b8ea4cc-104c-463d-a202-56c112bc56a7",
+  "bookingId": "35de1cfe-9571-4dea-88cc-f46cc5106beb",
   "results": [
     {
       "step": "Setup",
@@ -68,7 +68,7 @@
       "step": "Booking",
       "item": "created from payment",
       "status": "PASS",
-      "detail": "order=completed, booking=ab49b02e-2504-4034-94c0-9c32a7228fd3"
+      "detail": "order=completed, booking=35de1cfe-9571-4dea-88cc-f46cc5106beb"
     },
     {
       "step": "Worker",

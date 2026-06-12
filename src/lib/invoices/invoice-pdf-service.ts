@@ -1,4 +1,5 @@
-import React, { type ReactElement } from "react";
+import type { ReactElement } from "react";
+import ExternalReact from "@travelos/external-react";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { InvoicePdfDocument } from "@/lib/invoices/pdf/invoice-pdf-document";
 import { ensureInvoicePdfFontsRegistered } from "@/lib/invoices/pdf/register-fonts";
@@ -12,7 +13,9 @@ export function buildInvoicePdfFilename(invoiceNumber: string): string {
 /** On-demand PDF generation (reusable for future email attachments). */
 export async function renderInvoicePdfBuffer(model: InvoicePdfViewModel): Promise<Buffer> {
   ensureInvoicePdfFontsRegistered();
-  const element = React.createElement(InvoicePdfDocument, { model }) as ReactElement;
+  // Element must come from the same React instance the PDF reconciler uses
+  // (see serverExternalPackages note in next.config.ts).
+  const element = ExternalReact.createElement(InvoicePdfDocument, { model }) as ReactElement;
   const buffer = await renderToBuffer(element);
   return Buffer.from(buffer);
 }

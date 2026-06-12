@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12T05:43:58.897Z",
+  "generatedAt": "2026-06-12T05:56:12.243Z",
   "results": [
     {
       "section": "Setup",
@@ -29,7 +29,7 @@
       "section": "Timeline",
       "item": "domain_events in v_customer_timeline_events",
       "status": "PASS",
-      "detail": "rows=1, customer=yes"
+      "detail": "rows=5, customer=yes"
     },
     {
       "section": "Dispatcher",

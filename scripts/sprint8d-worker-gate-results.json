@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-06-12T05:44:04.823Z",
+  "generatedAt": "2026-06-12T05:56:17.896Z",
   "results": [
     {
       "section": "Events",
       "item": "emit test event",
       "status": "PASS",
-      "detail": "ec8561aa-12ef-4c47-a1ba-6cec952c4ae6"
+      "detail": "58d5b00a-3f15-413a-83f8-c93f6e902d01"
     },
     {
       "section": "Queue",
       "item": "enqueue notification job",
       "status": "PASS",
-      "detail": "aafa5d97-35a4-4d2b-990e-c9aae998b31c"
+      "detail": "2a9116f5-e6e8-4a00-9659-a7007d8cc740"
     },
     {
       "section": "Queue",
       "item": "enqueue idempotent",
       "status": "PASS",
-      "detail": "first=aafa5d97-35a4-4d2b-990e-c9aae998b31c, dup=aafa5d97-35a4-4d2b-990e-c9aae998b31c"
+      "detail": "first=2a9116f5-e6e8-4a00-9659-a7007d8cc740, dup=2a9116f5-e6e8-4a00-9659-a7007d8cc740"
     },
     {
       "section": "Worker",

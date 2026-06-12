@@ -1,0 +1,143 @@
+{
+  "generatedAt": "2026-06-12T05:54:03.702Z",
+  "results": [
+    {
+      "section": "Pages",
+      "item": "GET /portal/login",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "Security",
+      "item": "Unauthenticated dashboard",
+      "status": "PASS",
+      "detail": "status 401"
+    },
+    {
+      "section": "Auth",
+      "item": "Portal customer login",
+      "status": "PASS",
+      "detail": "portal-customer@demo.travelos.local"
+    },
+    {
+      "section": "API",
+      "item": "GET /api/portal/dashboard",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "API",
+      "item": "GET /api/portal/quotations",
+      "status": "PASS",
+      "detail": "status 200, count 1"
+    },
+    {
+      "section": "API",
+      "item": "GET /api/portal/bookings",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "Security",
+      "item": "Cross-customer quotation",
+      "status": "PASS",
+      "detail": "status 404"
+    },
+    {
+      "section": "API",
+      "item": "GET quotation timeline",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "API",
+      "item": "GET quotation PDF",
+      "status": "SKIP",
+      "detail": "status 500"
+    },
+    {
+      "section": "API",
+      "item": "GET booking documents",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "Pages",
+      "item": "GET /portal/notifications",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "API",
+      "item": "GET /api/portal/notifications",
+      "status": "PASS",
+      "detail": "status 200, unread 4"
+    },
+    {
+      "section": "API",
+      "item": "GET portal unread-count",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "Security",
+      "item": "Cross-customer notification read",
+      "status": "PASS",
+      "detail": "status 404"
+    },
+    {
+      "section": "API",
+      "item": "PATCH portal notification read",
+      "status": "PASS",
+      "detail": "status 200"
+    },
+    {
+      "section": "API",
+      "item": "POST portal read-all",
+      "status": "PASS",
+      "detail": "invoked"
+    },
+    {
+      "section": "Worker",
+      "item": "Process dispatch jobs",
+      "status": "PASS",
+      "detail": "status 200, processed 0"
+    },
+    {
+      "section": "Security",
+      "item": "Staff blocked from portal API",
+      "status": "PASS",
+      "detail": "status 403"
+    },
+    {
+      "section": "API",
+      "item": "GET /api/notifications",
+      "status": "PASS",
+      "detail": "status 200, unread 1"
+    },
+    {
+      "section": "Security",
+      "item": "Staff blocked from portal notifications",
+      "status": "PASS",
+      "detail": "status 403"
+    },
+    {
+      "section": "Security",
+      "item": "Cross-user staff notification read",
+      "status": "PASS",
+      "detail": "status 404"
+    },
+    {
+      "section": "Security",
+      "item": "Unauthenticated staff inbox",
+      "status": "PASS",
+      "detail": "status 401"
+    },
+    {
+      "section": "Security",
+      "item": "Unauthenticated portal notifications",
+      "status": "PASS",
+      "detail": "status 401"
+    }
+  ]
+}

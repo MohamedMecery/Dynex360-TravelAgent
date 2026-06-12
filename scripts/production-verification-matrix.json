@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-06-12T05:44:14.886Z",
+  "baseUrl": "http://localhost:3000",
+  "matrix": [
+    {
+      "id": "env",
+      "label": "Production environment",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "worker_health",
+      "label": "Worker health",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "foundation",
+      "label": "API foundation (7B)",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "crm_dashboard",
+      "label": "CRM dashboard (6)",
+      "status": "FAIL",
+      "detail": "[TypeError: fetch failed] {\n  [cause]: AggregateError [ECONNREFUSED]: \n      at internalConnectMultiple (node:net:1193:18)\n      at afterConnectMultiple (node:net:1783:7) {\n    code: 'ECONNREFUSED',\n    [errors]: [ [Error], [Error] ]\n  }\n}\nAssertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c, line 76\r\n"
+    },
+    {
+      "id": "portal",
+      "label": "Customer portal (8A–C)",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "events",
+      "label": "Domain events (8C)",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "worker",
+      "label": "Dispatch worker (8D)",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "payments",
+      "label": "Payments (9A)",
+      "status": "FAIL",
+      "detail": "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c, line 76\r\n"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp (9B)",
+      "status": "FAIL",
+      "detail": "\n> travel-os@0.1.0 gate:sprint9b:whatsapp\n> node scripts/run-sprint9b-whatsapp-gate.mjs\n\nSprint 9B WhatsApp gate\n\nPASS: [Schema] whatsapp_templates\nPASS: [Schema] whatsapp_messages\nPASS: [Schema] customer_communication_preferences\nFAIL: [Schema] tenant_whatsapp_settings — column tenant_whatsapp_settings.id does not exist\nPASS: [Schema] notification_deliveries.channel whatsapp\nSKIP: [Setup] customer — no customer\n\nWrote E:\\Dynex360\\Travel-OS-Project\\scripts\\sprint9b-whatsapp-gate-results.json\nGat"
+    },
+    {
+      "id": "sales_ai",
+      "label": "Sales AI (9C)",
+      "status": "FAIL",
+      "detail": "\n> travel-os@0.1.0 gate:sprint9c:sales-ai\n> node scripts/run-sprint9c-sales-ai-gate.mjs\n\nSprint 9C AI Sales Assistant gate\n\nPASS: [Schema] ai_sales_snapshots\nPASS: [Schema] ai_sales_score_history\nPASS: [Schema] ai_sales_recommendations\nPASS: [Schema] ai_sales_recommendation_feedback\nPASS: [Schema] ai_sales_insight_cache\nFAIL: [RPC] get_sales_insights callable — column p.name does not exist\nPASS: [Permissions] ai.sales.read\nPASS: [AI Platform] sales agent_key seeded\n\nDone: 7/8 passed\n"
+    },
+    {
+      "id": "operations_ai",
+      "label": "Operations AI (9D)",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "commercial",
+      "label": "Commercial journey (9E)",
+      "status": "FAIL",
+      "detail": "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c, line 76\r\n"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-06-12T05:53:29.045Z",
+  "quotationId": "3e5b0856-070e-4a70-9125-c6dc1795b7c4",
+  "bookingId": "ab49b02e-2504-4034-94c0-9c32a7228fd3",
+  "results": [
+    {
+      "step": "Setup",
+      "item": "portal account",
+      "status": "PASS",
+      "detail": "portal-customer@demo.travelos.local"
+    },
+    {
+      "step": "Auth",
+      "item": "staff sign-in",
+      "status": "PASS",
+      "detail": "wp3a-sales@demo.travelos.local"
+    },
+    {
+      "step": "Lead",
+      "item": "create lead",
+      "status": "PASS",
+      "detail": "status 201"
+    },
+    {
+      "step": "Lead",
+      "item": "link portal customer",
+      "status": "PASS"
+    },
+    {
+      "step": "Opportunity",
+      "item": "convert from lead",
+      "status": "PASS"
+    },
+    {
+      "step": "Quotation",
+      "item": "create with line items",
+      "status": "PASS"
+    },
+    {
+      "step": "Quotation",
+      "item": "send to customer",
+      "status": "PASS",
+      "detail": "sent"
+    },
+    {
+      "step": "Portal",
+      "item": "customer login",
+      "status": "PASS"
+    },
+    {
+      "step": "Portal",
+      "item": "accept quotation",
+      "status": "PASS",
+      "detail": "accepted"
+    },
+    {
+      "step": "Payment",
+      "item": "checkout session",
+      "status": "PASS"
+    },
+    {
+      "step": "Payment",
+      "item": "webhook completion",
+      "status": "PASS",
+      "detail": "{\"status\":\"processed\"}"
+    },
+    {
+      "step": "Booking",
+      "item": "created from payment",
+      "status": "PASS",
+      "detail": "order=completed, booking=ab49b02e-2504-4034-94c0-9c32a7228fd3"
+    },
+    {
+      "step": "Worker",
+      "item": "process dispatch queue",
+      "status": "PASS",
+      "detail": "completed 19"
+    },
+    {
+      "step": "Notifications",
+      "item": "customer notification row",
+      "status": "PASS",
+      "detail": "count recent 1"
+    },
+    {
+      "step": "WhatsApp",
+      "item": "delivery record",
+      "status": "PASS",
+      "detail": "skipped"
+    },
+    {
+      "step": "Operations AI",
+      "item": "second worker pass",
+      "status": "PASS"
+    },
+    {
+      "step": "Operations AI",
+      "item": "booking snapshot",
+      "status": "PASS",
+      "detail": "health=85, readiness=20%"
+    },
+    {
+      "step": "Operations AI",
+      "item": "open recommendation",
+      "status": "WARN",
+      "detail": "none yet"
+    },
+    {
+      "step": "Departure readiness",
+      "item": "readiness score present",
+      "status": "PASS",
+      "detail": "20%"
+    }
+  ]
+}

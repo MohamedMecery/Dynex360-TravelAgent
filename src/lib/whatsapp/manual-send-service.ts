@@ -51,12 +51,12 @@ export class ManualWhatsAppSendService {
 
     const { data: customer } = await this.admin
       .from("customers")
-      .select("mobile")
+      .select("phone")
       .eq("id", input.customerId)
       .eq("tenant_id", input.tenantId)
       .maybeSingle();
 
-    const phone = normalizePhoneToE164((customer?.mobile as string | null) ?? null);
+    const phone = normalizePhoneToE164((customer?.phone as string | null) ?? null);
     if (!phone) throw new Error("Customer has no valid mobile number");
 
     if (input.bodyVariables.length !== template.variable_count) {

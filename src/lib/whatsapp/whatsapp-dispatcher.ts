@@ -25,11 +25,11 @@ async function resolveCustomerPhone(
 ): Promise<string | null> {
   const { data } = await admin
     .from("customers")
-    .select("mobile")
+    .select("phone")
     .eq("tenant_id", tenantId)
     .eq("id", customerId)
     .maybeSingle();
-  return normalizePhoneToE164((data?.mobile as string | null) ?? null);
+  return normalizePhoneToE164((data?.phone as string | null) ?? null);
 }
 
 export class WhatsAppDispatcher {

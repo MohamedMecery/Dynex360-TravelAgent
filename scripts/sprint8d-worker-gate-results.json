@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-06-12T05:44:04.823Z",
+  "results": [
+    {
+      "section": "Events",
+      "item": "emit test event",
+      "status": "PASS",
+      "detail": "ec8561aa-12ef-4c47-a1ba-6cec952c4ae6"
+    },
+    {
+      "section": "Queue",
+      "item": "enqueue notification job",
+      "status": "PASS",
+      "detail": "aafa5d97-35a4-4d2b-990e-c9aae998b31c"
+    },
+    {
+      "section": "Queue",
+      "item": "enqueue idempotent",
+      "status": "PASS",
+      "detail": "first=aafa5d97-35a4-4d2b-990e-c9aae998b31c, dup=aafa5d97-35a4-4d2b-990e-c9aae998b31c"
+    },
+    {
+      "section": "Worker",
+      "item": "HTTP process batch",
+      "status": "PASS",
+      "detail": "status 200, processed 1"
+    },
+    {
+      "section": "Security",
+      "item": "Reject unauthenticated worker",
+      "status": "PASS",
+      "detail": "status 401"
+    },
+    {
+      "section": "Worker",
+      "item": "Job completed after process",
+      "status": "PASS",
+      "detail": "status=completed"
+    },
+    {
+      "section": "Load",
+      "item": "Enqueue 5 notification jobs",
+      "status": "PASS",
+      "detail": "count=5"
+    },
+    {
+      "section": "Load",
+      "item": "Process batch >= 5",
+      "status": "PASS",
+      "detail": "completed 5"
+    }
+  ]
+}

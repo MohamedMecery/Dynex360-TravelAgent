@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-06-12T05:43:58.897Z",
+  "results": [
+    {
+      "section": "Setup",
+      "item": "Admin client",
+      "status": "PASS",
+      "detail": "connected"
+    },
+    {
+      "section": "Events",
+      "item": "emit_domain_event insert",
+      "status": "PASS",
+      "detail": "978dfcaf-4e54-4fbb-b14e-ca7c5df786d8"
+    },
+    {
+      "section": "Events",
+      "item": "emit_domain_event idempotent",
+      "status": "PASS",
+      "detail": "first=978dfcaf-4e54-4fbb-b14e-ca7c5df786d8, second=978dfcaf-4e54-4fbb-b14e-ca7c5df786d8"
+    },
+    {
+      "section": "Events",
+      "item": "Single row per idempotency key",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "section": "Timeline",
+      "item": "domain_events in v_customer_timeline_events",
+      "status": "PASS",
+      "detail": "rows=1, customer=yes"
+    },
+    {
+      "section": "Dispatcher",
+      "item": "customer_notifications projection insert",
+      "status": "PASS",
+      "detail": "ok"
+    },
+    {
+      "section": "Dispatcher",
+      "item": "notification_deliveries in_app upsert",
+      "status": "PASS",
+      "detail": "ok"
+    },
+    {
+      "section": "Dispatcher",
+      "item": "staff notifications projection insert",
+      "status": "PASS",
+      "detail": "ok"
+    }
+  ]
+}

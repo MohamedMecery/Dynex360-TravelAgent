@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-06-12T05:50:30.593Z",
+  "results": [
+    {
+      "section": "Schema",
+      "item": "whatsapp_templates",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "whatsapp_messages",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "customer_communication_preferences",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "tenant_whatsapp_settings",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "notification_deliveries.channel whatsapp",
+      "status": "PASS"
+    },
+    {
+      "section": "Templates",
+      "item": "seed approved template",
+      "status": "PASS"
+    },
+    {
+      "section": "Events",
+      "item": "emit quotation.sent",
+      "status": "PASS"
+    },
+    {
+      "section": "Queue",
+      "item": "enqueue dispatch.whatsapp",
+      "status": "PASS"
+    },
+    {
+      "section": "Worker",
+      "item": "process-dispatch-jobs HTTP",
+      "status": "PASS",
+      "detail": "200"
+    },
+    {
+      "section": "Delivery",
+      "item": "notification_deliveries whatsapp row",
+      "status": "PASS",
+      "detail": "skipped"
+    },
+    {
+      "section": "Queue",
+      "item": "idempotent enqueue",
+      "status": "PASS",
+      "detail": "first=3bb01a86-75de-4648-89ed-d0e7c94104a6 dup=3bb01a86-75de-4648-89ed-d0e7c94104a6"
+    },
+    {
+      "section": "Isolation",
+      "item": "cross-tenant message rows",
+      "status": "PASS",
+      "detail": "tenant messages: 0"
+    }
+  ]
+}

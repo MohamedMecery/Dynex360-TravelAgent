@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-11T12:24:36.221Z",
-  "productionMode": true,
+  "generatedAt": "2026-06-12T05:53:40.614Z",
+  "productionMode": false,
   "results": [
     {
       "category": "Required",
@@ -15,95 +15,36 @@
     {
       "category": "Required",
       "item": "CRON_SECRET",
-      "status": "FAIL",
-      "detail": "missing"
+      "status": "PASS"
     },
     {
       "category": "Required",
       "item": "NEXT_PUBLIC_SITE_URL",
-      "status": "FAIL",
-      "detail": "missing"
+      "status": "PASS"
     },
     {
       "category": "Required",
       "item": "ANTHROPIC_API_KEY",
-      "status": "FAIL",
+      "status": "WARN",
       "detail": "missing"
-    },
-    {
-      "category": "Email",
-      "item": "RESEND_API_KEY",
-      "status": "FAIL",
-      "detail": "missing for transactional email"
-    },
-    {
-      "category": "Email",
-      "item": "RESEND_FROM_EMAIL",
-      "status": "FAIL",
-      "detail": "missing for transactional email"
-    },
-    {
-      "category": "Payments",
-      "item": "PAYMOB_API_KEY",
-      "status": "WARN",
-      "detail": "payments will stay in mock mode"
-    },
-    {
-      "category": "Payments",
-      "item": "PAYMOB_INTEGRATION_ID",
-      "status": "WARN",
-      "detail": "payments will stay in mock mode"
-    },
-    {
-      "category": "Payments",
-      "item": "PAYMOB_HMAC_SECRET",
-      "status": "WARN",
-      "detail": "payments will stay in mock mode"
-    },
-    {
-      "category": "WhatsApp",
-      "item": "WHATSAPP_META_ACCESS_TOKEN",
-      "status": "WARN",
-      "detail": "mock mode implied when token unset"
-    },
-    {
-      "category": "WhatsApp",
-      "item": "WHATSAPP_META_PHONE_NUMBER_ID",
-      "status": "FAIL",
-      "detail": "required when not in mock mode"
-    },
-    {
-      "category": "WhatsApp",
-      "item": "WHATSAPP_META_ACCESS_TOKEN",
-      "status": "FAIL",
-      "detail": "required when not in mock mode"
-    },
-    {
-      "category": "WhatsApp",
-      "item": "WHATSAPP_META_APP_SECRET",
-      "status": "FAIL",
-      "detail": "required when not in mock mode"
-    },
-    {
-      "category": "WhatsApp",
-      "item": "WHATSAPP_WEBHOOK_VERIFY_TOKEN",
-      "status": "FAIL",
-      "detail": "required when not in mock mode"
     },
     {
       "category": "Forbidden",
       "item": "WHATSAPP_MOCK_MODE",
-      "status": "PASS"
+      "status": "WARN",
+      "detail": "must be disabled in production"
     },
     {
       "category": "Forbidden",
       "item": "PAYMOB_MOCK_MODE",
-      "status": "PASS"
+      "status": "WARN",
+      "detail": "must be disabled in production"
     },
     {
       "category": "Forbidden",
       "item": "PAYMOB_MOCK_WEBHOOKS",
-      "status": "PASS"
+      "status": "WARN",
+      "detail": "must be disabled in production"
     },
     {
       "category": "Forbidden",
@@ -118,25 +59,24 @@
     {
       "category": "URLs",
       "item": "NEXT_PUBLIC_SITE_URL",
-      "status": "FAIL",
-      "detail": "missing"
+      "status": "WARN",
+      "detail": "http://localhost:3000"
     },
     {
       "category": "Cron",
       "item": "CRON_SECRET strength",
-      "status": "FAIL",
-      "detail": "use 32+ random bytes"
+      "status": "PASS"
     },
     {
       "category": "Payments",
       "item": "Live Paymob",
-      "status": "FAIL",
+      "status": "WARN",
       "detail": "mock or missing API key"
     },
     {
       "category": "WhatsApp",
       "item": "Live Meta API",
-      "status": "FAIL",
+      "status": "WARN",
       "detail": "mock or missing token"
     }
   ]

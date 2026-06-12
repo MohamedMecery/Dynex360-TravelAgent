@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-06-12T05:53:43.207Z",
+  "results": [
+    {
+      "section": "Queue",
+      "item": "pending jobs",
+      "status": "PASS",
+      "detail": "0"
+    },
+    {
+      "section": "Queue",
+      "item": "processing jobs",
+      "status": "PASS",
+      "detail": "0"
+    },
+    {
+      "section": "Queue",
+      "item": "failed jobs",
+      "status": "PASS",
+      "detail": "0"
+    },
+    {
+      "section": "Queue",
+      "item": "dead_letter jobs",
+      "status": "PASS",
+      "detail": "0"
+    },
+    {
+      "section": "Latency",
+      "item": "oldest pending age",
+      "status": "PASS",
+      "detail": "no pending jobs"
+    },
+    {
+      "section": "Latency",
+      "item": "p95 job duration (sample)",
+      "status": "PASS",
+      "detail": "26287ms over 20 jobs"
+    },
+    {
+      "section": "Worker",
+      "item": "cron process batch",
+      "status": "PASS",
+      "detail": "status 200, 226ms, processed 0"
+    },
+    {
+      "section": "Security",
+      "item": "cron rejects missing secret",
+      "status": "PASS"
+    }
+  ]
+}

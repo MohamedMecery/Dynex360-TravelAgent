@@ -65,7 +65,9 @@ async function main() {
   ];
 
   for (const table of tables) {
-    const { error } = await admin.from(table).select("id").limit(1);
+    // tenant_whatsapp_settings keys on tenant_id (no surrogate id column)
+    const probeColumn = table === "tenant_whatsapp_settings" ? "tenant_id" : "id";
+    const { error } = await admin.from(table).select(probeColumn).limit(1);
     record("Schema", table, error ? "FAIL" : "PASS", error?.message);
   }
 
@@ -80,7 +82,15 @@ async function main() {
     enumCheck !== null ? "PASS" : "FAIL"
   );
 
-  const { data: tenant } = await admin.from("tenants").select("id").limit(1).maybeSingle();
+  // Pick a tenant that actually has customers so downstream steps can run
+  const { data: anyCustomer } = await admin
+    .from("customers")
+    .select("tenant_id")
+    .limit(1)
+    .maybeSingle();
+  const tenant = anyCustomer?.tenant_id
+    ? { id: anyCustomer.tenant_id }
+    : (await admin.from("tenants").select("id").limit(1).maybeSingle()).data;
   if (!tenant?.id) {
     record("Setup", "tenant", "SKIP", "no tenant");
     writeResults();
@@ -93,7 +103,7 @@ async function main() {
 
   const { data: customer } = await admin
     .from("customers")
-    .select("id, mobile")
+    .select("id, phone")
     .eq("tenant_id", tenant.id)
     .limit(1)
     .maybeSingle();
@@ -104,7 +114,7 @@ async function main() {
     return;
   }
 
-  await admin.from("customers").update({ mobile: "01009998877" }).eq("id", customer.id);
+  await admin.from("customers").update({ phone: "01009998877" }).eq("id", customer.id);
 
   await admin.from("customer_communication_preferences").upsert(
     {

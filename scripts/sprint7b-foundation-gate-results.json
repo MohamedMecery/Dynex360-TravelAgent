@@ -1,0 +1,63 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "results": [
+    {
+      "section": "setup",
+      "item": "signIn sales_agent",
+      "status": "PASS",
+      "detail": "wp3a-sales@demo.travelos.local"
+    },
+    {
+      "section": "cookie",
+      "item": "GET /api/auth/me",
+      "status": "PASS",
+      "detail": "role=sales_agent"
+    },
+    {
+      "section": "bearer",
+      "item": "GET /api/auth/me",
+      "status": "PASS",
+      "detail": "tenant=3078ca80-07c0-4314-a873-c5eaad0f0eb4"
+    },
+    {
+      "section": "bearer",
+      "item": "GET /api/bookings",
+      "status": "PASS",
+      "detail": "count=5"
+    },
+    {
+      "section": "bearer",
+      "item": "GET /api/bookings/:id",
+      "status": "PASS",
+      "detail": "ab49b02e-2504-4034-94c0-9c32a7228fd3"
+    },
+    {
+      "section": "bearer",
+      "item": "GET /api/users/assignees",
+      "status": "PASS",
+      "detail": "total=3"
+    },
+    {
+      "section": "security",
+      "item": "unauthenticated /api/auth/me",
+      "status": "PASS",
+      "detail": "401"
+    },
+    {
+      "section": "security",
+      "item": "invalid Bearer token",
+      "status": "PASS",
+      "detail": "401"
+    },
+    {
+      "section": "cookie",
+      "item": "GET /api/crm/dashboard regression",
+      "status": "PASS"
+    },
+    {
+      "section": "middleware",
+      "item": "API JSON 401 not HTML redirect",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-06-12T05:46:15.318Z",
+  "results": [
+    {
+      "section": "auth",
+      "item": "portal sign-in",
+      "status": "PASS"
+    },
+    {
+      "section": "setup",
+      "item": "enable payments",
+      "status": "PASS"
+    },
+    {
+      "section": "checkout",
+      "item": "accepted quotation",
+      "status": "SKIP",
+      "detail": "No accepted quotation — accept one in portal first"
+    },
+    {
+      "section": "security",
+      "item": "cross-customer order 404",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "generatedAt": "2026-06-12T05:53:53.535Z",
+  "results": [
+    {
+      "section": "Setup",
+      "item": "tenant_admin sign-in",
+      "status": "PASS"
+    },
+    {
+      "section": "API",
+      "item": "GET dashboard period=month status",
+      "status": "PASS",
+      "detail": "status=200"
+    },
+    {
+      "section": "API",
+      "item": "GET dashboard period=month payload",
+      "status": "PASS",
+      "detail": "kpis+charts ok"
+    },
+    {
+      "section": "API",
+      "item": "GET dashboard period=quarter status",
+      "status": "PASS",
+      "detail": "status=200"
+    },
+    {
+      "section": "API",
+      "item": "GET dashboard period=quarter payload",
+      "status": "PASS",
+      "detail": "kpis+charts ok"
+    },
+    {
+      "section": "Performance",
+      "item": "GET dashboard duration",
+      "status": "PASS",
+      "detail": "445ms"
+    },
+    {
+      "section": "Performance",
+      "item": "GET dashboard payload size",
+      "status": "PASS",
+      "detail": "1KB"
+    },
+    {
+      "section": "Financial gating",
+      "item": "tenant_admin revenue KPIs",
+      "status": "PASS",
+      "detail": "forecast=19350"
+    },
+    {
+      "section": "Financial gating",
+      "item": "sales_agent revenue KPIs",
+      "status": "PASS",
+      "detail": "forecast=null closed=null"
+    },
+    {
+      "section": "Financial gating",
+      "item": "sales_agent revenue_forecast chart",
+      "status": "PASS",
+      "detail": "len=0"
+    },
+    {
+      "section": "Financial gating",
+      "item": "finance_officer revenue KPIs",
+      "status": "PASS",
+      "detail": "forecast=19350 closed=0"
+    },
+    {
+      "section": "Financial gating",
+      "item": "finance_officer revenue_forecast chart",
+      "status": "PASS",
+      "detail": "len=0"
+    }
+  ]
+}

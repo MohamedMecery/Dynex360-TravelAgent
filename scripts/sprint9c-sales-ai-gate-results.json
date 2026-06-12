@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-06-12T05:50:48.883Z",
+  "results": [
+    {
+      "section": "Schema",
+      "item": "ai_sales_snapshots",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_sales_score_history",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_sales_recommendations",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_sales_recommendation_feedback",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_sales_insight_cache",
+      "status": "PASS"
+    },
+    {
+      "section": "RPC",
+      "item": "get_sales_insights callable",
+      "status": "PASS",
+      "detail": "ok (service role)"
+    },
+    {
+      "section": "Permissions",
+      "item": "ai.sales.read",
+      "status": "PASS"
+    },
+    {
+      "section": "AI Platform",
+      "item": "sales agent_key seeded",
+      "status": "PASS"
+    }
+  ]
+}

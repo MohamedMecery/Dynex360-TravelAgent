@@ -1,27 +1,11 @@
 -- ============================================================================
--- TravelOS Migration 058_ai_sales_insights
--- Sprint 9C-D â€” Pre-aggregated insight cache + tenant-scoped insights RPC
+-- TravelOS Migration 066_fix_sales_insights_package_title
+-- Fix: get_sales_insights referenced packages.name, but the column is
+-- packages.title — the RPC failed at runtime with "column p.name does not
+-- exist" for every sales-insights request. Re-creates the function with the
+-- correct column (identical otherwise to the patched 058 definition).
 -- ============================================================================
 
-CREATE TABLE IF NOT EXISTS ai_sales_insight_cache (
-    id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    tenant_id           UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
-    period_from         TIMESTAMPTZ NOT NULL,
-    period_to           TIMESTAMPTZ NOT NULL,
-    cache_key           TEXT NOT NULL,
-    payload             JSONB NOT NULL DEFAULT '{}',
-    computed_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
-    expires_at          TIMESTAMPTZ NOT NULL,
-    created_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
-    CONSTRAINT uq_ai_sales_insight_cache UNIQUE (tenant_id, cache_key)
-);
-
-CREATE INDEX IF NOT EXISTS idx_ai_sales_insight_cache_expires
-    ON ai_sales_insight_cache(tenant_id, expires_at);
-
--- ----------------------------------------------------------------------------
--- get_sales_insights â€” deterministic manager KPIs (L4)
--- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.get_sales_insights(
     p_from TIMESTAMPTZ,
     p_to   TIMESTAMPTZ

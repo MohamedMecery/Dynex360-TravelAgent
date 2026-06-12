@@ -68,3 +68,6 @@ _do_commit.bat
 
 # supabase CLI local state
 supabase/.temp/
+
+# Local credentials scratch file — contains secrets, must never be tracked
+Travel-Users.txt

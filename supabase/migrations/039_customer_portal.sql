@@ -147,7 +147,7 @@ BEGIN
         new_claims := jsonb_set(
             new_claims,
             '{app_metadata,user_type}',
-            to_jsonb('staff'),
+            to_jsonb('staff'::text),
             true
         );
     END IF;
@@ -180,7 +180,7 @@ BEGIN
             new_claims := jsonb_set(
                 new_claims,
                 '{app_metadata,user_type}',
-                to_jsonb('customer'),
+                to_jsonb('customer'::text),
                 true
             );
             new_claims := jsonb_set(

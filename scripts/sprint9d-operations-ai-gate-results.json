@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-06-12T05:44:13.590Z",
+  "results": [
+    {
+      "section": "Schema",
+      "item": "ai_ops_snapshots",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_ops_score_history",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_ops_recommendations",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_ops_recommendation_feedback",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "ai_ops_insight_cache",
+      "status": "PASS"
+    },
+    {
+      "section": "Schema",
+      "item": "booking_documents.document_type",
+      "status": "PASS"
+    },
+    {
+      "section": "RPC",
+      "item": "get_operations_insights callable",
+      "status": "PASS",
+      "detail": "ok (service role)"
+    },
+    {
+      "section": "Permissions",
+      "item": "ai.operations.read",
+      "status": "PASS"
+    },
+    {
+      "section": "AI Platform",
+      "item": "operations agent_key seeded",
+      "status": "PASS"
+    },
+    {
+      "section": "Events",
+      "item": "dispatch.ai_ops_score job type usable",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Deployment/runtime files MUST be LF — CRLF breaks them inside Linux containers.
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+*.sh text eol=lf
+deploy/** text eol=lf

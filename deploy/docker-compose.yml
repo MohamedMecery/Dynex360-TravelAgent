@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: /root/travel-os
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* are inlined at build time — must be passed as build args.
+        # These are public values (publishable key + URL), safe to bake in.
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    image: travelos:latest
+    container_name: travelos
+    restart: always
+    env_file: .env
+    expose:
+      - "3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=n8n_default"
+      # HTTP -> HTTPS redirect
+      - "traefik.http.routers.travelos.rule=Host(`travelos.srv1754043.hstgr.cloud`)"
+      - "traefik.http.routers.travelos.entrypoints=web,websecure"
+      - "traefik.http.routers.travelos.tls=true"
+      - "traefik.http.routers.travelos.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.travelos.loadbalancer.server.port=3000"
+    networks:
+      - traefik_network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health/supabase"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  traefik_network:
+    external: true
+    name: n8n_default

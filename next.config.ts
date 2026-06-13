@@ -5,6 +5,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  // Self-hosted Docker target: emit a minimal standalone server bundle
+  // (.next/standalone/server.js) so the runner image carries only the traced
+  // node_modules instead of the full dependency tree. Harmless on Vercel.
+  output: "standalone",
   transpilePackages: ["@refinedev/nextjs-router"],
   // PDF rendering must stay on ONE React instance. Route handlers are bundled
   // against Next's vendored React 19 canary, so elements created there are

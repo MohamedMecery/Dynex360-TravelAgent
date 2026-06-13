@@ -1,0 +1,38 @@
+# deps & build output (rebuilt inside image)
+node_modules
+**/node_modules
+.next
+out
+build
+dist
+
+# secrets — never ship into the image (env is injected at runtime via env_file)
+.env
+.env.local
+.env*.local
+.env.cloud.template
+Travel-Users.*
+
+# vcs / ci / tooling
+.git
+.github
+.vercel
+coverage
+playwright-report
+test-results
+e2e/.auth
+
+# docs & local scratch
+docs
+*.md
+!README.md
+.tmp-*
+dev-output.log
+
+# mobile app (separate deploy target, not part of web build)
+apps/mobile
+
+# os / editor
+.DS_Store
+.idea
+.vscode
